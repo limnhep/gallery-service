@@ -4,7 +4,7 @@ import React from 'react';
 import {
   GalleryFeaturesOverviewRoomsContainerItems,
   GalleryFeaturesOverviewRoomsContainerItemsImg,
-  GalleryFeaturesOverviewRoomsContainerItemsTitle
+  GalleryFeaturesOverviewRoomsContainerItemsTitle,
 } from '../../../styled/galleryOverviewItems';
 
 const GalleryOverviewItems = ({ name, image }) => (

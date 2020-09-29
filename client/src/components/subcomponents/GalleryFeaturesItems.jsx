@@ -1,169 +1,191 @@
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
+import {
+  GalleryFeaturesModulesTopContainer,
+  GalleryFeaturesOverviewHeadingContainerHeading,
+  GalleryFeaturesModulesContainerHeadingSecondary,
+  GalleryTinyMarginBot,
+  GalleryFeaturesModulesContainerRightContainer,
+  GalleryFeaturesModulesContainerImagesContainer,
+  GalleryFeaturesLeftContainerHeadingSticky,
+  GalleryFeaturesModulesLeftContainerBottom,
+  GalleryFeaturesModulesLeftContainer,
+  ImagesSingle,
+  ImagesPair,
+  ImagesSkewed1,
+  ImagesSkewed2,
+  ImagesLarge,
+  ImagesComment,
+  ImagesCommentTextIcon,
+  ImagesCommentTextContainer,
+  ImagesCommentTextText,
+  ImagesCommentTextHost,
+  ImagesCommentPhoto,
+} from '../../../styled/galleryFeaturesItems';
 
 class GalleryFeaturesItems extends Component {
   renderRoomGallery() {
     const {
       name, hostname, images, index, setModalImage,
     } = this.props;
-    console.log(this.props);
     if (images.length === 1 && index === 0) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} id={name} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={name} />,
       ]);
     } if (images.length === 1 && !images[0].comment) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-large" src={images[0].url} />,
+        <ImagesLarge key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
       ]);
     } if (images.length === 1 && images[0].comment) {
       return ([
-        <div key={Math.random()} className="gallery-features-modules-container-images-comment">
-          <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container">
-            <img key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-icon" src="../../../public/img/icons/quotes.png" />
-            <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-text">{images[0].comment}</div>
-            <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-host">
+        <ImagesComment key={Math.random()}>
+          <ImagesCommentTextContainer key={Math.random()}>
+            <ImagesCommentTextIcon key={Math.random()} src="../../../public/img/icons/quotes.png" />
+            <ImagesCommentTextText key={Math.random()}>{images[0].comment}</ImagesCommentTextText>
+            <ImagesCommentTextHost key={Math.random()}>
               {hostname}
               , your host
-            </div>
-          </div>
-        </div>,
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-comment-photo" src={images[0].url} />,
+            </ImagesCommentTextHost>
+          </ImagesCommentTextContainer>
+        </ImagesComment>,
+        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
       ]);
     } if (images.length === 2) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
       ]);
     } if (images.length === 3) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[2].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[2].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
       ]);
     } if (images.length === 4 && !images[3].comment) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[2].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[2].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[3].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[3].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
       ]);
     } if (images.length === 4 && images[3].comment) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[2].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[2].url} />,
-        <div key={Math.random()} className="gallery-features-modules-container-images-comment">
-          <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container">
-            <img key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-icon" src="../../../public/img/icons/quotes.png" />
-            <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-text">{images[3].comment}</div>
-            <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-host">
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesComment key={Math.random()}>
+          <ImagesCommentTextContainer key={Math.random()}>
+            <ImagesCommentTextIcon key={Math.random()} src="../../../public/img/icons/quotes.png" />
+            <ImagesCommentTextText key={Math.random()}>{images[3].comment}</ImagesCommentTextText>
+            <ImagesCommentTextHost key={Math.random()}>
               {hostname}
               , your host
-            </div>
-          </div>
-        </div>,
-        <img key={Math.random()} onClick={() => setModalImage(images[3].url)} className="gallery-darken-img gallery-features-modules-container-images-comment-photo" src={images[3].url} />,
+            </ImagesCommentTextHost>
+          </ImagesCommentTextContainer>
+        </ImagesComment>,
+        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
       ]);
     } if (images.length === 5) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[2].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[2].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[3].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-1" src={images[3].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[4].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-2" src={images[4].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
       ]);
     } if (images.length === 6 && !images[5].comment) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[2].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[2].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[3].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-2" src={images[3].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[4].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-1" src={images[4].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[5].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[5].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
       ]);
     } if (images.length === 6 && images[5].comment) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[2].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[2].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[3].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-2" src={images[3].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[4].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-1" src={images[4].url} />,
-        <div key={Math.random()} className="gallery-features-modules-container-images-comment">
-          <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container">
-            <img key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-icon" src="../../../public/img/icons/quotes.png" />
-            <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-text">{images[5].comment}</div>
-            <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-host">
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
+        <ImagesComment key={Math.random()}>
+          <ImagesCommentTextContainer key={Math.random()}>
+            <ImagesCommentTextIcon key={Math.random()} src="../../../public/img/icons/quotes.png" />
+            <ImagesCommentTextText key={Math.random()}>{images[5].comment}</ImagesCommentTextText>
+            <ImagesCommentTextHost key={Math.random()}>
               {hostname}
               , your host
-            </div>
-          </div>
-        </div>,
-        <img key={Math.random()} onClick={() => setModalImage(images[5].url)} className="gallery-darken-img gallery-features-modules-container-images-comment-photo" src={images[5].url} />,
+            </ImagesCommentTextHost>
+          </ImagesCommentTextContainer>
+        </ImagesComment>,
+        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
       ]);
     } if (images.length === 7 && !images[6].comment) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[2].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[2].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[3].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[3].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[4].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-2" src={images[4].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[5].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-1" src={images[5].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[6].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[6].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} />,
       ]);
     } if (images.length === 7 && images[6].comment) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[2].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[2].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[3].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[3].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[4].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-2" src={images[4].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[5].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-1" src={images[5].url} />,
-        <div key={Math.random()} className="gallery-features-modules-container-images-comment">
-          <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container">
-            <img key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-icon" src="../../../public/img/icons/quotes.png" />
-            <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-text">{images[6].comment}</div>
-            <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-host">
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
+        <ImagesComment key={Math.random()}>
+          <ImagesCommentTextContainer key={Math.random()}>
+            <ImagesCommentTextIcon key={Math.random()} src="../../../public/img/icons/quotes.png" />
+            <ImagesCommentTextText key={Math.random()}>{images[6].comment}</ImagesCommentTextText>
+            <ImagesCommentTextHost key={Math.random()}>
               {hostname}
               , your host
-            </div>
-          </div>
-        </div>,
-        <img key={Math.random()} onClick={() => setModalImage(images[6].url)} className="gallery-darken-img gallery-features-modules-container-images-comment-photo" src={images[6].url} />,
+            </ImagesCommentTextHost>
+          </ImagesCommentTextContainer>
+        </ImagesComment>,
+        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} />,
       ]);
     } if (images.length === 8 && !images[7].comment) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[2].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[2].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[3].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-2" src={images[3].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[4].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-1" src={images[4].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[5].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[5].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[6].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[6].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[7].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[7].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[7].url)} src={images[7].url} />,
       ]);
     } if (images.length === 8 && images[7].comment) {
       return ([
-        <img key={Math.random()} onClick={() => setModalImage(images[0].url)} className="gallery-darken-img gallery-features-modules-container-images-single" src={images[0].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[1].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[1].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[2].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[2].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[3].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-2" src={images[3].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[4].url)} className="gallery-darken-img gallery-features-modules-container-images-skewed-1" src={images[4].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[5].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[5].url} />,
-        <img key={Math.random()} onClick={() => setModalImage(images[6].url)} className="gallery-darken-img gallery-features-modules-container-images-pair" src={images[6].url} />,
-        <div key={Math.random()} className="gallery-features-modules-container-images-comment">
-          <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container">
-            <img key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-icon" src="../../../public/img/icons/quotes.png" />
-            <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-text">{images[7].comment}</div>
-            <div key={Math.random()} className="gallery-features-modules-container-images-comment-text-container-host">
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} />,
+        <ImagesComment key={Math.random()}>
+          <ImagesCommentTextContainer key={Math.random()}>
+            <ImagesCommentTextIcon key={Math.random()} src="../../../public/img/icons/quotes.png" />
+            <ImagesCommentTextText key={Math.random()}>{images[7].comment}</ImagesCommentTextText>
+            <ImagesCommentTextHost key={Math.random()}>
               {hostname}
               , your host
-            </div>
-          </div>
-        </div>,
-        <img key={Math.random()} onClick={() => setModalImage(images[7].url)} className="gallery-darken-img gallery-features-modules-container-images-comment-photo" src={images[7].url} />,
+            </ImagesCommentTextHost>
+          </ImagesCommentTextContainer>
+        </ImagesComment>,
+        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[7].url)} src={images[7].url} />,
       ]);
     }
     return null;
@@ -198,20 +220,20 @@ class GalleryFeaturesItems extends Component {
 
     return (
       <>
-        <div className="gallery-features-modules-top-container">
+        <GalleryFeaturesModulesTopContainer>
           <div className={this.renderPositionClass()}>
             <div className={this.renderStickyClass()}>
-              <h2 className="gallery-features-overview-heading-container-heading">{name}</h2>
-              <div className="gallery-tiny-margin-bot-6" />
-              <h2 className="gallery-features-modules-container-heading-secondary"><span>{features}</span></h2>
+              <GalleryFeaturesOverviewHeadingContainerHeading>{name}</GalleryFeaturesOverviewHeadingContainerHeading>
+              <GalleryTinyMarginBot />
+              <GalleryFeaturesModulesContainerHeadingSecondary><span>{features}</span></GalleryFeaturesModulesContainerHeadingSecondary>
             </div>
           </div>
-          <div className="gallery-features-modules-container-right-container" id={name}>
-            <div className="gallery-features-modules-container-images-container">
+          <GalleryFeaturesModulesContainerRightContainer id={name}>
+            <GalleryFeaturesModulesContainerImagesContainer>
               {this.renderRoomGallery()}
-            </div>
-          </div>
-        </div>
+            </GalleryFeaturesModulesContainerImagesContainer>
+          </GalleryFeaturesModulesContainerRightContainer>
+        </GalleryFeaturesModulesTopContainer>
       </>
     );
   }
