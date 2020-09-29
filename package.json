@@ -1,0 +1,29 @@
+{
+  "name": "fec-project-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Harris Li",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.7",
+    "nodemon": "^2.0.4"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HRSF130-Bougie/gallery-service.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HRSF130-Bougie/gallery-service/issues"
+  },
+  "homepage": "https://github.com/HRSF130-Bougie/gallery-service#readme",
+  "description": ""
+}
