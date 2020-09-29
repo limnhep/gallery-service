@@ -25,7 +25,6 @@ class App extends Component {
 
   componentDidMount() {
     requestListing().then((listing) => {
-      console.log(listing);
       const { rooms } = listing.gallery;
       const imagesArray = [];
       rooms.forEach((room) => {
