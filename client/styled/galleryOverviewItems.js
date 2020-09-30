@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const GalleryFeaturesOverviewRoomsContainerItems = styled.div`
+export const RoomsContainerItems = styled.div`
 display: inline-block;
 margin-bottom:2px;
 
@@ -11,7 +11,7 @@ margin-bottom:2px;
 }
 `;
 
-export const GalleryFeaturesOverviewRoomsContainerItemsImg = styled.img`
+export const RoomsContainerItemsImg = styled.img`
 object-fit: cover;
 width: 146px;
 height: 96px;
@@ -20,7 +20,7 @@ margin-bottom: 10px;
 box-shadow: 2px 2px rgb(238, 238, 238);
 `;
 
-export const GalleryFeaturesOverviewRoomsContainerItemsTitle = styled.h4`
+export const RoomsContainerItemsTitle = styled.h4`
 font-family: 'Airbnb Cereal App Light';
 color: rgb(34, 34, 34);
 font-size: 14px;

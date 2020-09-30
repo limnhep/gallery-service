@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-export const GalleryFeaturesModulesTopContainer = styled.div`
+export const TopContainer = styled.div`
 max-width: 1120px;
 margin: 46px auto 0 auto;
 padding-bottom: 18px;
 `;
 
-export const GalleryFeaturesOverviewHeadingContainerHeading = styled.h2`
+export const OverviewHeading = styled.h2`
 font-family: 'Airbnb Cereal App Medium';
 color: rgb(34, 34, 34);
 font-size: 22px;
@@ -14,7 +14,7 @@ line-height: 30px;
 font-weight: 400px;
 `;
 
-export const GalleryFeaturesModulesContainerHeadingSecondary = styled.h2`
+export const HeadingSecondary = styled.h2`
 display: block;
 
 max-width: 362px;
@@ -27,29 +27,29 @@ line-height: 20px;
 font-weight: 400px;
 `;
 
-export const GalleryTinyMarginBot = styled.div`
+export const TinyMarginBot = styled.div`
 margin-bottom: 6px !important;
 `;
 
-export const GalleryFeaturesModulesContainerRightContainer = styled.div`
+export const RightContainer = styled.div`
 display: inline-block;
 max-width: 742px;
 width: 100vw;
 `;
 
-export const GalleryFeaturesModulesContainerImagesContainer = styled.div`
+export const ImagesContainer = styled.div`
 display: flex;
 gap: 10px;
 flex-wrap: wrap;
 justify-content: space-around;
 `;
 
-export const GalleryFeaturesLeftContainerHeadingSticky = styled.div`
+export const LeftContainerHeadingSticky = styled.div`
 position: fixed;
 top: 42px;
 `;
 
-export const GalleryFeaturesModulesLeftContainerBottom = styled.div`
+export const LeftContainerBottom = styled.div`
 display: inline-block;
 vertical-align: bottom;
 
@@ -59,7 +59,7 @@ width:100%;
 padding-bottom: 30px;
 `;
 
-export const GalleryFeaturesModulesLeftContainer = styled.div`
+export const LeftContainer = styled.div`
 display: inline-block;
 vertical-align: top;
 

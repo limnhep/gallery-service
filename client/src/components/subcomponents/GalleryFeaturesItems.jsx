@@ -5,15 +5,15 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
 import {
-  GalleryFeaturesModulesTopContainer,
-  GalleryFeaturesOverviewHeadingContainerHeading,
-  GalleryFeaturesModulesContainerHeadingSecondary,
-  GalleryTinyMarginBot,
-  GalleryFeaturesModulesContainerRightContainer,
-  GalleryFeaturesModulesContainerImagesContainer,
-  GalleryFeaturesLeftContainerHeadingSticky,
-  GalleryFeaturesModulesLeftContainerBottom,
-  GalleryFeaturesModulesLeftContainer,
+  TopContainer,
+  OverviewHeading,
+  HeadingSecondary,
+  TinyMarginBot,
+  RightContainer,
+  ImagesContainer,
+  LeftContainerHeadingSticky,
+  LeftContainerBottom,
+  LeftContainer,
   ImagesSingle,
   ImagesPair,
   ImagesSkewed1,
@@ -191,22 +191,48 @@ class GalleryFeaturesItems extends Component {
     return null;
   }
 
-  renderStickyClass() {
+  renderStickyClass(name, features) {
     const { sticky } = this.props;
     if (sticky === 0) {
-      return null;
+      return (
+        <>
+          <OverviewHeading>{name}</OverviewHeading>
+          <TinyMarginBot />
+          <HeadingSecondary><span>{features}</span></HeadingSecondary>
+        </>
+      );
     } if (sticky === 1) {
-      return 'gallery-feature-left-container-heading-sticky';
+      return (
+        <LeftContainerHeadingSticky>
+          <OverviewHeading>{name}</OverviewHeading>
+          <TinyMarginBot />
+          <HeadingSecondary><span>{features}</span></HeadingSecondary>
+        </LeftContainerHeadingSticky>
+      );
     }
-    return null;
+    return (
+      <>
+        <OverviewHeading>{name}</OverviewHeading>
+        <TinyMarginBot />
+        <HeadingSecondary><span>{features}</span></HeadingSecondary>
+      </>
+    );
   }
 
-  renderPositionClass() {
+  renderPositionClass(name, features) {
     const { sticky } = this.props;
     if (sticky === 2) {
-      return 'gallery-features-modules-left-container-bottom';
+      return (
+        <LeftContainerBottom>
+          {this.renderStickyClass(name, features)}
+        </LeftContainerBottom>
+      );
     }
-    return 'gallery-features-modules-left-container';
+    return (
+      <LeftContainer>
+        {this.renderStickyClass(name, features)}
+      </LeftContainer>
+    );
   }
 
   render() {
@@ -220,20 +246,14 @@ class GalleryFeaturesItems extends Component {
 
     return (
       <>
-        <GalleryFeaturesModulesTopContainer>
-          <div className={this.renderPositionClass()}>
-            <div className={this.renderStickyClass()}>
-              <GalleryFeaturesOverviewHeadingContainerHeading>{name}</GalleryFeaturesOverviewHeadingContainerHeading>
-              <GalleryTinyMarginBot />
-              <GalleryFeaturesModulesContainerHeadingSecondary><span>{features}</span></GalleryFeaturesModulesContainerHeadingSecondary>
-            </div>
-          </div>
-          <GalleryFeaturesModulesContainerRightContainer id={name}>
-            <GalleryFeaturesModulesContainerImagesContainer>
+        <TopContainer>
+          {this.renderPositionClass(name, features)}
+          <RightContainer id={name}>
+            <ImagesContainer>
               {this.renderRoomGallery()}
-            </GalleryFeaturesModulesContainerImagesContainer>
-          </GalleryFeaturesModulesContainerRightContainer>
-        </GalleryFeaturesModulesTopContainer>
+            </ImagesContainer>
+          </RightContainer>
+        </TopContainer>
       </>
     );
   }

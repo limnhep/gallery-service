@@ -5,14 +5,14 @@ import React, { Component } from 'react';
 import GalleryOverviewItems from './subcomponents/GalleryOverviewItems.jsx';
 import GalleryFeaturesItems from './subcomponents/GalleryFeaturesItems.jsx';
 import {
-  GalleryFeaturesTopContainer,
-  GalleryFeaturesHeader,
-  GalleryFeaturesToggleButton,
-  GalleryFeaturesOverview,
-  GalleryFeaturesOverviewHeadingContainer,
-  GalleryFeaturesOverviewHeadingContainerHeading,
-  GalleryFeaturesOverviewRoomsContainer,
-  GalleryAmenitiesModule,
+  TopContainer,
+  Header,
+  ToggleButton,
+  Overview,
+  OverviewHeadingContainer,
+  OverviewHeadingContainerHeading,
+  OverviewRoomsContainer,
+  AmenitiesModule
 } from '../../styled/galleryFeatures';
 
 class GalleryFeatures extends Component {
@@ -78,30 +78,30 @@ class GalleryFeatures extends Component {
       <>
         {/* GALLERY FEATURES PARENT  */}
 
-        <GalleryFeaturesTopContainer>
-          <GalleryFeaturesHeader>
-            <GalleryFeaturesToggleButton onClick={ModalToggle}>
+        <TopContainer>
+          <Header>
+            <ToggleButton onClick={ModalToggle}>
               <img src="../public/img/icons/left-arrow.png" alt="img" />
-            </GalleryFeaturesToggleButton>
-          </GalleryFeaturesHeader>
+            </ToggleButton>
+          </Header>
 
           {/* GALLERY FEATURES OVERVIEW  */}
 
-          <GalleryFeaturesOverview>
-            <GalleryFeaturesOverviewHeadingContainer>
-              <GalleryFeaturesOverviewHeadingContainerHeading>Property overview</GalleryFeaturesOverviewHeadingContainerHeading>
-            </GalleryFeaturesOverviewHeadingContainer>
-            <GalleryFeaturesOverviewRoomsContainer>
+          <Overview>
+            <OverviewHeadingContainer>
+              <OverviewHeadingContainerHeading>Property overview</OverviewHeadingContainerHeading>
+            </OverviewHeadingContainer>
+            <OverviewRoomsContainer>
               {overviewItems}
-            </GalleryFeaturesOverviewRoomsContainer>
-          </GalleryFeaturesOverview>
+            </OverviewRoomsContainer>
+          </Overview>
 
           {/* GALLERY AMENITIES MODULES  */}
 
-          <GalleryAmenitiesModule>
+          <AmenitiesModule>
             {amenitiesItems}
-          </GalleryAmenitiesModule>
-        </GalleryFeaturesTopContainer>
+          </AmenitiesModule>
+        </TopContainer>
 
       </>
     );
