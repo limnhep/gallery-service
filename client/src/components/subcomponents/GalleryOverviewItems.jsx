@@ -1,11 +1,17 @@
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 import React from 'react';
+import {
+  RoomsContainerItems,
+  RoomsContainerItemsImg,
+  RoomsContainerItemsTitle,
+} from '../../../styled/galleryOverviewItems';
 
 const GalleryOverviewItems = ({ name, image }) => (
-  <div className="gallery-features-overview-rooms-container-items">
-    <img className="gallery-features-overview-rooms-container-items-img" src={image} />
-    <h4 className="gallery-features-overview-rooms-container-items-title">{name}</h4>
-  </div>
+  <RoomsContainerItems>
+    <RoomsContainerItemsImg src={image} alt="img" />
+    <RoomsContainerItemsTitle>{name}</RoomsContainerItemsTitle>
+  </RoomsContainerItems>
 );
 
 export default GalleryOverviewItems;

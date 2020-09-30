@@ -4,6 +4,16 @@
 import React, { Component } from 'react';
 import GalleryOverviewItems from './subcomponents/GalleryOverviewItems.jsx';
 import GalleryFeaturesItems from './subcomponents/GalleryFeaturesItems.jsx';
+import {
+  TopContainer,
+  Header,
+  ToggleButton,
+  Overview,
+  OverviewHeadingContainer,
+  OverviewHeadingContainerHeading,
+  OverviewRoomsContainer,
+  AmenitiesModule
+} from '../../styled/galleryFeatures';
 
 class GalleryFeatures extends Component {
   constructor(props) {
@@ -68,30 +78,30 @@ class GalleryFeatures extends Component {
       <>
         {/* GALLERY FEATURES PARENT  */}
 
-        <div className="gallery-features-top-container">
-          <div className="gallery-features-header">
-            <button className="gallery-features-toggle-button" onClick={ModalToggle}>
+        <TopContainer>
+          <Header>
+            <ToggleButton onClick={ModalToggle}>
               <img src="../public/img/icons/left-arrow.png" alt="img" />
-            </button>
-          </div>
+            </ToggleButton>
+          </Header>
 
           {/* GALLERY FEATURES OVERVIEW  */}
 
-          <div className="gallery-features-overview">
-            <div className="gallery-features-overview-heading-container">
-              <h2 className="gallery-features-overview-heading-container-heading">Property overview</h2>
-            </div>
-            <div className="gallery-features-overview-rooms-container">
+          <Overview>
+            <OverviewHeadingContainer>
+              <OverviewHeadingContainerHeading>Property overview</OverviewHeadingContainerHeading>
+            </OverviewHeadingContainer>
+            <OverviewRoomsContainer>
               {overviewItems}
-            </div>
-          </div>
+            </OverviewRoomsContainer>
+          </Overview>
 
           {/* GALLERY AMENITIES MODULES  */}
 
-          <div className="gallery-amenities-module">
+          <AmenitiesModule>
             {amenitiesItems}
-          </div>
-        </div>
+          </AmenitiesModule>
+        </TopContainer>
 
       </>
     );
