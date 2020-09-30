@@ -41,7 +41,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state);
     if (!this.state.done) {
       return (
         <>
@@ -84,7 +83,7 @@ class App extends Component {
         return (
           <GalleryFeatures
             listing={listing}
-            toggle={() => this.setState({ features: !features })}
+            ModalToggle={() => this.setState({ features: !features })}
             setModalImage={(url) => this.setModalImage(url)}
           />
         );

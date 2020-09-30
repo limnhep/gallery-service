@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable max-len */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
@@ -5,23 +7,28 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
+import GalleryTitleBar from './subcomponents/GalleryTitleBar.jsx';
+
 import {
-  GalleryTopContainer,
-  GalleryTitleContainer,
-  GalleryTitleHeading,
-  GalleryTitleSecondary,
-  GalleryTinyMargin,
-  GalleryTitleSecondarySilver,
-  GalleryTitleSecondaryLocation,
-  GalleryContainerLarge,
-  GalleryButton,
-  GalleryContainerLargeMain,
-  GalleryContainerLargeMainImg,
-  GalleryContainerLargeAlt,
-  GalleryContainerLargeAltPair,
-  GalleryContainerLargeAltImg,
-  GalleryContainerLargeAltImg2,
-  GalleryContainerLargeAltPairImg,
+  TopContainer,
+  ContainerLarge,
+  ShowMoreButton,
+  ContainerLargeMain,
+  ContainerLargeMainImg,
+  ContainerLargeAlt,
+  ContainerLargeAltPair,
+  ContainerLargeAltImg,
+  ContainerLargeAltImg2,
+  ContainerLargeAltPairImg,
+  ListingBodyContainer,
+  ListingInfoContainer,
+  ListingRoomInfo,
+  ListingRoomHeading,
+  ListingRoomSecondary,
+  ListingAvatarContainer,
+  ModalBackground,
+  SaveModal,
+  ShareModal,
 } from '../../styled/gallery';
 
 import {
@@ -34,24 +41,24 @@ class Gallery extends Component {
 
     if (listing.gallery.featured.length === 3) {
       return [
-        <GalleryContainerLargeMain key={Math.random()}>
-          <GalleryContainerLargeMainImg onClick={ModalToggle} src={listing.gallery.featured[0]} />
-        </GalleryContainerLargeMain>,
-        <GalleryContainerLargeAlt key={Math.random()}>
-          <GalleryContainerLargeAltImg onClick={ModalToggle} src={listing.gallery.featured[1]} />
-        </GalleryContainerLargeAlt>,
-        <GalleryContainerLargeAlt key={Math.random()}>
-          <GalleryContainerLargeAltImg2 onClick={ModalToggle} src={listing.gallery.featured[2]} />
-        </GalleryContainerLargeAlt>,
+        <ContainerLargeMain key={Math.random()}>
+          <ContainerLargeMainImg onClick={ModalToggle} src={listing.gallery.featured[0]} />
+        </ContainerLargeMain>,
+        <ContainerLargeAlt key={Math.random()}>
+          <ContainerLargeAltImg onClick={ModalToggle} src={listing.gallery.featured[1]} />
+        </ContainerLargeAlt>,
+        <ContainerLargeAlt key={Math.random()}>
+          <ContainerLargeAltImg2 onClick={ModalToggle} src={listing.gallery.featured[2]} />
+        </ContainerLargeAlt>,
       ];
     }
     return [
-      <GalleryContainerLargeMain key={Math.random()}>
-        <GalleryContainerLargeMainImg onClick={ModalToggle} src={listing.gallery.featured[0]} />
-      </GalleryContainerLargeMain>,
-      <GalleryContainerLargeAltPair key={Math.random()}>
-        <GalleryContainerLargeAltPairImg onClick={ModalToggle} src={listing.gallery.featured[1]} />
-      </GalleryContainerLargeAltPair>,
+      <ContainerLargeMain key={Math.random()}>
+        <ContainerLargeMainImg onClick={ModalToggle} src={listing.gallery.featured[0]} />
+      </ContainerLargeMain>,
+      <ContainerLargeAltPair key={Math.random()}>
+        <ContainerLargeAltPairImg onClick={ModalToggle} src={listing.gallery.featured[1]} />
+      </ContainerLargeAltPair>,
     ];
   }
 
@@ -65,44 +72,55 @@ class Gallery extends Component {
     return (
       <>
         <CssReset />
-        <GalleryTopContainer>
-          <GalleryTitleContainer>
-            <GalleryTitleHeading>{listing.title}</GalleryTitleHeading>
-            <GalleryTinyMargin>
-              <GalleryTitleSecondary>
-                {starIcon}
-  &nbsp;&nbsp;
-                {listing.rating}
-  &nbsp;&nbsp;
-                <GalleryTitleSecondarySilver>
-                  (
-                  {listing.reviews}
-                  )&nbsp;&nbsp;·&nbsp;
-                </GalleryTitleSecondarySilver>
-
-                {listing.superhost
-                  ? (
-                    <GalleryTitleSecondarySilver>
-                      {medalIcon}
-                      {' '}
-                      Superhost&nbsp;&nbsp;·&nbsp;&nbsp;
-                    </GalleryTitleSecondarySilver>
-                  )
-                  : null}
-
-                <GalleryTitleSecondaryLocation>{listing.location}</GalleryTitleSecondaryLocation>
-              </GalleryTitleSecondary>
-            </GalleryTinyMargin>
-          </GalleryTitleContainer>
-          <GalleryContainerLarge>
+        <TopContainer>
+          <GalleryTitleBar
+            starIcon={starIcon}
+            medalIcon={medalIcon}
+            listing={listing}
+          />
+          <ContainerLarge>
             {this.renderPhotoGalleryMain(listing)}
-            <GalleryButton onClick={ModalToggle}>
+            <ShowMoreButton onClick={ModalToggle}>
               {dotIcon}
               {' '}
               Show all photos
-            </GalleryButton>
-          </GalleryContainerLarge>
-        </GalleryTopContainer>
+            </ShowMoreButton>
+          </ContainerLarge>
+          <ListingBodyContainer>
+            <ListingInfoContainer>
+              <ListingRoomInfo>
+                <ListingRoomHeading>
+                  {listing.name}
+                  {' '}
+                  hosted by
+                  {' '}
+                  {listing.hostname}
+                </ListingRoomHeading>
+                <ListingRoomSecondary>
+                  {listing.guests}
+                  {' '}
+                  guests ·
+                  {' '}
+                  {listing.bedrooms}
+                  {' '}
+                  bedroom ·
+                  {' '}
+                  {listing.beds}
+                  {' '}
+                  bed ·
+                  {' '}
+                  {listing.bathrooms}
+                  {' '}
+                  bath
+                </ListingRoomSecondary>
+                <ListingAvatarContainer />
+              </ListingRoomInfo>
+            </ListingInfoContainer>
+          </ListingBodyContainer>
+        </TopContainer>
+        <ModalBackground>
+          <SaveModal />
+        </ModalBackground>
       </>
     );
   }

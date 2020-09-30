@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
-export const GalleryTopContainer = styled.div`display: block;
+export const TopContainer = styled.div`
+display: block;
 width: 100vw;`;
 
-export const GalleryTitleContainer = styled.div`height: 64px;
+export const TitleContainer = styled.div`
+height: 64px;
 max-width: 1120px;
-margin: 24px auto 24px auto;`;
+margin: 24px auto 20px auto;`;
 
-export const GalleryTitleHeading = styled.span`
+export const TitleHeading = styled.span`
 font-family: 'Airbnb Cereal App Light';
 color: rgb(34, 34, 34);
 font-size: 26px;
@@ -15,7 +17,7 @@ line-height: 30px;
 font-weight: 400px;
 }`;
 
-export const GalleryTitleSecondary = styled.span`
+export const TitleSecondary = styled.span`
 padding-top: 8px;
 
 font-family: 'Airbnb Cereal App Medium';
@@ -25,10 +27,11 @@ line-height: 20px;
 font-weight: 700px;
 `;
 
-export const GalleryTinyMargin = styled.div`
-margin-top: 6px;`;
+export const TinyMargin = styled.div`
+margin-top: 12px;
+`;
 
-export const GalleryTitleSecondarySilver = styled.span`
+export const TitleSecondarySilver = styled.span`
 font-family: 'Airbnb Cereal App Light';
 color: rgb(113, 113, 113);
 font-size: 14px;
@@ -36,7 +39,7 @@ line-height: 20px;
 font-weight: 400;
 `;
 
-export const GalleryTitleSecondaryLocation = styled.span`
+export const TitleSecondaryLocation = styled.span`
 font-family: 'Airbnb Cereal App Medium';
 color: rgb(113, 113, 113);
 font-size: 14px;
@@ -46,7 +49,7 @@ font-weight: 400;
 text-decoration: underline;
 `;
 
-export const GalleryContainerLarge = styled.div`
+export const ContainerLarge = styled.div`
 max-height: 750px;
 max-width: 1120px;
 
@@ -64,7 +67,7 @@ grid-template-rows: 1fr 1fr;
 grid-gap: 8px;
 `;
 
-export const GalleryButton = styled.button`
+export const ShowMoreButton = styled.button`
 position: absolute;
 height: 34px;
 width: 155px;
@@ -97,12 +100,12 @@ font-weight: 600px;
 }
 `;
 
-export const GalleryContainerLargeMain = styled.div`
+export const ContainerLargeMain = styled.div`
 grid-column: 1/2;
 grid-row: 1/3;
 `;
 
-export const GalleryContainerLargeMainImg = styled.img`
+export const ContainerLargeMainImg = styled.img`
 height: 100%;
 width: 100%;
 border-top-left-radius: 13px;
@@ -119,7 +122,7 @@ vertical-align: bottom;
 }
 `;
 
-export const GalleryContainerLargeAlt = styled.div`
+export const ContainerLargeAlt = styled.div`
 height: 100%;
 width: 100%;
 grid-column-start: 2;
@@ -128,7 +131,7 @@ height: 100%;
 width: 100%;
 `;
 
-export const GalleryContainerLargeAltImg = styled.img`
+export const ContainerLargeAltImg = styled.img`
 object-fit: cover;
 object-position: 50%;
 vertical-align: bottom;
@@ -144,7 +147,7 @@ border-top-right-radius: 13px;
 }
 `;
 
-export const GalleryContainerLargeAltImg2 = styled.img`
+export const ContainerLargeAltImg2 = styled.img`
 object-fit: cover;
 object-position: 50%;
 vertical-align: bottom;
@@ -160,14 +163,14 @@ border-bottom-right-radius: 13px;
 }
 `;
 
-export const GalleryContainerLargeAltPair = styled.div`
+export const ContainerLargeAltPair = styled.div`
 height: 100%;
 width: 100%;
 grid-column-start: 2;
 grid-row: 1/3;
 `;
 
-export const GalleryContainerLargeAltPairImg = styled.img`
+export const ContainerLargeAltPairImg = styled.img`
 object-fit: cover;
 object-position: 50%;
 vertical-align: bottom;
@@ -182,4 +185,129 @@ border-bottom-right-radius: 13px;
     -webkit-filter: brightness(85%);
     transition: -webkit-filter 0.3s;
 }
+`;
+
+export const NavBarButtonsFont = styled.span`
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+background-color: #ffffff;
+font-size: 14px;
+line-height: 18px;
+font-weight: 600px; 
+
+text-decoration: underline;
+
+&:hover {
+    cursor: pointer;
+    background-color: rgb(245, 245, 245); 
+}
+&:focus {
+    outline:0;
+}
+`;
+
+export const NavBarButtons = styled.button`
+background-color: white;
+border: none;
+border-radius: 10px;
+float: right;
+margin-left: 4px;
+width: 76px;
+height: 34px;
+vertical-align: top;
+
+&:hover {
+    cursor: pointer;
+    background-color: rgb(245, 245, 245); 
+}
+
+&:hover ${NavBarButtonsFont}{
+    background-color: rgb(245, 245, 245); 
+}
+
+&:focus {
+    outline:0;
+}
+`;
+
+export const NavBarIcon = styled.img`
+vertical-align: bottom;
+padding-bottom: 2px;
+`;
+
+export const ListingBodyContainer = styled.div`
+width:1120px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 653px 467px;
+height: 1000px;
+background-color: lightgrey;
+`;
+
+export const ListingInfoContainer = styled.div`
+display: inline;
+grid-column: 1/2;
+height: 56px;
+padding-top:48px;
+padding-bottom:24px;
+`;
+
+export const ListingRoomInfo = styled.div`
+display: inline-block;
+`;
+
+export const ListingRoomHeading = styled.div`
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+background-color: #ffffff;
+font-size: 22px;
+line-height: 26px;
+font-weight: 600px; 
+
+margin-bottom: 8px;
+`;
+
+export const ListingRoomSecondary = styled.div`
+font-family: 'Airbnb Cereal App Light';
+color: rgb(34, 34, 34);
+background-color: #ffffff;
+font-size: 16px;
+line-height: 20px;
+font-weight: 400px; 
+`;
+
+export const ListingAvatarContainer = styled.div`
+display: inline-block;
+float:right
+width: 56px;
+height: 56px;
+border-radius:50%;
+background-color:orange;
+`;
+
+export const ModalBackground = styled.div`
+position: relative;
+height: 100vh;
+width: 100vw;
+opacity: 0.5;
+`;
+
+export const SaveModal = styled.div`
+position: absolute;
+z-index: 10;
+height: 572px;
+width: 530px;
+left: 50%,
+top: 50%;
+background-color: lightgrey;
+`;
+
+export const ShareModal = styled.div`
+position: absolute;
+z-index: 10;
+height: 789px;
+width: 378px;
+left: 50%,
+top: 50%;
+background-color: lightgrey;
 `;

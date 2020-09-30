@@ -2,15 +2,16 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {
-  GalleryModalTopContainer,
-  GalleryModalNavBar,
-  GalleryModalBackButton,
-  GalleryModalImageIndex,
-  GalleryModalImageFrame,
-  GalleryModalImageFrameLeftButton,
-  GalleryModalImageFrameRightButton,
-  GalleryModalImageFramePhoto,
-  GalleryModalImageFrameComment,
+  TopContainer,
+  NavBar,
+  BackButton,
+  ImageIndex,
+  ImageFrame,
+  ImageFrameLeftButton,
+  ImageFrameRightButton,
+  ImageFramePhoto,
+  ImageFrameComment,
+  ImageArrowButton,
 } from '../../styled/galleryModal';
 
 const GalleryModal = ({
@@ -24,24 +25,24 @@ const GalleryModal = ({
     }
   });
   return (
-    <GalleryModalTopContainer>
-      <GalleryModalNavBar>
-        <GalleryModalBackButton onClick={() => closeModal()}>✕ &nbsp;Close</GalleryModalBackButton>
-        <GalleryModalImageIndex>
+    <TopContainer>
+      <NavBar>
+        <BackButton onClick={() => closeModal()}>✕ &nbsp;Close</BackButton>
+        <ImageIndex>
           {imageIndex + 1}
           {' '}
           /
           {' '}
           {totalPhotos}
-        </GalleryModalImageIndex>
-      </GalleryModalNavBar>
-      <GalleryModalImageFrame>
-        {imageIndex > 0 ? <GalleryModalImageFrameLeftButton onClick={() => changeImage(images[imageIndex - 1].url)}>Left</GalleryModalImageFrameLeftButton> : ''}
-        <GalleryModalImageFramePhoto src={selectedImage} />
-        {images[imageIndex].comment ? <GalleryModalImageFrameComment>{images[imageIndex].comment}</GalleryModalImageFrameComment> : null}
-        {imageIndex < totalPhotos - 1 ? <GalleryModalImageFrameRightButton onClick={() => changeImage(images[imageIndex + 1].url)}>Right</GalleryModalImageFrameRightButton> : ''}
-      </GalleryModalImageFrame>
-    </GalleryModalTopContainer>
+        </ImageIndex>
+      </NavBar>
+      <ImageFrame>
+        {imageIndex > 0 ? <ImageFrameLeftButton onClick={() => changeImage(images[imageIndex - 1].url)}><ImageArrowButton src="../public/img/icons/left-arrow2.png" alt="img" /></ImageFrameLeftButton> : ''}
+        <ImageFramePhoto src={selectedImage} />
+        {images[imageIndex].comment ? <ImageFrameComment>{images[imageIndex].comment}</ImageFrameComment> : null}
+        {imageIndex < totalPhotos - 1 ? <ImageFrameRightButton onClick={() => changeImage(images[imageIndex + 1].url)}><ImageArrowButton src="../public/img/icons/right-arrow2.png" alt="img" /></ImageFrameRightButton> : ''}
+      </ImageFrame>
+    </TopContainer>
   );
 };
 
