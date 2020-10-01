@@ -106,7 +106,7 @@ const listing = {
             comment: null,
           },
           {
-            url: 'https://airbnb-bougie.s3-us-west-1.amazonaws.com/listing_images/listing10/5-1.png',
+            url: 'https://airbnb-bougie.s3-us-west-1.amazonaws.com/listing_images/listing10/5-2.png',
             comment: null,
           }],
       }

@@ -20,6 +20,7 @@ const listing7 = require('../sample_data/listing7');
 const listing8 = require('../sample_data/listing8');
 const listing9 = require('../sample_data/listing9');
 const listing10 = require('../sample_data/listing10');
+const listing11 = require('../sample_data/listing11');
 
 const sampleListings = [
     listing1,
@@ -32,6 +33,7 @@ const sampleListings = [
     listing8,
     listing9,
     listing10,
+    listing11,
 ];
 
 //SEEDING FUNCTION

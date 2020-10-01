@@ -28,8 +28,11 @@ import {
   ShareModal,
   ShareModalContainer,
   ShareModalCloseButtonContainer,
+  ShareModalCloseButton,
   ShareModalHeading,
   ShareModalItem,
+  ShareModalItemLink,
+  ShareModalItemIcon,
 } from '../../../styled/gallerySaveShareModal';
 
 class GallerySaveShareModal extends Component {
@@ -128,31 +131,66 @@ class GallerySaveShareModal extends Component {
         <ShareModal>
           <ShareModalContainer>
             <ShareModalCloseButtonContainer>
-              <img src="../../public/img/icons/close-button.png" />
+              <ShareModalCloseButton src="../../public/img/icons/close-button.png" onClick={() => setModalState(0)} />
             </ShareModalCloseButtonContainer>
             <ShareModalHeading>
               Share this place with friends and family
             </ShareModalHeading>
             <ShareModalItem>
-              Facebook
+              <ShareModalItemLink>
+                <ShareModalItemIcon src="../../public/img/icons/facebook.png" />
+                &nbsp;&nbsp;
+                Facebook
+              </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
-              Twitter
+              <ShareModalItemLink>
+                <ShareModalItemIcon src="../../public/img/icons/twitter.png" />
+                &nbsp;&nbsp;
+                Twitter
+              </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
-              Email
+              <ShareModalItemLink>
+                <ShareModalItemIcon src="../../public/img/icons/copy.png" />
+                &nbsp;&nbsp;
+                Copy Link
+              </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
-              SMS
+              <ShareModalItemLink>
+                <ShareModalItemIcon src="../../public/img/icons/email.png" />
+                &nbsp;&nbsp;
+                Email
+              </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
-              Messenger
+              <ShareModalItemLink>
+                <ShareModalItemIcon src="../../public/img/icons/sms-bubble-speech.png" />
+                &nbsp;&nbsp;
+                SMS
+              </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
-              WhatsApp
+              <ShareModalItemLink>
+                <ShareModalItemIcon src="../../public/img/icons/messenger.png" />
+                &nbsp;&nbsp;
+                Messenger
+              </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
-              Embed
+              <ShareModalItemLink>
+                <ShareModalItemIcon src="../../public/img/icons/whatsapp.png" />
+                &nbsp;&nbsp;
+                WhatsApp
+              </ShareModalItemLink>
+            </ShareModalItem>
+            <ShareModalItem>
+              <ShareModalItemLink>
+                <ShareModalItemIcon src="../../public/img/icons/embed.svg" />
+                &nbsp;&nbsp;
+                Embed
+              </ShareModalItemLink>
             </ShareModalItem>
           </ShareModalContainer>
         </ShareModal>

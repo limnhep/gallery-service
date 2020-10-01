@@ -37,8 +37,18 @@ class Gallery extends Component {
   constructor() {
     super();
     this.state = {
-      modalState: 3,
+      modalState: 0,
     };
+    this.handleModalState = this.handleModalState.bind(this);
+  }
+
+  handleModalState(mode) {
+    if (mode === 0) {
+      document.body.style.overflow = 'visible';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+    this.setState({ modalState: mode });
   }
 
   renderPhotoGalleryMain(listing) {
@@ -82,7 +92,7 @@ class Gallery extends Component {
             starIcon={starIcon}
             medalIcon={medalIcon}
             listing={listing}
-            saveModalToggle={(mode) => this.setState({ modalState: mode })}
+            saveModalToggle={(mode) => this.handleModalState(mode)}
           />
           <ContainerLarge>
             {this.renderPhotoGalleryMain(listing)}
@@ -125,7 +135,7 @@ class Gallery extends Component {
           </ListingBodyContainer>
           <GallerySaveShareModal
             modalState={this.state.modalState}
-            setModalState={(mode) => this.setState({ modalState: mode })}
+            setModalState={(mode) => this.handleModalState(mode)}
           />
         </TopContainer>
       </>

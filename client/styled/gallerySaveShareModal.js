@@ -73,11 +73,16 @@ height: 45px;
 width: 312px;
 `;
 
+export const ShareModalCloseButton = styled.img`
+&:hover {
+    cursor: pointer;
+}
+`;
+
 export const ShareModalHeading = styled.div`
 height: 84px;
 width: 312px;
-
-border-bottom: 1px solid rgb(210, 210, 210);
+border-bottom: 1px solid rgb(230, 230, 230);
 
 font-family: 'Airbnb Cereal App Medium';
 color: rgb(72, 72, 72);
@@ -89,14 +94,28 @@ font-weight: 800;
 export const ShareModalItem = styled.div`
 height: 75px;
 width: 312px;
-border-bottom: 1px solid rgb(210, 210, 210);
-align-items: center;
+border-bottom: 1px solid rgb(230, 230, 230);
 
+display: flex;
+align-items: center;
+`;
+
+export const ShareModalItemLink = styled.div`
 font-family: 'Airbnb Cereal App Medium';
 color: #008489;
 font-size: 16px;
 line-height: 1.375em;
 font-weight: 600px; 
+
+&:hover {
+    cursor: pointer;
+}
+`;
+
+export const ShareModalItemIcon = styled.img`
+vertical-align: middle;
+max-width: 16px;
+max-height: 16px;
 `;
 
 export const ModalNavBar = styled.div`
