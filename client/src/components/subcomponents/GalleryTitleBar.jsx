@@ -12,7 +12,9 @@ import {
   NavBarIcon,
 } from '../../../styled/gallery';
 
-const GalleryTitleBar = ({ starIcon, medalIcon, listing }) => (
+const GalleryTitleBar = ({
+  starIcon, medalIcon, listing, saveModalToggle,
+}) => (
   <TitleContainer>
     <TitleHeading>{listing.title}</TitleHeading>
     <TinyMargin />
@@ -38,12 +40,12 @@ const GalleryTitleBar = ({ starIcon, medalIcon, listing }) => (
 
       <TitleSecondaryLocation>{listing.location}</TitleSecondaryLocation>
 
-      <NavBarButtons>
+      <NavBarButtons onClick={() => saveModalToggle(1)}>
         <NavBarIcon src="../../public/img/icons/heart.png" />
               &nbsp;&nbsp;
         <NavBarButtonsFont>Save</NavBarButtonsFont>
       </NavBarButtons>
-      <NavBarButtons>
+      <NavBarButtons onClick={() => saveModalToggle(3)}>
         <NavBarIcon src="../../public/img/icons/upload.png" />
               &nbsp;&nbsp;
         <NavBarButtonsFont>Share</NavBarButtonsFont>

@@ -48,27 +48,6 @@ class App extends Component {
         </>
       );
     }
-    // const AppComponents = (
-    //   <div className="app">
-    //     <div>Navbar</div>
-    //     <div>Title</div>
-    //     <div>Room and Host - Brief Info</div>
-    //     <div>Room - Description</div>
-    //     <div>Room - Small Gallery</div>
-    //     <div>Room - Sleeping Arrangements</div>
-    //     <div>Calendar and Booking</div>
-    //     <div>AIR BNB PLUS INSPECTED</div>
-    //     <div>Room - Amenities</div>
-    //     <div>Reviews</div>
-    //     <div>Location</div>
-    //     <div>Owner's Background</div>
-    //     <div>Room - Things to Know</div>
-    //     <div>More places to stay</div>
-    //     <div>Explore other options</div>
-    //     <div>Footer - Links</div>
-    //     <div>Footer - Bar</div>
-    //   </div>
-    // );
 
     const renderFeatures = () => {
       const { features, listing, modal } = this.state;

@@ -8,6 +8,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
 import GalleryTitleBar from './subcomponents/GalleryTitleBar.jsx';
+import GallerySaveShareModal from './subcomponents/GallerySaveShareModal.jsx';
 
 import {
   TopContainer,
@@ -26,9 +27,6 @@ import {
   ListingRoomHeading,
   ListingRoomSecondary,
   ListingAvatarContainer,
-  ModalBackground,
-  SaveModal,
-  ShareModal,
 } from '../../styled/gallery';
 
 import {
@@ -36,6 +34,13 @@ import {
 } from '../../styled/global';
 
 class Gallery extends Component {
+  constructor() {
+    super();
+    this.state = {
+      modalState: 3,
+    };
+  }
+
   renderPhotoGalleryMain(listing) {
     const ModalToggle = this.props.toggle;
 
@@ -77,6 +82,7 @@ class Gallery extends Component {
             starIcon={starIcon}
             medalIcon={medalIcon}
             listing={listing}
+            saveModalToggle={(mode) => this.setState({ modalState: mode })}
           />
           <ContainerLarge>
             {this.renderPhotoGalleryMain(listing)}
@@ -117,10 +123,11 @@ class Gallery extends Component {
               </ListingRoomInfo>
             </ListingInfoContainer>
           </ListingBodyContainer>
+          <GallerySaveShareModal
+            modalState={this.state.modalState}
+            setModalState={(mode) => this.setState({ modalState: mode })}
+          />
         </TopContainer>
-        <ModalBackground>
-          <SaveModal />
-        </ModalBackground>
       </>
     );
   }

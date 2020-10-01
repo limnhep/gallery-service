@@ -2,12 +2,14 @@ import styled from 'styled-components';
 
 export const TopContainer = styled.div`
 display: block;
-width: 100vw;`;
+width: 100vw;
+`;
 
 export const TitleContainer = styled.div`
 height: 64px;
 max-width: 1120px;
-margin: 24px auto 20px auto;`;
+padding-top: 24px;
+margin: 0 auto 20px auto;`;
 
 export const TitleHeading = styled.span`
 font-family: 'Airbnb Cereal App Light';
@@ -53,7 +55,9 @@ export const ContainerLarge = styled.div`
 max-height: 750px;
 max-width: 1120px;
 
-margin: 0 auto;
+left: 50%;
+transform: translate(-50%);
+padding-top: 24px;
 
 width: 100vw;
 height: 100vw;
@@ -80,7 +84,7 @@ border-width: 1px;
 border-color: black;
 box-shadow: none;
 
-font-family: 'Airbnb Cereal App Light';
+font-family: 'Airbnb Cereal App Medium';
 color: rgb(34, 34, 34);
 background-color: #ffffff;
 font-size: 14px;
@@ -207,14 +211,18 @@ text-decoration: underline;
 `;
 
 export const NavBarButtons = styled.button`
+position: relative;
 background-color: white;
 border: none;
+z-index: 5;
 border-radius: 10px;
 float: right;
 margin-left: 4px;
 width: 76px;
 height: 34px;
 vertical-align: top;
+right: -10px;
+bottom: 6px;
 
 &:hover {
     cursor: pointer;
@@ -283,31 +291,4 @@ width: 56px;
 height: 56px;
 border-radius:50%;
 background-color:orange;
-`;
-
-export const ModalBackground = styled.div`
-position: relative;
-height: 100vh;
-width: 100vw;
-opacity: 0.5;
-`;
-
-export const SaveModal = styled.div`
-position: absolute;
-z-index: 10;
-height: 572px;
-width: 530px;
-left: 50%,
-top: 50%;
-background-color: lightgrey;
-`;
-
-export const ShareModal = styled.div`
-position: absolute;
-z-index: 10;
-height: 789px;
-width: 378px;
-left: 50%,
-top: 50%;
-background-color: lightgrey;
 `;
