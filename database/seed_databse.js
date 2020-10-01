@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Listings } = require('../database/listings');
+const { FavoritesList } = require('../database/favoritelist');
 
 //MONGOOSE CONNECTION
 mongoose.connect('mongodb://localhost:27017/airbnb_plus', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
@@ -36,6 +37,46 @@ const sampleListings = [
     listing11,
 ];
 
+const sampleSavedList = [
+    {
+        userID: 1,
+        savedList: [
+            {   
+                index: 0,
+                time: 'Any time',
+                name: 'Spring Getaway',
+                stay: 'Nothing saved yet',
+                listingID: null,
+                url: '../../public/img/icons/emptylisting.png',
+            },
+            {
+                index: 1,
+                time: 'Any time',
+                name: 'Dream Homes',
+                stay: 'Nothing saved yet',
+                listingID: null,
+                url: '../../public/img/icons/emptylisting.png',
+            },
+            {
+                index: 2,
+                time: 'Any time',
+                name: 'Mobile Starred Listings',
+                stay: 'Nothing saved yet',
+                listingID: null,
+                url: '../../public/img/icons/emptylisting.png',
+            },
+            {
+                index: 3,
+                time: 'Any time',
+                name: 'Vacation Places',
+                stay: 'Nothing saved yet',
+                listingID: null,
+                url: '../../public/img/icons/emptylisting.png',
+            },
+        ]
+    }
+]
+
 //SEEDING FUNCTION
 async function seedAll(){
     try {
@@ -43,10 +84,14 @@ async function seedAll(){
             const newListing = new Listings(sampleListings[i]);
             await newListing.save();
         }
+        for(let i=0; i<sampleSavedList.length; i++){
+            const newListing = new FavoritesList(sampleSavedList[i]);
+            await newListing.save();
+        }
     } catch (err) {
         throw err;
     } finally {
-        console.log(`Successfully Seeded the Database with ${sampleListings.length} listings.`);
+        console.log(`Successfully Seeded the Database with ${sampleListings.length} listings and ${sampleSavedList[0].savedList.length} saved favorites.`);
         return;
     }
 };

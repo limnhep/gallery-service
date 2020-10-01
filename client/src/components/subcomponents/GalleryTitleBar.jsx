@@ -46,7 +46,7 @@ const GalleryTitleBar = ({
         <NavBarButtonsFont>Save</NavBarButtonsFont>
       </NavBarButtons>
       <NavBarButtons onClick={() => saveModalToggle(3)}>
-        <NavBarIcon src="../../public/img/icons/upload.png" />
+        <NavBarIcon src="../../public/img/icons/upload.svg" />
               &nbsp;&nbsp;
         <NavBarButtonsFont>Share</NavBarButtonsFont>
       </NavBarButtons>

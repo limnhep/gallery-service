@@ -80,9 +80,6 @@ class GallerySaveShareModal extends Component {
               {renderModalStateList}
               {renderModalStateList}
               {renderModalStateList}
-              {renderModalStateList}
-              {renderModalStateList}
-              {renderModalStateList}
             </SaveModalBodyContainer>
           </ModalBody>
           <ModalFooter>

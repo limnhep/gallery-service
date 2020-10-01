@@ -241,6 +241,8 @@ bottom: 6px;
 export const NavBarIcon = styled.img`
 vertical-align: bottom;
 padding-bottom: 2px;
+width: 16px;
+height: 16px;
 `;
 
 export const ListingBodyContainer = styled.div`
