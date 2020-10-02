@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable max-len */
 import React, { Component } from 'react';
 import {
   ModalBackground,
@@ -43,47 +45,65 @@ class GallerySaveShareModal extends Component {
     };
   }
 
+  onClickAddCategory() {
+    const { createListName } = this.state;
+    const { handleAddCategory, handleModalState } = this.props;
+    handleAddCategory(createListName);
+    handleModalState(1);
+  }
+
   render() {
-    const { modalState, setModalState } = this.props;
+    const {
+      favorites, handleToggleFavorite, modalState, handleModalState,
+    } = this.props;
+    const defaultURL = '../../public/img/icons/emptylisting.png';
     const { createListName } = this.state;
 
+    const renderStays = (length) => {
+      if (length > 1) {
+        return `${length} Stays`;
+      } if (length === 1) {
+        return '1 Stay';
+      }
+      return 'Nothing saved yet';
+    };
+
     // Time, Name, Stays
-    const renderModalStateList = (
-      <SaveModalBodyButton>
+    const renderModalStateList = favorites.map((list, index) => (
+      <SaveModalBodyButton key={Math.random()} onClick={() => handleToggleFavorite('add', index)}>
         <SaveModalBodyButtonDiv>
           <SaveModalBodyButtonDivImgContainer>
-            <SaveModalBodyButtonDivImg src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/listing_images/listing1/feat-1.png" />
+            <SaveModalBodyButtonDivImg src={list.listingID.length ? list.listingID[list.listingID.length - 1][1] : defaultURL} />
           </SaveModalBodyButtonDivImgContainer>
           <SaveModalBodyButtonDivTextContainer>
-            <SaveModalBodyButtonDivTextContainerTime>Any time</SaveModalBodyButtonDivTextContainerTime>
-            <SaveModalBodyButtonDivTextContainerTitle>Dream Homes</SaveModalBodyButtonDivTextContainerTitle>
-            <SaveModalBodyButtonDivTextContainerStays>1 stay</SaveModalBodyButtonDivTextContainerStays>
+            <SaveModalBodyButtonDivTextContainerTime>{list.time}</SaveModalBodyButtonDivTextContainerTime>
+            <SaveModalBodyButtonDivTextContainerTitle>{list.name}</SaveModalBodyButtonDivTextContainerTitle>
+            <SaveModalBodyButtonDivTextContainerStays>
+              {renderStays(list.listingID.length)}
+            </SaveModalBodyButtonDivTextContainerStays>
           </SaveModalBodyButtonDivTextContainer>
         </SaveModalBodyButtonDiv>
       </SaveModalBodyButton>
-    );
+    ));
 
     const ModalStateOneSaveList = (
       <>
-        <ModalBackground onClick={() => setModalState(0)} />
+        <ModalBackground onClick={() => handleModalState(0)} />
         <SaveModal>
           <ModalNavBar>
             <ModalNavBarHeading>Save to a list</ModalNavBarHeading>
             <ModalNavBarBackButton
               src="../../public/img/icons/close-button.png"
-              onClick={() => setModalState(0)}
+              onClick={() => handleModalState(0)}
             />
           </ModalNavBar>
           <ModalBody>
             <SaveModalBodyContainer>
               {renderModalStateList}
-              {renderModalStateList}
-              {renderModalStateList}
-              {renderModalStateList}
             </SaveModalBodyContainer>
           </ModalBody>
           <ModalFooter>
-            <SaveModalFooterButton onClick={() => setModalState(2)}>Create a list</SaveModalFooterButton>
+            <SaveModalFooterButton onClick={() => handleModalState(2)}>Create a list</SaveModalFooterButton>
           </ModalFooter>
         </SaveModal>
       </>
@@ -91,13 +111,13 @@ class GallerySaveShareModal extends Component {
 
     const ModalStateTwoCreateList = (
       <>
-        <ModalBackground onClick={() => setModalState(1)} />
+        <ModalBackground onClick={() => handleModalState(1)} />
         <CreateListModal>
           <ModalNavBar>
             <ModalNavBarHeading>Name this list</ModalNavBarHeading>
             <ModalNavBarBackButton
               src="../../public/img/icons/close-button.png"
-              onClick={() => setModalState(1)}
+              onClick={() => handleModalState(1)}
             />
           </ModalNavBar>
           <ModalBody>
@@ -109,6 +129,8 @@ class GallerySaveShareModal extends Component {
                   onFocus={(e) => { e.target.placeholder = ''; }}
                   onBlur={(e) => { e.target.value === '' ? e.target.placeholder = 'Name' : null; }}
                   onChange={(e) => this.setState({ createListName: e.target.value })}
+                  placeholder="Name"
+                  maxlength="50"
                   required
                 />
               </CreateListModalInputContainerForm>
@@ -116,7 +138,7 @@ class GallerySaveShareModal extends Component {
             </CreateListModalInputContainer>
           </ModalBody>
           <ModalFooter>
-            {createListName.length ? <CreateListModalCreateButtonBlack>Create</CreateListModalCreateButtonBlack> : <CreateListModalCreateButton>Create</CreateListModalCreateButton>}
+            {createListName.length ? <CreateListModalCreateButtonBlack onClick={() => this.onClickAddCategory()}>Create</CreateListModalCreateButtonBlack> : <CreateListModalCreateButton>Create</CreateListModalCreateButton>}
           </ModalFooter>
         </CreateListModal>
       </>
@@ -124,11 +146,11 @@ class GallerySaveShareModal extends Component {
 
     const ModalStateThreeShare = (
       <>
-        <ModalBackground onClick={() => setModalState(0)} />
+        <ModalBackground onClick={() => handleModalState(0)} />
         <ShareModal>
           <ShareModalContainer>
             <ShareModalCloseButtonContainer>
-              <ShareModalCloseButton src="../../public/img/icons/close-button.png" onClick={() => setModalState(0)} />
+              <ShareModalCloseButton src="../../public/img/icons/close-button.png" onClick={() => handleModalState(0)} />
             </ShareModalCloseButtonContainer>
             <ShareModalHeading>
               Share this place with friends and family

@@ -12,15 +12,10 @@ height: 24px;
 padding: 40px 0 20px 0;
 
 display: inline-block;
-text-align: center;
 `;
 
 export const BackButton = styled.button`
-position: fixed;
-left: 40px;
-top: 40px;
-display: inline-block;
-vertical-align: middle;
+align-self: left;
 text-align: center;
 
 width: 90px;
@@ -48,13 +43,46 @@ font-size: 14px;
 }
 `;
 
+export const IconContainer = styled.div`
+float: right;
+`;
+
+export const ShareIcon = styled.img`
+height: 16px;
+width: 16px;
+vertical-align: middle;
+
+&:hover {
+    cursor: pointer;
+}
+
+&:focus {
+    outline:0;
+}
+`;
+
+export const HeartIcon = styled.img`
+height: 16px;
+width: 16px;
+margin-left: 15px;
+
+&:hover {
+    cursor: pointer;
+}
+
+&:focus {
+    outline:0;
+}
+`;
+
 export const ImageIndex = styled.div`
 font-family: 'Airbnb Cereal App Light';
 color: rgb(34, 34, 34);
 font-size: 16px;
 line-height: 20px;
 font-weight: 400px;
-vertical-align: middle;
+
+margin: 0 auto;
 `;
 
 export const ImageFrame = styled.div`

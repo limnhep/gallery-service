@@ -52,7 +52,7 @@ text-decoration: underline;
 `;
 
 export const ContainerLarge = styled.div`
-max-height: 750px;
+max-height: 771px;
 max-width: 1120px;
 
 left: 50%;
@@ -251,7 +251,6 @@ margin: 0 auto;
 display: grid;
 grid-template-columns: 653px 467px;
 height: 1000px;
-background-color: lightgrey;
 `;
 
 export const ListingInfoContainer = styled.div`

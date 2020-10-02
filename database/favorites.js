@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const favoriteslist = new Schema({
+const favorites = new Schema({
     userID: Number,
     savedList: [],
 })
 
-const FavoritesList = mongoose.model('FavoritesList' , favoriteslist); 
+const Favorites = mongoose.model('Favorites' , favorites); 
 
 module.exports = {
-    FavoritesList,
+    Favorites,
 }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Listings } = require('../database/listings');
-const { FavoritesList } = require('../database/favoritelist');
+const { Favorites } = require('../database/favorites');
 
 //MONGOOSE CONNECTION
 mongoose.connect('mongodb://localhost:27017/airbnb_plus', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
@@ -42,36 +42,28 @@ const sampleSavedList = [
         userID: 1,
         savedList: [
             {   
-                index: 0,
                 time: 'Any time',
                 name: 'Spring Getaway',
                 stay: 'Nothing saved yet',
-                listingID: null,
-                url: '../../public/img/icons/emptylisting.png',
+                listingID: [],
             },
             {
-                index: 1,
                 time: 'Any time',
                 name: 'Dream Homes',
                 stay: 'Nothing saved yet',
-                listingID: null,
-                url: '../../public/img/icons/emptylisting.png',
+                listingID: [],
             },
             {
-                index: 2,
                 time: 'Any time',
                 name: 'Mobile Starred Listings',
                 stay: 'Nothing saved yet',
-                listingID: null,
-                url: '../../public/img/icons/emptylisting.png',
+                listingID: [],
             },
             {
-                index: 3,
                 time: 'Any time',
                 name: 'Vacation Places',
                 stay: 'Nothing saved yet',
-                listingID: null,
-                url: '../../public/img/icons/emptylisting.png',
+                listingID: [],
             },
         ]
     }
@@ -85,7 +77,7 @@ async function seedAll(){
             await newListing.save();
         }
         for(let i=0; i<sampleSavedList.length; i++){
-            const newListing = new FavoritesList(sampleSavedList[i]);
+            const newListing = new Favorites(sampleSavedList[i]);
             await newListing.save();
         }
     } catch (err) {

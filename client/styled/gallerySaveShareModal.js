@@ -209,7 +209,7 @@ margin-right: 16px;
 `;
 
 export const SaveModalBodyButtonDivImg = styled.img`
-object-fit: fill;
+object-fit: cover;
 height: 100%;
 width: 100%;
 `;

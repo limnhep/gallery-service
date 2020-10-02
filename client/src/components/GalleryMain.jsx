@@ -27,30 +27,13 @@ import {
   ListingRoomHeading,
   ListingRoomSecondary,
   ListingAvatarContainer,
-} from '../../styled/gallery';
+} from '../../styled/galleryMain';
 
 import {
   CssReset,
 } from '../../styled/global';
 
 class Gallery extends Component {
-  constructor() {
-    super();
-    this.state = {
-      modalState: 0,
-    };
-    this.handleModalState = this.handleModalState.bind(this);
-  }
-
-  handleModalState(mode) {
-    if (mode === 0) {
-      document.body.style.overflow = 'visible';
-    } else {
-      document.body.style.overflow = 'hidden';
-    }
-    this.setState({ modalState: mode });
-  }
-
   renderPhotoGalleryMain(listing) {
     const ModalToggle = this.props.toggle;
 
@@ -78,10 +61,11 @@ class Gallery extends Component {
   }
 
   render() {
-    const { listing } = this.props;
+    const {
+      favorites, handleModalState, handleAddCategory, handleToggleFavorite, listing, modalState, savedListing,
+    } = this.props;
     const ModalToggle = this.props.toggle;
-    const starIcon = (<img className="gallery-icon" src="../../public/img/icons/star.png" />);
-    const medalIcon = (<img className="gallery-icon" src="../../public/img/icons/medal.png" />);
+
     const dotIcon = (<img className="gallery-dot-icon" src="../../public/img/icons/dotdotdot.png" />);
 
     return (
@@ -89,10 +73,10 @@ class Gallery extends Component {
         <CssReset />
         <TopContainer>
           <GalleryTitleBar
-            starIcon={starIcon}
-            medalIcon={medalIcon}
             listing={listing}
-            saveModalToggle={(mode) => this.handleModalState(mode)}
+            savedListing={savedListing}
+            handleModalState={handleModalState}
+            handleToggleFavorite={handleToggleFavorite}
           />
           <ContainerLarge>
             {this.renderPhotoGalleryMain(listing)}
@@ -134,8 +118,11 @@ class Gallery extends Component {
             </ListingInfoContainer>
           </ListingBodyContainer>
           <GallerySaveShareModal
-            modalState={this.state.modalState}
-            setModalState={(mode) => this.handleModalState(mode)}
+            modalState={modalState}
+            handleModalState={handleModalState}
+            favorites={favorites}
+            handleAddCategory={handleAddCategory}
+            handleToggleFavorite={handleToggleFavorite}
           />
         </TopContainer>
       </>
