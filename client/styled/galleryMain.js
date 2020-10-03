@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TopContainer = styled.div`
+export const AppTopContainer = styled.div`
 display: block;
 width: 100vw;
 `;

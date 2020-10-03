@@ -19,7 +19,7 @@ import {
 } from '../../styled/galleryModal';
 
 const GalleryModal = ({
-  images, changeImage, closeModal, favorites, handleModalState, handleAddCategory, handleToggleFavorite, savedListing, selectedImage,
+  images, changeImage, closeModal, favorites, handleAddCategory, handleToggleFavorite, savedListing, selectedImage,
 }) => {
   const totalPhotos = images.length;
   const [modalState, setModalState] = useState(0);

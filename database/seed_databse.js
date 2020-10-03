@@ -22,6 +22,7 @@ const listing8 = require('../sample_data/listing8');
 const listing9 = require('../sample_data/listing9');
 const listing10 = require('../sample_data/listing10');
 const listing11 = require('../sample_data/listing11');
+const listing12 = require('../sample_data/listing12');
 
 const sampleListings = [
     listing1,
@@ -35,6 +36,7 @@ const sampleListings = [
     listing9,
     listing10,
     listing11,
+    listing12,
 ];
 
 const sampleSavedList = [

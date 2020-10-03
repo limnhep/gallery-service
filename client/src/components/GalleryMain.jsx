@@ -11,7 +11,7 @@ import GalleryTitleBar from './subcomponents/GalleryTitleBar.jsx';
 import GallerySaveShareModal from './subcomponents/GallerySaveShareModal.jsx';
 
 import {
-  TopContainer,
+  AppTopContainer,
   ContainerLarge,
   ShowMoreButton,
   ContainerLargeMain,
@@ -71,7 +71,7 @@ class Gallery extends Component {
     return (
       <>
         <CssReset />
-        <TopContainer>
+        <AppTopContainer>
           <GalleryTitleBar
             listing={listing}
             savedListing={savedListing}
@@ -124,7 +124,7 @@ class Gallery extends Component {
             handleAddCategory={handleAddCategory}
             handleToggleFavorite={handleToggleFavorite}
           />
-        </TopContainer>
+        </AppTopContainer>
       </>
     );
   }

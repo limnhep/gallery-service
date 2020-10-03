@@ -20,8 +20,12 @@ module.exports = {
         },
       },
       {
-        test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
+        test: /\.(eot|woff|woff2|ttf)([\?]?.*)$/,
         loader: 'file-loader',
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader',
       },
       {
         test: /\.js$/,

@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import GalleryMain from './GalleryMain.jsx';
 import GalleryFeatures from './GalleryFeatures.jsx';
 import GalleryModal from './GalleryModal.jsx';
+import GalleryNavBar from './GalleryNavBar.jsx';
 import requestListing from '../api/Listings';
 import { requestFavorites, addFavorites, addFavoritesCategory } from '../api/Favorites';
 
@@ -45,7 +46,7 @@ class App extends Component {
         imagesArray.push(...room.images);
       });
       this.setState({
-        imagesArray, listing, favorites: favorites.savedList, done: true,
+        imagesArray, listing, favorites: favorites.savedList,
       }, () => {
         this.checkFavorite();
       });
@@ -156,22 +157,25 @@ class App extends Component {
       );
     }
 
-    const renderFeatures = () => {
+    const renderCurrentPage = () => {
       const {
         favorites, features, listing, modal, modalState, savedListing,
       } = this.state;
       if (!features && !modal) {
         return (
-          <GalleryMain
-            listing={listing}
-            favorites={favorites}
-            handleModalState={this.handleModalState}
-            handleAddCategory={this.handleAddCategory}
-            handleToggleFavorite={this.handleToggleFavorite}
-            modalState={modalState}
-            savedListing={savedListing}
-            toggle={() => this.setState({ features: !features })}
-          />
+          <>
+            <GalleryNavBar />
+            <GalleryMain
+              listing={listing}
+              favorites={favorites}
+              handleModalState={this.handleModalState}
+              handleAddCategory={this.handleAddCategory}
+              handleToggleFavorite={this.handleToggleFavorite}
+              modalState={modalState}
+              savedListing={savedListing}
+              toggle={() => this.setState({ features: !features })}
+            />
+          </>
         );
       } if (features && !modal) {
         return (
@@ -213,7 +217,7 @@ class App extends Component {
         <Helmet>
           <title>{this.state.listing.title}</title>
         </Helmet>
-        {renderFeatures()}
+        {renderCurrentPage()}
         {renderModal()}
       </>
     );
