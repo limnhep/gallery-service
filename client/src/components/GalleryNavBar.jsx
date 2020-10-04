@@ -12,10 +12,14 @@ import {
   NavBarSearchCategoriesItem,
   NavBarSearchCategoriesItemHeading,
   NavBarSearchExpandedContainer,
-  NavBarSearchExpandedCalendar,
+  NavBarSearchExpandedCalendarFrom,
+  NavBarSearchExpandedCalendarTo,
   NavBarSearchExpandedCalendarModal,
   NavBarSearchExpandedLocation,
   NavBarSearchExpandedLocationModal,
+  LocationModalItemDiv,
+  LocationModalItemImg,
+  LocationModalItemText,
   NavBarSearchExpandedGuests,
   NavBarSearchExpandedGuestModal,
   SearchHeading,
@@ -53,7 +57,8 @@ class GalleryNavBar extends Component {
     window.addEventListener('scroll', () => this.handleScrollCloseModal());
   }
 
-  handleSearchBarState(state) {
+  handleSearchBarState(state, e) {
+    e.stopPropagation();
     const { searchBarState } = this.state;
     if (state === searchBarState && state !== 1) {
       this.setState({ searchBarState: 5, secondaryModals: 0 });
@@ -71,7 +76,8 @@ class GalleryNavBar extends Component {
     }
   }
 
-  handlePopUpState(state) {
+  handlePopUpState(state, e) {
+    e.stopPropagation();
     const { searchBarState, secondaryModals } = this.state;
     if (state === secondaryModals && searchBarState !== 0) {
       this.setState({ searchBarState: 5, secondaryModals: 0 });
@@ -85,61 +91,90 @@ class GalleryNavBar extends Component {
   }
 
   handleCloseState(event) {
-    const { secondaryModals } = this.state;
-    if (event.target.className !== 'galleryNavBar__ProfileIconButton-mtzhcf-35 eFvWC' && secondaryModals > 0) {
-      this.setState({ secondaryModals: 0 });
+    const { searchBarState, secondaryModals } = this.state;
+    const { className } = event.target;
+    if (!className.includes('ProfileIconButton') && !className.includes('WorldButtonContainer') && secondaryModals > 0) {
+      this.setState({ secondaryModals: 0});
+    } else if (className.includes('WorldButtonContainer') && secondaryModals === 2) {
+      this.setState({ secondaryModals: 1 });
+    } else if (className.includes('ProfileIconButton') && secondaryModals === 1) {
+      this.setState({ secondaryModals: 2 });
     }
   }
 
   render() {
-    console.log(this.state);
     const { searchBarState, secondaryModals } = this.state;
-    const ExpandedSearchBar = (
+
+    const RenderLocationModel = (
+      <NavBarSearchExpandedLocationModal>
+        <LocationModalItemDiv>
+          <LocationModalItemImg src="../../public/img/icons/map2.png" />
+          <LocationModalItemText>Nearby</LocationModalItemText>
+        </LocationModalItemDiv>
+      </NavBarSearchExpandedLocationModal>
+    );
+
+    const RenderExpandedSearchBar = (
       <>
         <DivPadding>
-          <NavBarSearchExpandedContainer state={searchBarState}>
-            <NavBarSearchExpandedLocation state={searchBarState} onClick={() => this.handleSearchBarState(1)}>
+          <NavBarSearchExpandedContainer state={searchBarState} modal={secondaryModals}>
+            <NavBarSearchExpandedLocation
+              state={searchBarState}
+              modal={secondaryModals}
+              onClick={(e) => this.handleSearchBarState(1, e)}
+            >
               <SearchInputContainer>
                 <SearchHeading>Location</SearchHeading>
                 <SearchInput
                   placeholder="Where are you going?"
+                  state={searchBarState}
+                  modal={secondaryModals}
                 />
               </SearchInputContainer>
             </NavBarSearchExpandedLocation>
-            <NavBarSearchExpandedCalendar onClick={() => this.handleSearchBarState(2)}>
+            <NavBarSearchExpandedCalendarFrom
+              state={searchBarState}
+              onClick={(e) => this.handleSearchBarState(2, e)}
+            >
               <SearchHeading>Check in</SearchHeading>
               <SearchSecondary>Add dates</SearchSecondary>
-            </NavBarSearchExpandedCalendar>
-            <NavBarSearchExpandedCalendar onClick={() => this.handleSearchBarState(3)}>
+            </NavBarSearchExpandedCalendarFrom>
+            <NavBarSearchExpandedCalendarTo
+              state={searchBarState}
+              onClick={(e) => this.handleSearchBarState(3, e)}
+            >
               <SearchHeading>Check out</SearchHeading>
               <SearchSecondary>Add dates</SearchSecondary>
-            </NavBarSearchExpandedCalendar>
-            <ExpandedSearchGuestContainer onClick={() => this.handleSearchBarState(4)}>
+            </NavBarSearchExpandedCalendarTo>
+            <ExpandedSearchGuestContainer
+              state={searchBarState}
+              onClick={(e) => this.handleSearchBarState(4, e)}
+            >
               <NavBarSearchExpandedGuests>
                 <SearchHeading>Guests</SearchHeading>
                 <SearchSecondary>Add guests</SearchSecondary>
               </NavBarSearchExpandedGuests>
               <LargeSearchIconContainer />
             </ExpandedSearchGuestContainer>
-            {searchBarState === 1 ? <NavBarSearchExpandedLocationModal /> : null}
-            {searchBarState === 2 || searchBarState === 3 ? <NavBarSearchExpandedCalendarModal /> : null}
-            {searchBarState === 4 ? <NavBarSearchExpandedGuestModal /> : null}
+            {searchBarState === 1 && RenderLocationModel}
+            {(searchBarState === 2 || searchBarState === 3) && <NavBarSearchExpandedCalendarModal />}
+            {searchBarState === 4 && <NavBarSearchExpandedGuestModal />}
           </NavBarSearchExpandedContainer>
         </DivPadding>
-        <NavBarModal onClick={() => this.handleSearchBarState(0)} />
+        <NavBarModal onClick={(e) => this.handleSearchBarState(0, e)} />
       </>
     );
 
     return (
       <>
-        <TopContainer onClick={(event) => this.handleCloseState(event)}>
+        <TopContainer onClick={(e) => this.handleCloseState(e)}>
           <NavBarContainer>
             <AirbnbIconContainer>
               <AirbnbIcon src="../../public/img/icons/plus.png" />
             </AirbnbIconContainer>
             {searchBarState === 0
               ? (
-                <NavBarSearch onClick={() => this.handleSearchBarState(1)}>
+                <NavBarSearch onClick={(e) => this.handleSearchBarState(1, e)}>
                   <NavBarSearchText>Start your search</NavBarSearchText>
                   <NavBarSearchIconContainer>
                     <NavBarSearchIcon src="../../public/img/icons/search-tool.png" />
@@ -161,23 +196,23 @@ class GalleryNavBar extends Component {
                 </NavBarSearchCategories>
               )}
             <ButtonsContainer>
-              <ProfileIconButton onClick={() => this.handlePopUpState(2)}>
+              <ProfileIconButton onClick={(e) => this.handlePopUpState(2, e)}>
                 <MenuIcon src="../../public/img/icons/menu.png" />
                 <ProfileIconProfileImg src="../../public/img/icons/profile.png" />
               </ProfileIconButton>
-              <WorldButtonContainer onClick={() => this.handlePopUpState(1)}>
+              <WorldButtonContainer onClick={(e) => this.handlePopUpState(1, e)}>
                 <WorldButtonIcon src="../../public/img/icons/world.png" />
                 <WorldButtonIconDown src="../../public/img/icons/down-arrow.png" />
               </WorldButtonContainer>
               <BecomeAHostButton>
                 Become a host
               </BecomeAHostButton>
-              {secondaryModals === 2 ? <ProfileModal /> : null}
-              {secondaryModals === 1 ? <WorldModal /> : null}
+              {secondaryModals === 2 && <ProfileModal />}
+              {secondaryModals === 1 && <WorldModal />}
             </ButtonsContainer>
           </NavBarContainer>
-          {searchBarState === 0 ? null : ExpandedSearchBar}
-          {secondaryModals > 0 ? <DivPaddingToExitModal onClick={() => this.handleSearchBarState(0)} /> : null}
+          {searchBarState !== 0 && RenderExpandedSearchBar}
+          {secondaryModals > 0 && <DivPaddingToExitModal onClick={() => this.setState({ searchBarState: 0, secondaryModals: 0})} />}
         </TopContainer>
       </>
     );

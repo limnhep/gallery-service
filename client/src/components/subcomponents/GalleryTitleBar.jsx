@@ -10,11 +10,14 @@ import {
   NavBarButtons,
   NavBarButtonsFont,
   NavBarIcon,
+  GalleryIcon
 } from '../../../styled/galleryMain';
 
-const GalleryTitleBar = ({ handleToggleFavorite, listing, savedListing, handleModalState }) => {
-  const starIcon = (<img className="gallery-icon" src="../../public/img/icons/star.png" />);
-  const medalIcon = (<img className="gallery-icon" src="../../public/img/icons/medal.png" />);
+const GalleryTitleBar = ({
+  handleToggleFavorite, listing, savedListing, handleModalState,
+}) => {
+  const starIcon = (<GalleryIcon src="../../public/img/icons/star.png" />);
+  const medalIcon = (<GalleryIcon src="../../public/img/icons/medal.png" />);
 
   return (
     <TitleContainer>
@@ -31,15 +34,13 @@ const GalleryTitleBar = ({ handleToggleFavorite, listing, savedListing, handleMo
           )&nbsp;&nbsp;·&nbsp;
         </TitleSecondarySilver>
         {listing.superhost
-          ? (
+          && (
             <TitleSecondarySilver>
               {medalIcon}
               {' '}
               Superhost&nbsp;&nbsp;·&nbsp;&nbsp;
             </TitleSecondarySilver>
-          )
-          : null}
-
+          )}
         <TitleSecondaryLocation>{listing.location}</TitleSecondaryLocation>
 
         { savedListing !== false

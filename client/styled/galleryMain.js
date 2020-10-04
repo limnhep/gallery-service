@@ -293,3 +293,9 @@ height: 56px;
 border-radius:50%;
 background-color:orange;
 `;
+
+export const GalleryIcon = styled.img`
+height:16px;
+vertical-align: middle;
+padding-bottom: 2px;
+`;

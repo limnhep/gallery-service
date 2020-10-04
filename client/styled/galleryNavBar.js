@@ -10,7 +10,7 @@ export const DivPadding = styled.div`
 height: 112px;
 width: 100vw;
 position: absolute;
-z-index: 15;
+z-index: 18;
 background-color: white;
 border-bottom: 1px solid rgb(245, 245, 245);
 `;
@@ -21,7 +21,7 @@ width: 100vw;
 
 position: absolute;
 z-index: 15;
-opacity: 0;
+opacity: 100%;
 `;
 
 export const NavBarModal = styled.div`
@@ -71,10 +71,14 @@ font-size: 14px;
 line-height: 18px;
 font-weight: 600px; 
 border: none;
-
+background-color: ${({ state }) => (state === 1 || state === 5 ? 'white' : '#F6F6F6')};
 padding: 0 0;
 
 flex-basis: 100%;
+
+&:hover {
+    background-color: ${({ state }) => (state === 1 ? 'white' : '#F6F6F6')}
+}
 
 &:focus {
     outline: none;
@@ -100,9 +104,18 @@ flex-basis: 100%;
 `;
 
 export const NavBarSearchExpandedContainer = styled.div`
+--white-bg: white;
+--grey-bg: #F6F6F6;
 height: 66px;
 width: 850px;
 background-color: ${({ state }) => (state < 5 ? '#F6F6F6' : 'white')};
+
+${({ modal }) => {
+    if (modal > 0) {
+      return 'background-color: white;';
+    }
+    return '';
+  }}
 
 position: relative;
 
@@ -114,22 +127,15 @@ border-bottom-left-radius: 50px 50px;
 border-top-right-radius: 50px 50px;
 border-bottom-right-radius: 50px 50px;
 
-border: 1px solid lightgrey;
+border: 1px solid rgb(235,235,235);
 
 display: flex;
 justify-content: space-between;
 `;
 
-export const ActiveClass = styled.div`
-border-top-right-radius: 50px 50px;
-border-bottom-right-radius: 50px 50px;
-box-shadow: 0 1px 15px rgb(240, 240, 240);
-background-color: white; 
-`;
-
 export const NavBarSearchExpandedLocation = styled.div`
 height: 66px;
-width: 246px;
+width: 245px;
 
 display: flex;
 align-items: center;
@@ -140,11 +146,21 @@ padding-left 32px;
 border-top-left-radius: 50px 50px;
 border-bottom-left-radius: 50px 50px;
 
+box-shadow: 0 1px 15px rgb(240, 240, 240);
+
 ${({ state }) => {
     if (state === 1) {
-      return 'background-color: white; box-shadow: 0 1px 15px rgb(240, 240, 240);border-top-right-radius: 50px 50px;border-bottom-right-radius: 50px 50px;';
+      return 'box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-right-radius: 50px 50px;border-bottom-right-radius: 50px 50px;}';
     }
-}}
+    return 'box-shadow: 0 0 0 white;';
+  }}
+
+${({ state, modal }) => {
+    if (modal > 0 || state === 5) {
+      return 'background-color: none; box-shadow: 0 0 0 white;';
+    }
+    return '';
+  }}
 
 &:hover {
     cursor: pointer;
@@ -152,12 +168,19 @@ ${({ state }) => {
     border-bottom-right-radius: 50px 50px;
     border-top-left-radius: 50px 50px;
     border-bottom-left-radius: 50px 50px;
-    background-color: lightgrey;
+    ${({ state }) => state !== 1 && 'background-color: rgb(235,235,235)'};
+
+
+    ${({ state }) => state === 1 && 'background-color: white'}
+
+
+    ${SearchInput} {
+        background-color: ${({ state }) => (state === 1 ? 'white' : 'rgb(235,235,235)')};
+    }
 }
 `;
 
 export const NavBarSearchExpandedLocationModal = styled.div`
-height: 342px;
 width: 500px;
 position: absolute;
 z-index: 15px;
@@ -165,14 +188,61 @@ top: 76px;
 left: 0;
 background-color: white;
 
-border-top-right-radius: 50px 50px;
-border-bottom-right-radius: 50px 50px;
-border-top-left-radius: 50px 50px;
-border-bottom-left-radius: 50px 50px;
-border: 1px solid lightgrey;
+padding: 25px 0 25px 0;
+
+border-top-right-radius: 32px 32px;
+border-bottom-right-radius: 32px 32px;
+border-top-left-radius: 32px 32px;
+border-bottom-left-radius: 35px 32px;
+border: 1px solid rgb(235,235,235);
+
+display: block;
 `;
 
-export const NavBarSearchExpandedCalendar = styled.div`
+export const LocationModalItemImg = styled.img`
+height: 48px;
+width: 48px;
+
+border-top-right-radius: 8px 8px;
+border-bottom-right-radius: 8px 8px;
+border-top-left-radius: 8px 8px;
+border-bottom-left-radius: 8px 8px;
+
+margin-left: 8px;
+
+flex-basis: 48px;
+`;
+
+export const LocationModalItemText = styled.div`
+margin-left: 12px;
+
+font-family: 'Airbnb Cereal App Light';
+color: rgb(34, 34, 34);
+background-color: #ffffff;
+font-size: 16px;
+line-height: 20px;
+font-weight: 400px; 
+`;
+
+export const LocationModalItemDiv = styled.div`
+height: 64px;
+
+padding: 0px 25px 0 25px;
+
+display: flex;
+align-items: center;
+
+&:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+
+    ${LocationModalItemText} {
+        background-color: #F6F6F6;
+    }
+}
+`;
+
+export const NavBarSearchExpandedCalendarFrom = styled.div`
 height: 66px;
 width: 166px;
 
@@ -182,13 +252,65 @@ flex-wrap: wrap;
 align-content: center;
 padding-left: 24px;
 
+${({ state }) => {
+    if (state === 2) {
+      return 'box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-left-radius: 50px 50px; border-bottom-left-radius: 50px 50px; border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px;}';
+    }
+    return '';
+  }}
+
+${({ modal }) => {
+    if (modal > 0) {
+      return 'background-color: none; box-shadow: 0 0 0 white;';
+    }
+    return '';
+  }}
+
 &:hover {
     cursor: pointer;
     border-top-right-radius: 50px 50px;
     border-bottom-right-radius: 50px 50px;
     border-top-left-radius: 50px 50px;
     border-bottom-left-radius: 50px 50px;
-    background-color: lightgrey;
+    background-color: rgb(235,235,235);
+
+    ${({ state }) => state === 2 && 'background-color: white'}
+}
+`;
+
+export const NavBarSearchExpandedCalendarTo = styled.div`
+height: 66px;
+width: 166px;
+
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+align-content: center;
+padding-left: 24px;
+
+${({ state }) => {
+    if (state === 3) {
+      return 'box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-left-radius: 50px 50px;border-bottom-left-radius: 50px 50px; border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px;}';
+    }
+    return '';
+  }}
+
+${({ modal }) => {
+    if (modal > 0) {
+      return 'background-color: none; box-shadow: 0 0 0 white;';
+    }
+    return '';
+  }}
+
+&:hover {
+    cursor: pointer;
+    border-top-right-radius: 50px 50px;
+    border-bottom-right-radius: 50px 50px;
+    border-top-left-radius: 50px 50px;
+    border-bottom-left-radius: 50px 50px;
+    background-color: rgb(235,235,235);
+
+    ${({ state }) => state === 3 && 'background-color: white'}
 }
 `;
 
@@ -205,7 +327,7 @@ border-top-right-radius: 50px 50px;
 border-bottom-right-radius: 50px 50px;
 border-top-left-radius: 50px 50px;
 border-bottom-left-radius: 50px 50px;
-border: 1px solid lightgrey;
+border: 1px solid rgb(235,235,235);
 `;
 
 export const ExpandedSearchGuestContainer = styled.div`
@@ -215,13 +337,30 @@ padding-right: 8px;
 display: flex;
 align-items: center;
 
+${({ state }) => {
+    if (state === 4) {
+      return 'box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-left-radius: 50px 50px; border-bottom-left-radius: 50px 50px; border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px; }';
+    }
+    return '';
+  }}
+
+${({ state, modal }) => {
+    if (modal > 0 || state === 5) {
+      return 'background-color: none; box-shadow: 0 0 0 white;';
+    }
+    return '';
+  }}
+
+
 &:hover {
     cursor: pointer;
     border-top-right-radius: 50px 50px;
     border-bottom-right-radius: 50px 50px;
     border-top-left-radius: 50px 50px;
     border-bottom-left-radius: 50px 50px;
-    background-color: lightgrey;
+    background-color: rgb(235,235,235);
+
+    ${({ state }) => state === 4 && 'background-color: white'}
 }
 `;
 
@@ -238,7 +377,7 @@ border-top-right-radius: 50px 50px;
 border-bottom-right-radius: 50px 50px;
 border-top-left-radius: 50px 50px;
 border-bottom-left-radius: 50px 50px;
-border: 1px solid lightgrey;
+border: 1px solid rgb(235,235,235);
 `;
 
 export const LargeSearchIconContainer = styled.div`
@@ -292,7 +431,7 @@ border-top-left-radius: 25px 25px;
 border-bottom-left-radius: 25px 25px;
 border-top-right-radius: 25px 25px;
 border-bottom-right-radius: 25px 25px;
-border: 1px solid lightgrey;
+border: 1px solid rgb(235,235,235);
 
 margin-left: -20px;
 
@@ -482,7 +621,7 @@ border-top-right-radius: 15px 15px;
 border-bottom-right-radius: 15px 15px;
 border-top-left-radius: 15px 15px;
 border-bottom-left-radius: 15px 15px;
-border: 1px solid lightgrey;
+border: 1px solid rgb(235,235,235);
 
 box-shadow: 0 1px 15px rgb(210, 210, 210);
 `;
@@ -505,7 +644,7 @@ border-top-left-radius: 25px 25px;
 border-bottom-left-radius: 25px 25px;
 border-top-right-radius: 25px 25px;
 border-bottom-right-radius: 25px 25px;
-border: 1px solid lightgrey;
+border: 1px solid rgb(235,235,235);
 
 display: flex;
 align-items: center;
@@ -541,7 +680,7 @@ border-top-right-radius: 15px 15px;
 border-bottom-right-radius: 15px 15px;
 border-top-left-radius: 15px 15px;
 border-bottom-left-radius: 15px 15px;
-border: 1px solid lightgrey;
+border: 1px solid rgb(235,235,235);
 
 box-shadow: 0 1px 15px rgb(210, 210, 210);
 `;
