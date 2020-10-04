@@ -53,7 +53,6 @@ font-family: 'Airbnb Cereal App Medium';
 color: rgb(34, 34, 34);
 font-size: 12px;
 line-height: 16px;
-letter-spacing: 0.04em;
 font-weight: 800px; 
 
 flex-basis: 100%;
@@ -87,7 +86,7 @@ flex-basis: 100%;
 `;
 
 export const SearchSecondary = styled.div`
-font-family: 'Airbnb Cereal App Light';
+font-family: ${({ totalGuests }) => (totalGuests === 0 || totalGuests === undefined ? 'Airbnb Cereal App Light' : 'Airbnb Cereal App Medium')};
 color: rgb(113, 113, 113);
 font-size: 14px;
 line-height: 18px;
@@ -135,7 +134,7 @@ justify-content: space-between;
 
 export const NavBarSearchExpandedLocation = styled.div`
 height: 66px;
-width: 245px;
+width: 270px;
 
 display: flex;
 align-items: center;
@@ -244,7 +243,7 @@ align-items: center;
 
 export const NavBarSearchExpandedCalendarFrom = styled.div`
 height: 66px;
-width: 166px;
+width: 180px;
 
 display: flex;
 align-items: center;
@@ -280,7 +279,7 @@ ${({ modal }) => {
 
 export const NavBarSearchExpandedCalendarTo = styled.div`
 height: 66px;
-width: 166px;
+width: 180px;
 
 display: flex;
 align-items: center;
@@ -315,7 +314,6 @@ ${({ modal }) => {
 `;
 
 export const NavBarSearchExpandedCalendarModal = styled.div`
-height: 374px;
 width: 850px;
 position: absolute;
 z-index: 15px;
@@ -323,11 +321,138 @@ top: 76px;
 right: 0;
 background-color: white;
 
-border-top-right-radius: 50px 50px;
-border-bottom-right-radius: 50px 50px;
-border-top-left-radius: 50px 50px;
-border-bottom-left-radius: 50px 50px;
+
+border-top-right-radius: 32px 32px;
+border-bottom-right-radius: 32px 32px;
+border-top-left-radius: 32px 32px;
+border-bottom-left-radius: 35px 32px;
 border: 1px solid rgb(235,235,235);
+`;
+
+export const CalendarModal = styled.div`
+width: 849px;
+padding: 16px 32px 28px 32px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+`;
+
+export const CalendarModalMonthContainer = styled.div`
+height: 326px;
+width: 390px;
+padding: 0 27px;
+`;
+
+export const CalendarModalHeading = styled.div`
+height: 79px;
+width: 336px;
+padding-top: 22px;
+padding-bottom: 37px;
+
+text-align: center;
+user-select: none;
+
+font-family: 'Airbnb Cereal App Medium';
+color: #222222;
+font-size: 16px;
+line-height: 20px;
+font-weight: 400px; 
+
+position: relative;
+`;
+
+export const CalendarModalHeadingWeekContainer = styled.div`
+position: absolute;
+bottom: 0;
+display: grid;
+width: 336px;
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+`;
+
+export const CalendarModalBackButtonContainer = styled.div`
+height: 32px;
+width: 32px;
+position: absolute;
+left: -12px;
+top: 15px;
+border-radius: 50px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+&:hover {
+  cursor: pointer;
+  background-color: #F7F7F7;
+}
+`;
+
+export const CalendarModalForwardButtonContainer = styled.div`
+height: 32px;
+width: 32px;
+position: absolute;
+right: -12px;
+top: 15px;
+border-radius: 50px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+&:hover {
+  cursor: pointer;
+  background-color: #F7F7F7;
+}
+`;
+
+export const CalendarModalNavigationButton = styled.img`
+height: 12px;
+width: 12px;
+
+&:hover {
+  cursor: pointer;
+}
+`;
+
+export const CalendarModalHeadingWeek = styled.div`
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(113, 113, 113);
+font-size: 12px;
+line-height: 16px;
+font-weight: 800px; 
+`;
+
+export const CalendarModalBody = styled.div`
+height: 247px;
+width: 336px;
+
+display: grid;
+
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+`;
+
+export const CalendarModalBodyDay = styled.div`
+height: 48px;
+width: 48px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+&:hover {
+  cursor: ${({ valid }) => (valid ? 'pointer' : 'auto')};
+   ${({ valid }) => (valid ? 'border-radius: 100px; border: 1px solid black' : '')};
+}
+`;
+
+export const CalendarModalBodyDayText = styled.div`
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+font-size: 14px;
+line-height: 18px;
+font-weight: 600; 
+
+user-select: none;
 `;
 
 export const ExpandedSearchGuestContainer = styled.div`
@@ -365,7 +490,6 @@ ${({ state, modal }) => {
 `;
 
 export const NavBarSearchExpandedGuestModal = styled.div`
-height: 245px;
 width: 395px;
 position: absolute;
 z-index: 15px;
@@ -373,11 +497,71 @@ top: 76px;
 right: 0;
 background-color: white;
 
-border-top-right-radius: 50px 50px;
-border-bottom-right-radius: 50px 50px;
-border-top-left-radius: 50px 50px;
-border-bottom-left-radius: 50px 50px;
+border-top-right-radius: 32px 32px;
+border-bottom-right-radius: 32px 32px;
+border-top-left-radius: 32px 32px;
+border-bottom-left-radius: 35px 32px;
 border: 1px solid rgb(235,235,235);
+
+display: block;
+padding: 16px 32px 16px 32px;
+`;
+
+export const GuestModalItem = styled.div`
+height: 70px;
+display: flex;
+align-items: center;
+`;
+
+export const GuestModalItemText = styled.div`
+flex-basis: 222px;
+align-items: center;
+display: block;
+`;
+
+export const GuestModalItemTextPrimary = styled.div`
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+background-color: #ffffff;
+font-size: 16px;
+line-height: 20px;
+font-weight: 400px; 
+`;
+
+export const GuestModalItemTextSecondary = styled.div`
+font-family: 'Airbnb Cereal App Light';
+color: rgb(113, 113, 113);
+background-color: #ffffff;
+font-size: 14px;
+line-height: 18px;
+font-weight: 200px; 
+`;
+
+export const GuestModalItemTextGuestNumber = styled.div`
+font-family: 'Airbnb Cereal App Light';
+color: rgb(34, 34, 34);
+background-color: #ffffff;
+font-size: 16px;
+line-height: 20px;
+font-weight: 200px; 
+`;
+
+export const GuestModalIncrementContainer = styled.div`
+flex-basis: 104px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+`;
+
+export const GuestModalIncrementContainerIcon = styled.img`
+height: 32px;
+width: 32px;
+
+opacity: ${({ valid }) => (valid ? '0.8' : '0.2')};
+
+&:hover {
+    cursor: ${({ valid }) => (valid ? 'pointer' : 'not-allowed')};
+}
 `;
 
 export const LargeSearchIconContainer = styled.div`
@@ -608,7 +792,6 @@ user-select: none;
 `;
 
 export const WorldModal = styled.div`
-height: 110px;
 width: 185px;
 background-color: white;
 
@@ -617,13 +800,53 @@ z-index: 20;
 right: 85px;
 top: 55px;
 
-border-top-right-radius: 15px 15px;
-border-bottom-right-radius: 15px 15px;
-border-top-left-radius: 15px 15px;
-border-bottom-left-radius: 15px 15px;
+border-top-right-radius: 12px 12px;
+border-bottom-right-radius: 12px 12px;
+border-top-left-radius: 12px 12px;
+border-bottom-left-radius: 12px 12px;
 border: 1px solid rgb(235,235,235);
 
 box-shadow: 0 1px 15px rgb(210, 210, 210);
+
+display: block;
+padding: 8px 0 8px 0;
+`;
+
+export const WorldModalIcon = styled.img`
+height: 14px;
+width: 14px;
+margin-right: 12px;
+
+pointer-events: none;
+user-select: none;
+`;
+
+export const WorldModalText = styled.div`
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+background-color: #ffffff;
+font-size: 14px;
+line-height: 18px;
+font-weight: 600px; 
+
+margin-right: 12px;
+`;
+
+export const WorldModalItem = styled.div`
+height: 42px;
+padding: 0 16px 0 16px;
+
+display: flex;
+align-items: center;
+
+&:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+
+    ${WorldModalText} {
+        background-color: #F6F6F6;
+    }
+}
 `;
 
 export const MenuIcon = styled.img`
@@ -667,7 +890,6 @@ margin-left: 13px;
 `;
 
 export const ProfileModal = styled.div`
-height: 390px;
 width: 243px;
 background-color: white;
 
@@ -676,11 +898,76 @@ z-index: 20;
 right: 3px;
 top: 55px;
 
-border-top-right-radius: 15px 15px;
-border-bottom-right-radius: 15px 15px;
-border-top-left-radius: 15px 15px;
-border-bottom-left-radius: 15px 15px;
+border-top-right-radius: 12px 12px;
+border-bottom-right-radius: 12px 12px;
+border-top-left-radius: 12px 12px;
+border-bottom-left-radius: 12px 12px;
 border: 1px solid rgb(235,235,235);
 
 box-shadow: 0 1px 15px rgb(210, 210, 210);
+
+display: block;
+`;
+
+export const ProfileContainers = styled.div`
+padding: 12px 0 12px 0;
+display: block;
+${({ borderBottom }) => borderBottom && 'border-bottom: 1px solid lightgrey;'}
+`;
+
+export const ProfileContainersItem = styled.div`
+flex-basis: 100%;
+display: flex;
+justify-content: space-between;
+`;
+
+export const ProfileContainersHeading = styled.div`
+font-family: ${({ bold }) => (bold === true ? 'Airbnb Cereal App Medium' : 'Airbnb Cereal App Light')};
+color: rgb(34, 34, 34);
+background-color: #ffffff;
+font-size: 14px;
+line-height: 18px;
+font-weight: 600px; 
+
+position: relative;
+`;
+
+export const ProfileContainersStatus = styled.div`
+font-family: 'Airbnb Cereal App Light';
+color: rgb(113, 113, 113);
+background-color: #ffffff;
+font-size: 12px;
+line-height: 16px;
+font-weight: 400px; 
+`;
+
+export const NewMessagesNotification = styled.div`
+width: 6px;
+height: 6px;
+background-color: rgb(146,23,77);
+border-radius: 50%;
+
+position: absolute;
+top: -2px;
+right: -8px;
+`;
+
+export const ProfileContainersDiv = styled.div`
+padding: 0 16px 0 16px;
+height: 42px;
+display: flex;
+align-items: center;
+
+&:hover {
+    cursor: pointer;
+    background-color: #F6F6F6;
+
+    ${ProfileContainersHeading} {
+        background-color: #F6F6F6;
+    }
+
+    ${ProfileContainersStatus} {
+        background-color: #F6F6F6;
+    }
+}
 `;

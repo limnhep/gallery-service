@@ -7,17 +7,15 @@ position: relative;
 `;
 
 export const NavBar = styled.div`
-width: 100vw;
 height: 24px;
-padding: 40px 0 20px 0;
+padding: 40px 40px 20px 40px;
 
-display: inline-block;
+display: flex;
+align-items: center;
+justify-content: space-between;
 `;
 
 export const BackButton = styled.button`
-align-self: left;
-text-align: center;
-
 width: 90px;
 height: 36px;
 border-radius: 8px;
@@ -44,13 +42,11 @@ font-size: 14px;
 `;
 
 export const IconContainer = styled.div`
-float: right;
 `;
 
 export const ShareIcon = styled.img`
 height: 16px;
 width: 16px;
-vertical-align: middle;
 
 &:hover {
     cursor: pointer;
