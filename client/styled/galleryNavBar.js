@@ -64,7 +64,7 @@ width: 183px;
 `;
 
 export const SearchInput = styled.input`
-font-family: 'Airbnb Cereal App Light';
+font-family: ${({ bold }) => (bold ? 'Airbnb Cereal App Medium' : 'Airbnb Cereal App Light')};
 color: rgb(34, 34, 34);
 font-size: 14px;
 line-height: 18px;
@@ -72,6 +72,9 @@ font-weight: 600px;
 border: none;
 background-color: ${({ state }) => (state === 1 || state === 5 ? 'white' : '#F6F6F6')};
 padding: 0 0;
+overflow: hidden; 
+text-overflow: ellipsis; 
+white-space: nowrap;
 
 flex-basis: 100%;
 
@@ -86,7 +89,7 @@ flex-basis: 100%;
 `;
 
 export const SearchSecondary = styled.div`
-font-family: ${({ totalGuests }) => (totalGuests === 0 || totalGuests === undefined ? 'Airbnb Cereal App Light' : 'Airbnb Cereal App Medium')};
+font-family: ${({ bold }) => (!bold ? 'Airbnb Cereal App Light' : 'Airbnb Cereal App Medium')};
 color: rgb(113, 113, 113);
 font-size: 14px;
 line-height: 18px;

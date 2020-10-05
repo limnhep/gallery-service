@@ -75,7 +75,8 @@ class GalleryNavBar extends Component {
       searchBarState: 0,
       userModalState: 0,
       loggedIn: true,
-      location: null,
+      location: '',
+      hoveredDate: null,
       startDate: null,
       endDate: null,
       selectedMonthIndex: currentMonthIndex,
@@ -145,7 +146,9 @@ class GalleryNavBar extends Component {
           // Case 1: If Selected Year is on or after TripFromYear and Selected Month is on or before to TripFromMonth //
           if (selectedMonthValue < fromMonthValue) {
             // Case a: If Selected Month is **before** TripFromMonth SET start date to new start date and keep USER END_Date//
-            this.setState({ startDate: dateArray, searchBarState: 3 });
+            this.setState({
+              startDate: dateArray, searchBarState: 3, endDate: null, hoveredDate: null,
+            });
           } else if (selectedDay >= fromDay) {
             // Case b: If Selected Day is on TripStartMonth and Selected Day is on or before to TripStartDay keep USER START DATE and set NEW END Date//
             this.setState({ endDate: dateArray, searchBarState: 3 });
@@ -261,10 +264,10 @@ class GalleryNavBar extends Component {
 
   render() {
     const {
-      adults, infants, children, loggedIn, searchBarState, userModalState,
+      adults, infants, children, location, loggedIn, searchBarState, userModalState,
     } = this.state;
     const {
-      startDate, endDate, selectedMonthIndex,
+      startDate, endDate, hoveredDate, selectedMonthIndex,
     } = this.state;
     const totalGuests = adults + infants + children;
 
@@ -388,9 +391,9 @@ class GalleryNavBar extends Component {
 
     const RenderLocationModel = (
       <NavBarSearchExpandedLocationModal onClick={(e) => e.stopPropagation()}>
-        <LocationModalItemDiv>
+        <LocationModalItemDiv onClick={() => this.setState({ location: 'Explore nearby destinations', searchBarState: 2})}>
           <LocationModalItemImg src="../../public/img/icons/map2.png" />
-          <LocationModalItemText>Nearby</LocationModalItemText>
+          <LocationModalItemText>Explore nearby destinations</LocationModalItemText>
         </LocationModalItemDiv>
       </NavBarSearchExpandedLocationModal>
     );
@@ -457,7 +460,7 @@ class GalleryNavBar extends Component {
             <GuestModalIncrementContainerIcon
               valid={infants > 0}
               src="../../public/img/icons/minus.png"
-              onClick={() => this.setState({ infants: infants - 1 })}
+              onClick={infants > 0 ? () => this.setState({ infants: infants - 1 }) : undefined}
             />
             <GuestModalItemTextGuestNumber>{infants}</GuestModalItemTextGuestNumber>
             <GuestModalIncrementContainerIcon
@@ -482,9 +485,12 @@ class GalleryNavBar extends Component {
               <SearchInputContainer>
                 <SearchHeading>Location</SearchHeading>
                 <SearchInput
+                  value={location}
                   placeholder="Where are you going?"
+                  bold={location}
                   state={searchBarState}
                   modal={userModalState}
+                  onChange={(event) => this.setState({ location: event.target.value })}
                 />
               </SearchInputContainer>
             </NavBarSearchExpandedLocation>
@@ -493,14 +499,14 @@ class GalleryNavBar extends Component {
               onClick={(e) => this.handleSearchBarState(2, e)}
             >
               <SearchHeading>Check in</SearchHeading>
-              <SearchSecondary valid={startDate}>{startDate ? `${startDate[1]} ${startDate[2]}` : 'Add dates' }</SearchSecondary>
+              <SearchSecondary bold={startDate}>{startDate ? `${startDate[1]} ${startDate[2]}` : 'Add dates' }</SearchSecondary>
             </NavBarSearchExpandedCalendarFrom>
             <NavBarSearchExpandedCalendarTo
               state={searchBarState}
               onClick={(e) => this.handleSearchBarState(3, e)}
             >
               <SearchHeading>Check out</SearchHeading>
-              <SearchSecondary valid={endDate}>{endDate ? `${endDate[1]} ${endDate[2]}` : 'Add dates' }</SearchSecondary>
+              <SearchSecondary bold={endDate}>{endDate ? `${endDate[1]} ${endDate[2]}` : 'Add dates' }</SearchSecondary>
             </NavBarSearchExpandedCalendarTo>
             <ExpandedSearchGuestContainer
               state={searchBarState}
@@ -508,7 +514,7 @@ class GalleryNavBar extends Component {
             >
               <NavBarSearchExpandedGuests>
                 <SearchHeading>Guests</SearchHeading>
-                <SearchSecondary totalGuests={totalGuests}>{totalGuests === 0 ? 'Add guests' : `${totalGuests} guests`}</SearchSecondary>
+                <SearchSecondary bold={!!totalGuests}>{totalGuests === 0 ? 'Add guests' : `${totalGuests} guests`}</SearchSecondary>
               </NavBarSearchExpandedGuests>
               <LargeSearchIconContainer />
             </ExpandedSearchGuestContainer>
@@ -516,8 +522,9 @@ class GalleryNavBar extends Component {
             {(searchBarState === 2 || searchBarState === 3) && (
             <GallerySearchBarCalendar
               props={{
-                calendar, startDate, endDate, selectedMonthIndex,
+                calendar, startDate, endDate, selectedMonthIndex, hoveredDate,
               }}
+              setHoveredDate={(date) => this.setState({ hoveredDate: date })}
               setMonthIndex={this.setMonthIndex}
               setCalendarDate={this.setCalendarDate}
             />

@@ -14,11 +14,11 @@ import {
   CalendarModalNavigationButton,
 } from '../../../styled/galleryNavBar';
 
-const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate }) => {
-  const [hoveredDate, setHoveredDate] = useState(null);
+const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate, setHoveredDate }) => {
+  // const [hoveredDate, setHoveredDate] = useState(null);
 
   const {
-    calendar, startDate, endDate, selectedMonthIndex,
+    calendar, hoveredDate, startDate, endDate, selectedMonthIndex,
   } = props;
 
   // Determine today's day from javascript date library.
@@ -107,31 +107,47 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate }) => 
         }
 
         if (startDate && endDate) {
+          const userSelectedMonthFromValue = monthMapChart[userSelectedMonthFrom];
+          const userSelectedMonthToValue = monthMapChart[userSelectedMonthTo];
+          const renderedMonthValue = monthMapChart[renderedMonth];
           // See if the Rendered Current Year falls between user selected Year
           // UserSelectedYearFrom < renderedYear < UserSelectedYearTo
-          if (userSelectedYearFrom <= renderedYear && userSelectedYearTo >= renderedYear) {
-            const userSelectedMonthFromValue = monthMapChart[userSelectedMonthFrom];
-            const userSelectedMonthToValue = monthMapChart[userSelectedMonthTo];
-            const renderedMonthValue = monthMapChart[renderedMonth];
-            // See if the Rendered Current Month falls between user selected Month
-            // Map Each month to a value for mathematical comparison
-            // UserSelectedMonthFrom < renderedMonth < UserSelectedMonthTo
-            if (userSelectedMonthFromValue === renderedMonthValue && userSelectedMonthToValue === renderedMonthValue) {
-              if (userSelectedDayFrom < renderedDay && userSelectedDayTo > renderedDay) betweenStyling = true;
-            } else if (userSelectedMonthFromValue <= renderedMonthValue && userSelectedMonthToValue >= renderedMonthValue) {
-              // See if the Rendered Current Day falls between user selected Year
-              // UserSelectedDayFrom < renderedDay < UserSelectedDayTo
-              if (userSelectedMonthToValue > renderedMonthValue) {
-                betweenStyling = true;
-              } else if (userSelectedDayFrom < renderedDay && userSelectedDayTo > renderedDay) {
-                betweenStyling = true;
-              }
-              if (userSelectedMonthFromValue === renderedMonthValue && userSelectedDayFrom >= renderedDay) {
-                betweenStyling = false;
-              }
-              if (userSelectedMonthToValue === renderedMonthValue && userSelectedDayTo > renderedDay) {
-                betweenStyling = true;
-              }
+
+          // if (userSelectedYearFrom <= renderedYear && userSelectedYearTo >= renderedYear) {
+          //   console.log('here');
+
+          // See if the Rendered Current Month falls between user selected Month
+          // Map Each month to a value for mathematical comparison
+          // UserSelectedMonthFrom < renderedMonth < UserSelectedMonthTo
+          if (userSelectedMonthFromValue === renderedMonthValue && userSelectedMonthToValue === renderedMonthValue) {
+            if (userSelectedDayFrom < renderedDay && userSelectedDayTo > renderedDay) betweenStyling = true;
+          } else if (userSelectedMonthFromValue <= renderedMonthValue && userSelectedMonthToValue >= renderedMonthValue) {
+            // See if the Rendered Current Day falls between user selected Year
+            // UserSelectedDayFrom < renderedDay < UserSelectedDayTo
+            if (userSelectedMonthToValue > renderedMonthValue) {
+              betweenStyling = true;
+            } else if (userSelectedDayFrom < renderedDay && userSelectedDayTo > renderedDay) {
+              betweenStyling = true;
+            }
+            if (userSelectedMonthFromValue === renderedMonthValue && userSelectedDayFrom >= renderedDay) {
+              betweenStyling = false;
+            }
+            if (userSelectedMonthToValue === renderedMonthValue && userSelectedDayTo > renderedDay) {
+              betweenStyling = true;
+            }
+          } else if (userSelectedYearFrom < userSelectedYearTo) {
+            if (renderedYear > userSelectedYearFrom && renderedMonthValue === userSelectedMonthToValue && renderedDay < userSelectedDayTo) {
+              betweenStyling = true;
+            } else if (renderedYear > userSelectedYearTo && renderedMonthValue === userSelectedMonthFromValue && renderedDay > userSelectedDayFrom) {
+              betweenStyling = true;
+            } else if (renderedYear === userSelectedYearFrom && renderedMonthValue === userSelectedMonthFromValue && renderedDay > userSelectedDayFrom) {
+              betweenStyling = true;
+            } else if (renderedYear === userSelectedYearTo && renderedMonthValue === userSelectedMonthToValue && renderedDay < userSelectedDayTo) {
+              betweenStyling = true;
+            } else if (renderedYear > userSelectedYearFrom && renderedMonthValue < userSelectedMonthToValue) {
+              betweenStyling = true;
+            } else if (renderedYear < userSelectedYearTo && renderedMonthValue > userSelectedMonthFromValue) {
+              betweenStyling = true;
             }
           }
         }
@@ -143,6 +159,8 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate }) => 
           const hoveredMonthValue = monthMapChart[hoveredMonth];
           const renderedMonthValue = monthMapChart[renderedMonth];
           const userSelectedMonthFromValue = monthMapChart[userSelectedMonthFrom];
+
+          // Check and toggle BLACK CIRCLLE for the valid dates that falls after START DATE ON HOVER.
           if (hoveredDay === renderedDay && hoveredMonthValue === renderedMonthValue && hoveredYear >= renderedYear) {
             if (hoveredYear === userSelectedYearFrom && hoveredMonthValue >= userSelectedMonthFromValue && hoveredDay >= userSelectedDayFrom) {
               validUserSelectedDate = true;
@@ -150,23 +168,27 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate }) => 
             } else if (hoveredYear > userSelectedYearFrom) {
               validUserSelectedDate = true;
               backwardStyling = true;
+            } else if (hoveredYear === userSelectedYearFrom && hoveredMonthValue > userSelectedMonthFromValue) {
+              validUserSelectedDate = true;
+              backwardStyling = true;
             }
           }
 
+          // Check and toggle GREY BACKGROUND LOGIC for the valid dates that BETWEEN START DATE AND HOVERED DATE;
           if (renderedYear >= userSelectedYearFrom && renderedMonthValue > userSelectedMonthFromValue && renderedYear <= hoveredYear && renderedMonthValue < hoveredMonthValue) {
             betweenStyling = true;
           } else if (hoveredMonthValue === userSelectedMonthFromValue) {
             if (renderedDay > userSelectedDayFrom && renderedDay < hoveredDay && renderedMonthValue === hoveredMonthValue) {
               betweenStyling = true;
-            };
+            }
           } else if (hoveredYear === userSelectedYearFrom && renderedMonthValue === userSelectedMonthFromValue) {
             if (renderedDay > userSelectedDayFrom && hoveredMonthValue >= renderedMonthValue) {
               betweenStyling = true;
-            };
+            }
           } else if (hoveredYear >= userSelectedYearFrom && renderedMonthValue === hoveredMonthValue && renderedMonthValue >= userSelectedMonthFromValue) {
             if (renderedDay < hoveredDay) {
               betweenStyling = true;
-            };
+            }
           } else if (userSelectedYearFrom < hoveredYear) {
             if (renderedYear === hoveredYear && renderedDay < hoveredDay) {
               betweenStyling = true;
@@ -182,6 +204,7 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate }) => 
           }
         }
 
+        // push calendar days with styling to the calendarDays array for rendering.
         calendarDays.push(
           <CalendarModalBodyDayBoxDiv
             key={Math.random()}
