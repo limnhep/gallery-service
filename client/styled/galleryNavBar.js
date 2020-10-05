@@ -444,7 +444,8 @@ border-radius: 50px;
 
 ${({ forwardStyling }) => forwardStyling && 'border-top-right-radius: 0; border-bottom-right-radius: 0; background-color: #F7F7F7;'}
 ${({ backwardStyling }) => backwardStyling && 'border-top-left-radius: 0; border-bottom-left-radius: 0; background-color: #F7F7F7;'}
-
+${({ betweenStylingFirstBox }) => betweenStylingFirstBox && 'box-shadow: -32px 0px 7px 1px #F7F7F7'};
+${({ betweenStylingLastBox }) => betweenStylingLastBox && 'box-shadow: 32px 0px 7px 1px #F7F7F7'};
 ${({ betweenStyling }) => betweenStyling && BoxDivGreyBackground}
 `;
 

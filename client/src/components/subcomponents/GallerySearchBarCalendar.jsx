@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   NavBarSearchExpandedCalendarModal,
   CalendarModal,
@@ -15,6 +15,8 @@ import {
 } from '../../../styled/galleryNavBar';
 
 const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate }) => {
+  const [hoveredDate, setHoveredDate] = useState(null);
+
   const {
     calendar, startDate, endDate, selectedMonthIndex,
   } = props;
@@ -42,12 +44,34 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate }) => 
     let userSelectedYearTo;
     let userSelectedMonthTo;
     let userSelectedDayTo;
+    let hoveredYear;
+    let hoveredMonth;
+    let hoveredDay;
+
+    // Establish a month chart value to associate a month to a value for comparison to find if the current month rendered is between the user selected dates.
+    const monthMapChart = {
+      Jan: 1,
+      Feb: 2,
+      Mar: 3,
+      Apr: 4,
+      May: 5,
+      Jun: 6,
+      Jul: 7,
+      Aug: 8,
+      Sep: 9,
+      Oct: 10,
+      Nov: 11,
+      Dec: 12,
+    };
 
     if (startDate) {
       [userSelectedYearFrom, userSelectedMonthFrom, userSelectedDayFrom] = startDate;
     }
     if (endDate) {
       [userSelectedYearTo, userSelectedMonthTo, userSelectedDayTo] = endDate;
+    }
+    if (hoveredDate) {
+      [hoveredYear, hoveredMonth, hoveredDay] = hoveredDate;
     }
 
     for (let i = 0; i < dayGap + days; i += 1) {
@@ -56,8 +80,10 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate }) => 
       } else {
         // Calculated the day
         const renderedDay = i + 1 - dayGap;
+        const firstDayOfTheMonth = i === dayGap;
+        const lastDayOfTheMonth = i === (dayGap + days - 1);
         // Check VALID to see if the Day is in the PAST then it'll be rendered greyed out color; otherwise it is VALID and is USER selectable.
-        const validDay = ((currentMonthIndex === monthIndex && currentDay <= i + 1 - dayGap) || currentMonthIndex < monthIndex || currentYear < renderedYear);
+        const validDay = ((currentMonthIndex === monthIndex && currentDay <= renderedDay) || currentMonthIndex < monthIndex || currentYear < renderedYear);
         // Check to see if the day matches the User selected day for rendering.. 3 Conditions: On, or Between;
         let validUserSelectedDate;
         let forwardStyling;
@@ -81,22 +107,6 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate }) => 
         }
 
         if (startDate && endDate) {
-          // Establish a month chart value to associate a month to a value for comparison to find if the current month rendered is between the user selected dates.
-          const monthMapChart = {
-            Jan: 1,
-            Feb: 2,
-            Mar: 3,
-            Apr: 4,
-            May: 5,
-            Jun: 6,
-            Jul: 7,
-            Aug: 8,
-            Sep: 9,
-            Oct: 10,
-            Nov: 11,
-            Dec: 12,
-          };
-
           // See if the Rendered Current Year falls between user selected Year
           // UserSelectedYearFrom < renderedYear < UserSelectedYearTo
           if (userSelectedYearFrom <= renderedYear && userSelectedYearTo >= renderedYear) {
@@ -126,12 +136,62 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate }) => 
           }
         }
 
+        if (startDate && !endDate) {
+        // Check to see if hoveredDate matches the renderedDate and conditionally render the grey styled in between.
+        // DO NOT TOUCH
+        // COMPLETE // DANGEROUS
+          const hoveredMonthValue = monthMapChart[hoveredMonth];
+          const renderedMonthValue = monthMapChart[renderedMonth];
+          const userSelectedMonthFromValue = monthMapChart[userSelectedMonthFrom];
+          if (hoveredDay === renderedDay && hoveredMonthValue === renderedMonthValue && hoveredYear >= renderedYear) {
+            if (hoveredYear === userSelectedYearFrom && hoveredMonthValue >= userSelectedMonthFromValue && hoveredDay >= userSelectedDayFrom) {
+              validUserSelectedDate = true;
+              backwardStyling = true;
+            } else if (hoveredYear > userSelectedYearFrom) {
+              validUserSelectedDate = true;
+              backwardStyling = true;
+            }
+          }
+
+          if (renderedYear >= userSelectedYearFrom && renderedMonthValue > userSelectedMonthFromValue && renderedYear <= hoveredYear && renderedMonthValue < hoveredMonthValue) {
+            betweenStyling = true;
+          } else if (hoveredMonthValue === userSelectedMonthFromValue) {
+            if (renderedDay > userSelectedDayFrom && renderedDay < hoveredDay && renderedMonthValue === hoveredMonthValue) {
+              betweenStyling = true;
+            };
+          } else if (hoveredYear === userSelectedYearFrom && renderedMonthValue === userSelectedMonthFromValue) {
+            if (renderedDay > userSelectedDayFrom && hoveredMonthValue >= renderedMonthValue) {
+              betweenStyling = true;
+            };
+          } else if (hoveredYear >= userSelectedYearFrom && renderedMonthValue === hoveredMonthValue && renderedMonthValue >= userSelectedMonthFromValue) {
+            if (renderedDay < hoveredDay) {
+              betweenStyling = true;
+            };
+          } else if (userSelectedYearFrom < hoveredYear) {
+            if (renderedYear === hoveredYear && renderedDay < hoveredDay) {
+              betweenStyling = true;
+            } else if (renderedYear === userSelectedYearFrom && renderedMonthValue > userSelectedMonthFromValue) {
+              betweenStyling = true;
+            } else if (renderedYear === userSelectedYearFrom && renderedMonthValue === userSelectedMonthFromValue && renderedDay > userSelectedDayFrom) {
+              betweenStyling = true;
+            } else if (renderedYear === hoveredYear && renderedMonthValue < hoveredMonthValue) {
+              betweenStyling = true;
+            }
+          } else if (userSelectedYearFrom < hoveredYear && renderedMonthValue >= userSelectedMonthFromValue && renderedYear === userSelectedYearFrom) {
+            betweenStyling = true;
+          }
+        }
+
         calendarDays.push(
           <CalendarModalBodyDayBoxDiv
             key={Math.random()}
             forwardStyling={forwardStyling}
             backwardStyling={backwardStyling}
             betweenStyling={betweenStyling}
+            betweenStylingFirstBox={!!(firstDayOfTheMonth && betweenStyling)}
+            betweenStylingLastBox={!!(lastDayOfTheMonth && betweenStyling)}
+            onMouseLeave={startDate && !endDate ? () => setHoveredDate(null) : undefined}
+            onMouseEnter={startDate && !endDate ? () => setHoveredDate([renderedYear, renderedMonth, renderedDay]) : undefined}
           >
             <CalendarModalBodyDayBox
               onClick={validDay ? () => setCalendarDate([renderedYear, renderedMonth, renderedDay]) : undefined}
