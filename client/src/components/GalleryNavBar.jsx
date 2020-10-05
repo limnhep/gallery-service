@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GallerySearchBarCalendar from './subcomponents/GallerySearchBarCalendar.jsx';
 import {
   TopContainer,
   DivPadding,
@@ -14,18 +15,6 @@ import {
   NavBarSearchExpandedContainer,
   NavBarSearchExpandedCalendarFrom,
   NavBarSearchExpandedCalendarTo,
-  NavBarSearchExpandedCalendarModal,
-  CalendarModal,
-  CalendarModalMonthContainer,
-  CalendarModalHeading,
-  CalendarModalHeadingWeekContainer,
-  CalendarModalHeadingWeek,
-  CalendarModalBody,
-  CalendarModalBodyDay,
-  CalendarModalBodyDayText,
-  CalendarModalBackButtonContainer,
-  CalendarModalForwardButtonContainer,
-  CalendarModalNavigationButton,
   NavBarSearchExpandedLocation,
   NavBarSearchExpandedLocationModal,
   LocationModalItemDiv,
@@ -71,22 +60,145 @@ import {
   ProfileContainersStatus,
 } from '../../styled/galleryNavBar';
 
+import calendar from '../../public/calendar';
+
 class GalleryNavBar extends Component {
   constructor() {
     super();
+
+    const currentMonth = Date().split(' ')[1];
+    const currentDay = Number(Date().split(' ')[2]);
+    const currentYear = Number(Date().split(' ')[3]);
+    const currentMonthIndex = calendar.findIndex((month) => month[0].split(' ')[0].substring(0, 3) === currentMonth && month[0].split(' ')[1].substring(0, 4) === currentYear.toString());
+
     this.state = {
       searchBarState: 0,
       userModalState: 0,
       loggedIn: true,
       location: null,
+      startDate: null,
+      endDate: null,
+      selectedMonthIndex: currentMonthIndex,
       adults: 0,
       children: 0,
       infants: 0,
     };
+    this.setMonthIndex = this.setMonthIndex.bind(this);
+    this.setCalendarDate = this.setCalendarDate.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('scroll', () => this.handleScrollCloseModal());
+  }
+
+  setCalendarDate(dateArray) {
+    // Input with calendar selected dateArray [year, month, day]
+    const { searchBarState, startDate, endDate } = this.state;
+
+    // Check Valid;
+    if (endDate && startDate) {
+      const monthMapChart = {
+        Jan: 1,
+        Feb: 2,
+        Mar: 3,
+        Apr: 4,
+        May: 5,
+        Jun: 6,
+        Jul: 7,
+        Aug: 8,
+        Sep: 9,
+        Oct: 10,
+        Nov: 11,
+        Dec: 12,
+      };
+
+      const [fromYear, fromMonth, fromDay] = startDate;
+      const [toYear, toMonth, toDay] = endDate;
+      const [selectedYear, selectedMonth, selectedDay] = dateArray;
+
+      const fromMonthValue = monthMapChart[fromMonth];
+      const toMonthValue = monthMapChart[toMonth];
+      const selectedMonthValue = monthMapChart[selectedMonth];
+
+      // const validDay = ((currentMonthIndex === monthIndex && currentDay <= i + 1 - dayGap) || currentMonthIndex < monthIndex || currentYear < renderedYear);
+      if (searchBarState === 2) {
+        if (selectedYear <= toYear && selectedMonthValue <= toMonthValue) {
+          // MODAL STATE: CHOOSE START DATE
+          // Case 1: If Selected Year is on or before TripToYear and Selected Month is on or before to TripStartMonth //
+          if (selectedMonthValue < toMonthValue) {
+            // Case a: If Selected Month is **before** TripToMonth SET start date to new start date and keep USER SELECTED END_Date//
+            this.setState({ startDate: dateArray, searchBarState: 3 });
+          } else if (selectedDay <= toDay) {
+            // Case b: If Selected Day is on TripToMonth and Selected Day is on or before to TripToDay keep USER SELECTED END_Date//
+            this.setState({ startDate: dateArray, searchBarState: 3 });
+          } else {
+            // Case c: If Selected Day is the SAME MONTH BUT **AFTER** END DATE. CLEAR ENDDATE AND SET SELECTED DAY AS startDate //
+            this.setState({ startDate: dateArray, endDate: null, searchBarState: 3 });
+          }
+        } else {
+          // Case 2; Selected Date is after TripStartYear and after TripStartMonth, re set startDate and clear End Date, change to Second Calendar Modal to choose end date.
+          this.setState({ startDate: dateArray, searchBarState: 3, endDate: null });
+        }
+      } else if (searchBarState === 3) {
+        if (selectedYear <= fromYear && selectedMonthValue <= fromMonthValue) {
+          // MODAL STATE: CHOOSE END DATE
+          // Case 1: If Selected Year is on or after TripFromYear and Selected Month is on or before to TripFromMonth //
+          if (selectedMonthValue < fromMonthValue) {
+            // Case a: If Selected Month is **before** TripFromMonth SET start date to new start date and keep USER END_Date//
+            this.setState({ startDate: dateArray, searchBarState: 3 });
+          } else if (selectedDay >= fromDay) {
+            // Case b: If Selected Day is on TripStartMonth and Selected Day is on or before to TripStartDay keep USER START DATE and set NEW END Date//
+            this.setState({ endDate: dateArray, searchBarState: 3 });
+          } else {
+            // Case c: If Selected Day is the SAME MONTH BUT **AFTER** END DATE. CLEAR ENDDATE AND SET SELECTED DAY AS startDate
+            this.setState({ startDate: dateArray, endDate: null, searchBarState: 3 });
+          }
+        } else {
+          // Case 2; Selected Date is after TripStartYear and after TripStartMonth, reset End Date and Keep Start Date //
+          this.setState({ endDate: dateArray, searchBarState: 3 });
+        }
+      }
+    } else if (searchBarState === 2) {
+      this.setState({ startDate: dateArray, searchBarState: 3 });
+    } else if (searchBarState === 3) {
+      const monthMapChart = {
+        Jan: 1,
+        Feb: 2,
+        Mar: 3,
+        Apr: 4,
+        May: 5,
+        Jun: 6,
+        Jul: 7,
+        Aug: 8,
+        Sep: 9,
+        Oct: 10,
+        Nov: 11,
+        Dec: 12,
+      };
+
+      const [fromYear, fromMonth, fromDay] = startDate;
+      const [selectedYear, selectedMonth, selectedDay] = dateArray;
+
+      const fromMonthValue = monthMapChart[fromMonth];
+      const selectedMonthValue = monthMapChart[selectedMonth];
+
+      if (!startDate) {
+        this.setState({ startDate: dateArray, searchBarState: 3 });
+      } else if (selectedYear <= fromYear && selectedMonthValue < fromMonthValue) {
+        this.setState({ startDate: dateArray, searchBarState: 3 });
+      } else if (selectedYear <= fromYear && selectedMonthValue === fromMonthValue && selectedDay < fromDay) {
+        this.setState({ startDate: dateArray, searchBarState: 3 });
+      } else {
+        this.setState({ endDate: dateArray, searchBarState: 3 });
+      }
+    }
+  }
+
+  setMonthIndex(newIndex) {
+    if (newIndex < 0 || newIndex > calendar.length - 2) {
+      return;
+    }
+    this.setState({ selectedMonthIndex: newIndex });
   }
 
   handleSearchBarState(state, e) {
@@ -150,6 +262,9 @@ class GalleryNavBar extends Component {
   render() {
     const {
       adults, infants, children, loggedIn, searchBarState, userModalState,
+    } = this.state;
+    const {
+      startDate, endDate, selectedMonthIndex,
     } = this.state;
     const totalGuests = adults + infants + children;
 
@@ -280,81 +395,6 @@ class GalleryNavBar extends Component {
       </NavBarSearchExpandedLocationModal>
     );
 
-    const RenderCalendarModal = (
-      <NavBarSearchExpandedCalendarModal>
-        <CalendarModal>
-          <CalendarModalMonthContainer>
-            <CalendarModalHeading>
-              October 2020
-              <CalendarModalBackButtonContainer>
-                <CalendarModalNavigationButton src="../../public/img/icons/left-arrow.png" />
-              </CalendarModalBackButtonContainer>
-              <CalendarModalHeadingWeekContainer>
-                <CalendarModalHeadingWeek>
-                  Su
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  Mo
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  Tu
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  We
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  Th
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  Fr
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  Sa
-                </CalendarModalHeadingWeek>
-              </CalendarModalHeadingWeekContainer>
-            </CalendarModalHeading>
-            <CalendarModalBody>
-              {new Array(30).fill(1).map((day, index) => <CalendarModalBodyDay key={Math.random()} valid><CalendarModalBodyDayText>{index + 1}</CalendarModalBodyDayText></CalendarModalBodyDay>)}
-            </CalendarModalBody>
-          </CalendarModalMonthContainer>
-          <CalendarModalMonthContainer>
-            <CalendarModalHeading>
-              November 2020
-              <CalendarModalForwardButtonContainer>
-                <CalendarModalNavigationButton src="../../public/img/icons/right-arrow.png" />
-              </CalendarModalForwardButtonContainer>
-              <CalendarModalHeadingWeekContainer>
-                <CalendarModalHeadingWeek>
-                  Su
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  Mo
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  Tu
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  We
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  Th
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  Fr
-                </CalendarModalHeadingWeek>
-                <CalendarModalHeadingWeek>
-                  Sa
-                </CalendarModalHeadingWeek>
-              </CalendarModalHeadingWeekContainer>
-            </CalendarModalHeading>
-            <CalendarModalBody>
-              {new Array(30).fill(1).map((day, index) => <CalendarModalBodyDay key={Math.random()} valid><CalendarModalBodyDayText>{index + 1}</CalendarModalBodyDayText></CalendarModalBodyDay>)}
-            </CalendarModalBody>
-          </CalendarModalMonthContainer>
-        </CalendarModal>
-      </NavBarSearchExpandedCalendarModal>
-    );
-
     const RenderWorldModal = (
       <WorldModal onClick={(e) => e.stopPropagation()}>
         <WorldModalItem>
@@ -453,14 +493,14 @@ class GalleryNavBar extends Component {
               onClick={(e) => this.handleSearchBarState(2, e)}
             >
               <SearchHeading>Check in</SearchHeading>
-              <SearchSecondary>Add dates</SearchSecondary>
+              <SearchSecondary valid={startDate}>{startDate ? `${startDate[1]} ${startDate[2]}` : 'Add dates' }</SearchSecondary>
             </NavBarSearchExpandedCalendarFrom>
             <NavBarSearchExpandedCalendarTo
               state={searchBarState}
               onClick={(e) => this.handleSearchBarState(3, e)}
             >
               <SearchHeading>Check out</SearchHeading>
-              <SearchSecondary>Add dates</SearchSecondary>
+              <SearchSecondary valid={endDate}>{endDate ? `${endDate[1]} ${endDate[2]}` : 'Add dates' }</SearchSecondary>
             </NavBarSearchExpandedCalendarTo>
             <ExpandedSearchGuestContainer
               state={searchBarState}
@@ -473,7 +513,15 @@ class GalleryNavBar extends Component {
               <LargeSearchIconContainer />
             </ExpandedSearchGuestContainer>
             {searchBarState === 1 && RenderLocationModel}
-            {(searchBarState === 2 || searchBarState === 3) && RenderCalendarModal}
+            {(searchBarState === 2 || searchBarState === 3) && (
+            <GallerySearchBarCalendar
+              props={{
+                calendar, startDate, endDate, selectedMonthIndex,
+              }}
+              setMonthIndex={this.setMonthIndex}
+              setCalendarDate={this.setCalendarDate}
+            />
+            )}
             {searchBarState === 4 && RenderGuestModal}
           </NavBarSearchExpandedContainer>
         </DivPadding>
@@ -500,12 +548,16 @@ class GalleryNavBar extends Component {
               : (
                 <NavBarSearchCategories>
                   <NavBarSearchCategoriesItem>
-                    <NavBarSearchCategoriesItemHeading>
+                    <NavBarSearchCategoriesItemHeading
+                      valid={searchBarState >= 1 && searchBarState <= 5}
+                    >
                       Places to stay
                     </NavBarSearchCategoriesItemHeading>
                   </NavBarSearchCategoriesItem>
                   <NavBarSearchCategoriesItem>
-                    <NavBarSearchCategoriesItemHeading>
+                    <NavBarSearchCategoriesItemHeading
+                      valid={searchBarState >= 6 && searchBarState <= 8}
+                    >
                       Experiences
                     </NavBarSearchCategoriesItemHeading>
                   </NavBarSearchCategoriesItem>

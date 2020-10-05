@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const TopContainer = styled.div`
 height: 80px;
@@ -334,13 +334,11 @@ width: 849px;
 padding: 16px 32px 28px 32px;
 display: flex;
 justify-content: space-between;
-align-items: center;
 `;
 
 export const CalendarModalMonthContainer = styled.div`
-height: 326px;
 width: 390px;
-padding: 0 27px;
+padding: 0 27px 6px 27px;
 `;
 
 export const CalendarModalHeading = styled.div`
@@ -369,11 +367,11 @@ width: 336px;
 grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 `;
 
-export const CalendarModalBackButtonContainer = styled.div`
+export const CalendarModalButtonContainer = styled.div`
 height: 32px;
 width: 32px;
 position: absolute;
-left: -12px;
+${({ left }) => (left === true ? 'left: -12px' : 'right: -12px')};
 top: 15px;
 border-radius: 50px;
 
@@ -423,35 +421,60 @@ font-weight: 800px;
 `;
 
 export const CalendarModalBody = styled.div`
-height: 247px;
 width: 336px;
 
 display: grid;
+grid-row-gap: 2px;
 
 grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 `;
 
-export const CalendarModalBodyDay = styled.div`
+const BoxDivGreyBackground = css`
+&:hover {
+  background-color: #F7F7F7;
+  border-radius: 0;
+}
+`;
+
+export const CalendarModalBodyDayBoxDiv = styled.div`
 height: 48px;
 width: 48px;
+
+border-radius: 50px;
+
+${({ forwardStyling }) => forwardStyling && 'border-top-right-radius: 0; border-bottom-right-radius: 0; background-color: #F7F7F7;'}
+${({ backwardStyling }) => backwardStyling && 'border-top-left-radius: 0; border-bottom-left-radius: 0; background-color: #F7F7F7;'}
+
+${({ betweenStyling }) => betweenStyling && BoxDivGreyBackground}
+`;
+
+export const CalendarModalBodyDayBox = styled.div`
+height: 48px;
+width: 48px;
+
+${({ renderBackgroundBlack }) => (renderBackgroundBlack && 'background-color: rgb(34, 34, 34)')};
+${({ renderBackgroundBlack }) => (renderBackgroundBlack && 'border-radius: 100px; border: 1px solid black')};
+${({ betweenStyling }) => (betweenStyling && 'background-color: #F7F7F7')};
 
 display: flex;
 justify-content: center;
 align-items: center;
 
 &:hover {
-  cursor: ${({ valid }) => (valid ? 'pointer' : 'auto')};
-   ${({ valid }) => (valid ? 'border-radius: 100px; border: 1px solid black' : '')};
+  cursor: ${({ validDay }) => (validDay ? 'pointer' : 'auto')};
+   ${({ validDay }) => (validDay ? 'border-radius: 100px; border: 1px solid black' : '')};
 }
 `;
 
 export const CalendarModalBodyDayText = styled.div`
 font-family: 'Airbnb Cereal App Medium';
-color: rgb(34, 34, 34);
+
 font-size: 14px;
 line-height: 18px;
 font-weight: 600; 
 
+color: ${({ validDay }) => (validDay ? 'rgb(34, 34, 34)' : 'lightgrey')};
+${({ renderBackgroundBlack }) => (renderBackgroundBlack && 'color: white')};
 user-select: none;
 `;
 
@@ -649,6 +672,34 @@ align-items: center;
 justify-content:center; 
 `;
 
+const HeadingActiveUnderline = css`
+&:before {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 28px;
+  width: 18px;
+  content: '';
+  border-top: 2px solid black;
+}
+`;
+
+const HeadingHoverUnderline = css`
+&:hover::before {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 28px;
+  width: 4px;
+  content: '';
+  border-top: 2px solid black;
+}
+
+&:hover {
+  cursor: pointer;
+}
+`;
+
 export const NavBarSearchCategoriesItemHeading = styled.div`
 font-family: 'Airbnb Cereal App Light';
 color: rgb(34, 34, 34);
@@ -656,6 +707,15 @@ background-color: #ffffff;
 font-size: 16px;
 line-height: 20px;
 font-weight: 400px; 
+
+position: relative;
+
+&:hover {
+  cursor: default;
+}
+
+${({ valid }) => !valid && HeadingHoverUnderline}
+${({ valid }) => valid && HeadingActiveUnderline}
 `;
 
 export const NavBarSearchText = styled.div`
