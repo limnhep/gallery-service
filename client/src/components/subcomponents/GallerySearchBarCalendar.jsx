@@ -239,7 +239,7 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate, setHo
         <CalendarModalHeading>
           {Heading}
           <CalendarModalButtonContainer left={left} onClick={left ? () => setMonthIndex(selectedMonthIndex - 1) : () => setMonthIndex(selectedMonthIndex + 1)}>
-            {left ? <CalendarModalNavigationButton src="../../../public/img/icons/left-arrow.png" /> : <CalendarModalNavigationButton src="../../../public/img/icons/right-arrow.png" />}
+            {left ? <CalendarModalNavigationButton src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow.png" /> : <CalendarModalNavigationButton src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/right-arrow.png" />}
           </CalendarModalButtonContainer>
           <CalendarModalHeadingWeekContainer>
             <CalendarModalHeadingWeek>

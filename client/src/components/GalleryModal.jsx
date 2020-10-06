@@ -41,17 +41,17 @@ const GalleryModal = ({
           {totalPhotos}
         </ImageIndex>
         <IconContainer>
-          <ShareIcon onClick={() => setModalState(3)} src="../../public/img/icons/upload.png" />
+          <ShareIcon onClick={() => setModalState(3)} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/upload.png" />
           {savedListing !== false
-            ? <HeartIcon onClick={() => handleToggleFavorite('remove')} src="../../public/img/icons/heart.png" />
-            : <HeartIcon onClick={() => setModalState(1)} src="../../public/img/icons/noheart.png" />}
+            ? <HeartIcon onClick={() => handleToggleFavorite('remove')} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/heart.png" />
+            : <HeartIcon onClick={() => setModalState(1)} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/noheart.png" />}
         </IconContainer>
       </NavBar>
       <ImageFrame>
-        {imageIndex > 0 ? <ImageFrameLeftButton onClick={() => changeImage(images[imageIndex - 1].url)}><ImageArrowButton src="../public/img/icons/left-arrow2.png" alt="img" /></ImageFrameLeftButton> : ''}
+        {imageIndex > 0 ? <ImageFrameLeftButton onClick={() => changeImage(images[imageIndex - 1].url)}><ImageArrowButton src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow2.png" alt="img" /></ImageFrameLeftButton> : ''}
         <ImageFramePhoto src={selectedImage} />
         {images[imageIndex].comment ? <ImageFrameComment>{images[imageIndex].comment}</ImageFrameComment> : null}
-        {imageIndex < totalPhotos - 1 ? <ImageFrameRightButton onClick={() => changeImage(images[imageIndex + 1].url)}><ImageArrowButton src="../public/img/icons/right-arrow2.png" alt="img" /></ImageFrameRightButton> : ''}
+        {imageIndex < totalPhotos - 1 ? <ImageFrameRightButton onClick={() => changeImage(images[imageIndex + 1].url)}><ImageArrowButton src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/right-arrow2.png" alt="img" /></ImageFrameRightButton> : ''}
       </ImageFrame>
       {
         modalState

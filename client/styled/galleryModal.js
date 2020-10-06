@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ImageFadeIn } from './keyframes/galleryAnimations';
 
 export const TopContainer = styled.div`
 height: 100vh;
@@ -151,6 +152,9 @@ height: auto;
 width: auto;
 max-width: 80vw;
 max-height: 78vh;
+
+animation: 0.35s ${ImageFadeIn} ease-in-out;
+-webkit-animation: 0.35s ${ImageFadeIn} ease-in-out;
 `;
 
 export const ImageFrameComment = styled.h4`

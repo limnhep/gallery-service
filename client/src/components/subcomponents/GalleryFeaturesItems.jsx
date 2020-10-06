@@ -44,7 +44,7 @@ class GalleryFeaturesItems extends Component {
       return ([
         <ImagesComment key={Math.random()}>
           <ImagesCommentTextContainer key={Math.random()}>
-            <ImagesCommentTextIcon key={Math.random()} src="../../../public/img/icons/quotes.png" />
+            <ImagesCommentTextIcon key={Math.random()} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/quotes.png" />
             <ImagesCommentTextText key={Math.random()}>{images[0].comment}</ImagesCommentTextText>
             <ImagesCommentTextHost key={Math.random()}>
               {hostname}
@@ -79,7 +79,7 @@ class GalleryFeaturesItems extends Component {
         <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
         <ImagesComment key={Math.random()}>
           <ImagesCommentTextContainer key={Math.random()}>
-            <ImagesCommentTextIcon key={Math.random()} src="../../../public/img/icons/quotes.png" />
+            <ImagesCommentTextIcon key={Math.random()} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/quotes.png" />
             <ImagesCommentTextText key={Math.random()}>{images[3].comment}</ImagesCommentTextText>
             <ImagesCommentTextHost key={Math.random()}>
               {hostname}
@@ -115,7 +115,7 @@ class GalleryFeaturesItems extends Component {
         <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
         <ImagesComment key={Math.random()}>
           <ImagesCommentTextContainer key={Math.random()}>
-            <ImagesCommentTextIcon key={Math.random()} src="../../../public/img/icons/quotes.png" />
+            <ImagesCommentTextIcon key={Math.random()} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/quotes.png" />
             <ImagesCommentTextText key={Math.random()}>{images[5].comment}</ImagesCommentTextText>
             <ImagesCommentTextHost key={Math.random()}>
               {hostname}
@@ -145,7 +145,7 @@ class GalleryFeaturesItems extends Component {
         <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
         <ImagesComment key={Math.random()}>
           <ImagesCommentTextContainer key={Math.random()}>
-            <ImagesCommentTextIcon key={Math.random()} src="../../../public/img/icons/quotes.png" />
+            <ImagesCommentTextIcon key={Math.random()} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/quotes.png" />
             <ImagesCommentTextText key={Math.random()}>{images[6].comment}</ImagesCommentTextText>
             <ImagesCommentTextHost key={Math.random()}>
               {hostname}
@@ -177,7 +177,7 @@ class GalleryFeaturesItems extends Component {
         <ImagesPair key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} />,
         <ImagesComment key={Math.random()}>
           <ImagesCommentTextContainer key={Math.random()}>
-            <ImagesCommentTextIcon key={Math.random()} src="../../../public/img/icons/quotes.png" />
+            <ImagesCommentTextIcon key={Math.random()} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/quotes.png" />
             <ImagesCommentTextText key={Math.random()}>{images[7].comment}</ImagesCommentTextText>
             <ImagesCommentTextHost key={Math.random()}>
               {hostname}
@@ -236,7 +236,9 @@ class GalleryFeaturesItems extends Component {
   }
 
   render() {
-    const { amenities, name } = this.props;
+    const {
+      amenities, name, index, setRef,
+    } = this.props;
     const features = amenities.reduce((string, feature, index) => {
       if (index !== amenities.length - 1) {
         return `${string + feature} · `;
@@ -246,7 +248,7 @@ class GalleryFeaturesItems extends Component {
 
     return (
       <>
-        <TopContainer>
+        <TopContainer ref={(ref) => setRef(ref, index)}>
           {this.renderPositionClass(name, features)}
           <RightContainer id={name}>
             <ImagesContainer>

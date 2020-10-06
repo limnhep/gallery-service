@@ -56,7 +56,7 @@ class GallerySaveShareModal extends Component {
     const {
       favorites, handleToggleFavorite, modalState, handleModalState,
     } = this.props;
-    const defaultURL = '../../public/img/icons/emptylisting.png';
+    const defaultURL = 'https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/emptylisting.png';
     const { createListName } = this.state;
 
     const renderStays = (length) => {
@@ -93,7 +93,7 @@ class GallerySaveShareModal extends Component {
           <ModalNavBar>
             <ModalNavBarHeading>Save to a list</ModalNavBarHeading>
             <ModalNavBarBackButton
-              src="../../public/img/icons/close-button.png"
+              src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png"
               onClick={() => handleModalState(0)}
             />
           </ModalNavBar>
@@ -116,7 +116,7 @@ class GallerySaveShareModal extends Component {
           <ModalNavBar>
             <ModalNavBarHeading>Name this list</ModalNavBarHeading>
             <ModalNavBarBackButton
-              src="../../public/img/icons/close-button.png"
+              src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png"
               onClick={() => handleModalState(1)}
             />
           </ModalNavBar>
@@ -150,63 +150,63 @@ class GallerySaveShareModal extends Component {
         <ShareModal>
           <ShareModalContainer>
             <ShareModalCloseButtonContainer>
-              <ShareModalCloseButton src="../../public/img/icons/close-button.png" onClick={() => handleModalState(0)} />
+              <ShareModalCloseButton src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" onClick={() => handleModalState(0)} />
             </ShareModalCloseButtonContainer>
             <ShareModalHeading>
               Share this place with friends and family
             </ShareModalHeading>
             <ShareModalItem>
               <ShareModalItemLink>
-                <ShareModalItemIcon src="../../public/img/icons/facebook.png" />
+                <ShareModalItemIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/facebook.png" />
                 &nbsp;&nbsp;
                 Facebook
               </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
               <ShareModalItemLink>
-                <ShareModalItemIcon src="../../public/img/icons/twitter.png" />
+                <ShareModalItemIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/twitter.png" />
                 &nbsp;&nbsp;
                 Twitter
               </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
               <ShareModalItemLink>
-                <ShareModalItemIcon src="../../public/img/icons/copy.png" />
+                <ShareModalItemIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/copy.png" />
                 &nbsp;&nbsp;
                 Copy Link
               </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
               <ShareModalItemLink>
-                <ShareModalItemIcon src="../../public/img/icons/email.png" />
+                <ShareModalItemIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/email.png" />
                 &nbsp;&nbsp;
                 Email
               </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
               <ShareModalItemLink>
-                <ShareModalItemIcon src="../../public/img/icons/sms-bubble-speech.png" />
+                <ShareModalItemIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/sms-bubble-speech.png" />
                 &nbsp;&nbsp;
                 SMS
               </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
               <ShareModalItemLink>
-                <ShareModalItemIcon src="../../public/img/icons/messenger.png" />
+                <ShareModalItemIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/messenger.png" />
                 &nbsp;&nbsp;
                 Messenger
               </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
               <ShareModalItemLink>
-                <ShareModalItemIcon src="../../public/img/icons/whatsapp.png" />
+                <ShareModalItemIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/whatsapp.png" />
                 &nbsp;&nbsp;
                 WhatsApp
               </ShareModalItemLink>
             </ShareModalItem>
             <ShareModalItem>
               <ShareModalItemLink>
-                <ShareModalItemIcon src="../../public/img/icons/embed.svg" />
+                <ShareModalItemIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/embed.svg" />
                 &nbsp;&nbsp;
                 Embed
               </ShareModalItemLink>

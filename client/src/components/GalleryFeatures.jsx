@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
@@ -6,7 +7,7 @@ import React, { Component } from 'react';
 import GalleryOverviewItems from './subcomponents/GalleryOverviewItems.jsx';
 import GalleryFeaturesItems from './subcomponents/GalleryFeaturesItems.jsx';
 import {
-  TopContainer,
+  GalleryFeaturesContainer,
   Header,
   ToggleButton,
   Overview,
@@ -22,10 +23,15 @@ class GalleryFeatures extends Component {
     this.state = {
       stickyStyleRooms: {},
     };
+    this.roomRefs = [];
   }
 
   componentDidMount() {
     window.addEventListener('scroll', () => this.mountStickyHeading());
+  }
+
+  setRef(ref, index) {
+    this.roomRefs[index] = ref;
   }
 
   mountStickyHeading() {
@@ -54,14 +60,6 @@ class GalleryFeatures extends Component {
     const { listing, ModalToggle, setModalImage } = this.props;
     const { stickyStyleRooms } = this.state;
 
-    const overviewItems = listing.gallery.rooms.map((room) => (
-      <GalleryOverviewItems
-        name={room.name}
-        image={room.images[0].url}
-        key={Math.random()}
-      />
-    ));
-
     const amenitiesItems = listing.gallery.rooms.map((room, index) => (
       <GalleryFeaturesItems
         amenities={room.amenities}
@@ -69,20 +67,30 @@ class GalleryFeatures extends Component {
         images={room.images}
         index={index}
         name={room.name}
+        setRef={(ref) => this.setRef(ref, index)}
         setModalImage={setModalImage}
         sticky={stickyStyleRooms[room.name]}
         key={Math.random()}
       />
     ));
 
+    const overviewItems = listing.gallery.rooms.map((room, index) => (
+      <GalleryOverviewItems
+        name={room.name}
+        image={room.images[0].url}
+        index={index}
+        key={Math.random()}
+        scrollToRoom={(id) => this.roomRefs[id].scrollIntoView({ behavior: 'smooth' })}
+      />
+    ));
+
     return (
       <>
         {/* GALLERY FEATURES PARENT  */}
-
-        <TopContainer>
+        <GalleryFeaturesContainer>
           <Header>
             <ToggleButton onClick={ModalToggle}>
-              <img src="../public/img/icons/left-arrow.png" alt="img" />
+              <img src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow.png" alt="img" />
             </ToggleButton>
           </Header>
 
@@ -102,8 +110,7 @@ class GalleryFeatures extends Component {
           <AmenitiesModule>
             {amenitiesItems}
           </AmenitiesModule>
-        </TopContainer>
-
+        </GalleryFeaturesContainer>
       </>
     );
   }

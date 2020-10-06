@@ -66,7 +66,7 @@ class Gallery extends Component {
     } = this.props;
     const ModalToggle = this.props.toggle;
 
-    const dotIcon = (<img className="gallery-dot-icon" src="../../public/img/icons/dotdotdot.png" />);
+    const dotIcon = (<img className="gallery-dot-icon" src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/dotdotdot.png" />);
 
     return (
       <>

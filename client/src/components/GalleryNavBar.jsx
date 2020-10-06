@@ -410,7 +410,7 @@ class GalleryNavBar extends Component {
     const RenderLocationModel = (
       <NavBarSearchExpandedLocationModal onClick={(e) => e.stopPropagation()}>
         <LocationModalItemDiv onClick={() => this.setState({ location: 'Explore nearby destinations', searchBarState: searchBarState === 1 ? 2 : 7 })}>
-          <LocationModalItemImg src="../../public/img/icons/map2.png" />
+          <LocationModalItemImg src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/map2.png" />
           <LocationModalItemText>Explore nearby destinations</LocationModalItemText>
         </LocationModalItemDiv>
       </NavBarSearchExpandedLocationModal>
@@ -419,7 +419,7 @@ class GalleryNavBar extends Component {
     const RenderWorldModal = (
       <WorldModal onClick={(e) => e.stopPropagation()}>
         <WorldModalItem>
-          <WorldModalIcon src="../../public/img/icons/world.png" />
+          <WorldModalIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/world.png" />
           <WorldModalText>English (US)</WorldModalText>
         </WorldModalItem>
         <WorldModalItem>
@@ -439,13 +439,13 @@ class GalleryNavBar extends Component {
           <GuestModalIncrementContainer>
             <GuestModalIncrementContainerIcon
               valid={adults > 0}
-              src="../../public/img/icons/minus.png"
+              src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/minus.png"
               onClick={adults > 0 ? () => this.setState({ adults: adults - 1 }) : undefined}
             />
             <GuestModalItemTextGuestNumber>{adults}</GuestModalItemTextGuestNumber>
             <GuestModalIncrementContainerIcon
               valid
-              src="../../public/img/icons/add.png"
+              src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/add.png"
               onClick={() => this.setState({ adults: adults + 1 })}
             />
           </GuestModalIncrementContainer>
@@ -458,13 +458,13 @@ class GalleryNavBar extends Component {
           <GuestModalIncrementContainer>
             <GuestModalIncrementContainerIcon
               valid={children > 0}
-              src="../../public/img/icons/minus.png"
+              src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/minus.png"
               onClick={children > 0 ? () => this.setState({ children: children - 1 }) : undefined}
             />
             <GuestModalItemTextGuestNumber>{children}</GuestModalItemTextGuestNumber>
             <GuestModalIncrementContainerIcon
               valid
-              src="../../public/img/icons/add.png"
+              src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/add.png"
               onClick={() => this.setState({ children: children + 1 })}
             />
           </GuestModalIncrementContainer>
@@ -477,13 +477,13 @@ class GalleryNavBar extends Component {
           <GuestModalIncrementContainer>
             <GuestModalIncrementContainerIcon
               valid={infants > 0}
-              src="../../public/img/icons/minus.png"
+              src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/minus.png"
               onClick={infants > 0 ? () => this.setState({ infants: infants - 1 }) : undefined}
             />
             <GuestModalItemTextGuestNumber>{infants}</GuestModalItemTextGuestNumber>
             <GuestModalIncrementContainerIcon
               valid
-              src="../../public/img/icons/add.png"
+              src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/add.png"
               onClick={() => this.setState({ infants: infants + 1 })}
             />
           </GuestModalIncrementContainer>
@@ -667,14 +667,14 @@ class GalleryNavBar extends Component {
         <TopContainer onClick={(e) => this.handleCloseState(e)}>
           <NavBarContainer>
             <AirbnbIconContainer>
-              <AirbnbIcon src="../../public/img/icons/plus.png" />
+              <AirbnbIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/plus.png" />
             </AirbnbIconContainer>
             {searchBarState === 0
               ? (
                 <NavBarSearch onClick={(e) => this.handleSearchBarState(1, e)}>
                   <NavBarSearchText>Start your search</NavBarSearchText>
                   <NavBarSearchIconContainer>
-                    <NavBarSearchIcon src="../../public/img/icons/search-tool.png" />
+                    <NavBarSearchIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/search-tool.png" />
                   </NavBarSearchIconContainer>
                 </NavBarSearch>
               )
@@ -700,9 +700,9 @@ class GalleryNavBar extends Component {
               )}
             <ButtonsContainer>
               <ProfileIconButton onClick={(e) => this.handlePopUpState(2, e)}>
-                <MenuIcon src="../../public/img/icons/menu.png" />
+                <MenuIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/menu.png" />
                 {loggedIn
-                  ? <ProfileIconProfileImg src="../../public/img/icons/profile.png" />
+                  ? <ProfileIconProfileImg src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/profile.png" />
                   : (
                     <ProfileIconProfileDiv>
                       <AvatarIconSVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false">
