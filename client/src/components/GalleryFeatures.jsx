@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
 /* eslint-disable import/extensions */
@@ -12,7 +13,7 @@ import {
   OverviewHeadingContainer,
   OverviewHeadingContainerHeading,
   OverviewRoomsContainer,
-  AmenitiesModule
+  AmenitiesModule,
 } from '../../styled/galleryFeatures';
 
 class GalleryFeatures extends Component {
@@ -50,8 +51,8 @@ class GalleryFeatures extends Component {
   }
 
   render() {
-    const ModalToggle = this.props.toggle;
-    const { listing } = this.props;
+    const { listing, ModalToggle, setModalImage } = this.props;
+    const { stickyStyleRooms } = this.state;
 
     const overviewItems = listing.gallery.rooms.map((room) => (
       <GalleryOverviewItems
@@ -68,8 +69,8 @@ class GalleryFeatures extends Component {
         images={room.images}
         index={index}
         name={room.name}
-        setModalImage={this.props.setModalImage}
-        sticky={this.state.stickyStyleRooms[room.name]}
+        setModalImage={setModalImage}
+        sticky={stickyStyleRooms[room.name]}
         key={Math.random()}
       />
     ));

@@ -8,11 +8,7 @@ const listingSchema = new Schema({
     location: String,
     hostname: String,
     avatar: String,
-    rating: {
-        type: Number,
-        min: 0,
-        max: 5,
-    },
+    rating: String,
     guests: {
         type: Number,
         min: 0,

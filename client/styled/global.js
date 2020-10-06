@@ -23,6 +23,9 @@ time, mark, audio, video {
 	font: inherit;
     vertical-align: baseline;
     scroll-behavior: smooth;
+	box-sizing: border-box;
+	-moz-osx-font-smoothing: auto;
+	-webkit-font-smoothing: auto;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 

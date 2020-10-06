@@ -24,6 +24,15 @@ bottom: 0;
 border-radius: 100px;
 border-width: 0px;
 background-color: white; 
+
+&:focus {
+    outline:0;
+}
+
+&:hover {
+    cursor: pointer;
+    background-color: rgb(245, 245, 245); 
+}
 `;
 
 export const Overview = styled.div`
