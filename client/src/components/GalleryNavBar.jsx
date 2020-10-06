@@ -13,8 +13,11 @@ import {
   NavBarSearchCategoriesItem,
   NavBarSearchCategoriesItemHeading,
   NavBarSearchExpandedContainer,
+  NavBarSearchExperienceContainer,
   NavBarSearchExpandedCalendarFrom,
   NavBarSearchExpandedCalendarTo,
+  NavBarSearchExpandedExperienceCalendar,
+  NavBarSearchExpandedExperienceCalendarText,
   NavBarSearchExpandedLocation,
   NavBarSearchExpandedLocationModal,
   LocationModalItemDiv,
@@ -39,6 +42,8 @@ import {
   ExpandedSearchGuestContainer, // Expanded Search Bar Icon
   LargeSearchIconContainer, // Expanded Search Bar Icon
   LargeSearchIcon, // Expanded Search Bar Icon
+  LargeSearchIconText,
+  RoundSearchIconContainer,
   ButtonsContainer,
   BecomeAHostButton,
   WorldButtonContainer,
@@ -51,6 +56,8 @@ import {
   MenuIcon,
   ProfileIconButton,
   ProfileIconProfileImg,
+  ProfileIconProfileDiv,
+  AvatarIconSVG,
   ProfileModal,
   ProfileContainers,
   ProfileContainersDiv,
@@ -74,7 +81,7 @@ class GalleryNavBar extends Component {
     this.state = {
       searchBarState: 0,
       userModalState: 0,
-      loggedIn: true,
+      loggedIn: false,
       location: '',
       hoveredDate: null,
       startDate: null,
@@ -83,6 +90,7 @@ class GalleryNavBar extends Component {
       adults: 0,
       children: 0,
       infants: 0,
+      hoveredBoxBorderCheck: null,
     };
     this.setMonthIndex = this.setMonthIndex.bind(this);
     this.setCalendarDate = this.setCalendarDate.bind(this);
@@ -207,10 +215,18 @@ class GalleryNavBar extends Component {
   handleSearchBarState(state, e) {
     e.stopPropagation();
     const { searchBarState } = this.state;
-    if (state === searchBarState && state !== 1) {
-      this.setState({ searchBarState: 5, userModalState: 0 });
-    } else if (state === searchBarState && state === 1) {
-      this.setState({ searchBarState: 1, userModalState: 0 });
+    if (searchBarState <= 5) {
+      if (state === searchBarState && state !== 1) {
+        this.setState({ searchBarState: 5, userModalState: 0 });
+      } else if (state === searchBarState && state === 1) {
+        this.setState({ searchBarState: 1, userModalState: 0 });
+      } else {
+        this.setState({ searchBarState: state, userModalState: 0 });
+      }
+    } else if (state === searchBarState && state !== 8) {
+      this.setState({ searchBarState: 8, userModalState: 0 });
+    } else if (state === searchBarState && state === 6) {
+      this.setState({ searchBarState: 6, userModalState: 0 });
     } else {
       this.setState({ searchBarState: state, userModalState: 0 });
     }
@@ -256,6 +272,8 @@ class GalleryNavBar extends Component {
         this.setState({ userModalState: 1 });
       } else if (className.includes('ProfileIconButton') && userModalState === 1) {
         this.setState({ userModalState: 2 });
+      } else if (searchBarState > 5) {
+        this.setState({ searchBarState: 8 });
       } else if (searchBarState !== 0) {
         this.setState({ searchBarState: 5 });
       }
@@ -264,11 +282,11 @@ class GalleryNavBar extends Component {
 
   render() {
     const {
-      adults, infants, children, location, loggedIn, searchBarState, userModalState,
+      adults, infants, children, hoveredBoxBorderCheck, location, loggedIn, searchBarState, userModalState,
     } = this.state;
     const {
       startDate, endDate, hoveredDate, selectedMonthIndex,
-    } = this.state;
+    } = this.state; // Calendar
     const totalGuests = adults + infants + children;
 
     const RenderProfileModal = (
@@ -391,7 +409,7 @@ class GalleryNavBar extends Component {
 
     const RenderLocationModel = (
       <NavBarSearchExpandedLocationModal onClick={(e) => e.stopPropagation()}>
-        <LocationModalItemDiv onClick={() => this.setState({ location: 'Explore nearby destinations', searchBarState: 2})}>
+        <LocationModalItemDiv onClick={() => this.setState({ location: 'Explore nearby destinations', searchBarState: searchBarState === 1 ? 2 : 7 })}>
           <LocationModalItemImg src="../../public/img/icons/map2.png" />
           <LocationModalItemText>Explore nearby destinations</LocationModalItemText>
         </LocationModalItemDiv>
@@ -480,6 +498,9 @@ class GalleryNavBar extends Component {
             <NavBarSearchExpandedLocation
               state={searchBarState}
               modal={userModalState}
+              hoveringState={hoveredBoxBorderCheck}
+              onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 1 })}
+              onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
               onClick={(e) => this.handleSearchBarState(1, e)}
             >
               <SearchInputContainer>
@@ -496,6 +517,9 @@ class GalleryNavBar extends Component {
             </NavBarSearchExpandedLocation>
             <NavBarSearchExpandedCalendarFrom
               state={searchBarState}
+              hoveringState={hoveredBoxBorderCheck}
+              onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 2 })}
+              onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
               onClick={(e) => this.handleSearchBarState(2, e)}
             >
               <SearchHeading>Check in</SearchHeading>
@@ -503,6 +527,9 @@ class GalleryNavBar extends Component {
             </NavBarSearchExpandedCalendarFrom>
             <NavBarSearchExpandedCalendarTo
               state={searchBarState}
+              hoveringState={hoveredBoxBorderCheck}
+              onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 3 })}
+              onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
               onClick={(e) => this.handleSearchBarState(3, e)}
             >
               <SearchHeading>Check out</SearchHeading>
@@ -510,15 +537,39 @@ class GalleryNavBar extends Component {
             </NavBarSearchExpandedCalendarTo>
             <ExpandedSearchGuestContainer
               state={searchBarState}
+              hoveringState={hoveredBoxBorderCheck}
+              onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 4 })}
+              onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
               onClick={(e) => this.handleSearchBarState(4, e)}
             >
               <NavBarSearchExpandedGuests>
                 <SearchHeading>Guests</SearchHeading>
                 <SearchSecondary bold={!!totalGuests}>{totalGuests === 0 ? 'Add guests' : `${totalGuests} guests`}</SearchSecondary>
               </NavBarSearchExpandedGuests>
-              <LargeSearchIconContainer />
+              {searchBarState !== 5
+                ? (
+                  <LargeSearchIconContainer>
+                    <LargeSearchIcon viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                      <g>
+                        <path d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9" />
+                      </g>
+                    </LargeSearchIcon>
+                    <LargeSearchIconText>
+                      Search
+                    </LargeSearchIconText>
+                  </LargeSearchIconContainer>
+                )
+                : (
+                  <RoundSearchIconContainer>
+                    <LargeSearchIcon viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                      <g>
+                        <path d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9" />
+                      </g>
+                    </LargeSearchIcon>
+                  </RoundSearchIconContainer>
+                )}
             </ExpandedSearchGuestContainer>
-            {searchBarState === 1 && RenderLocationModel}
+            {(searchBarState === 1 || (searchBarState === 6 && !location)) && RenderLocationModel}
             {(searchBarState === 2 || searchBarState === 3) && (
             <GallerySearchBarCalendar
               props={{
@@ -531,6 +582,81 @@ class GalleryNavBar extends Component {
             )}
             {searchBarState === 4 && RenderGuestModal}
           </NavBarSearchExpandedContainer>
+        </DivPadding>
+        <NavBarModal onClick={(e) => this.handleSearchBarState(0, e)} />
+      </>
+    );
+
+    const RenderExperienceSearchBar = (
+      <>
+        <DivPadding>
+          <NavBarSearchExperienceContainer state={searchBarState} modal={userModalState}>
+            <NavBarSearchExpandedLocation
+              state={searchBarState}
+              modal={userModalState}
+              hoveringState={hoveredBoxBorderCheck}
+              onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 6 })}
+              onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
+              onClick={(e) => this.handleSearchBarState(6, e)}
+            >
+              <SearchInputContainer>
+                <SearchHeading>Location</SearchHeading>
+                <SearchInput
+                  value={location}
+                  placeholder="Where are you going?"
+                  bold={location}
+                  state={searchBarState}
+                  modal={userModalState}
+                  onChange={(event) => this.setState({ location: event.target.value })}
+                />
+              </SearchInputContainer>
+            </NavBarSearchExpandedLocation>
+            <NavBarSearchExpandedExperienceCalendar
+              state={searchBarState}
+              hoveringState={hoveredBoxBorderCheck}
+              onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 7 })}
+              onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
+              onClick={(e) => this.handleSearchBarState(7, e)}
+            >
+              <NavBarSearchExpandedExperienceCalendarText>
+                <SearchHeading>Check out</SearchHeading>
+                <SearchSecondary bold={endDate}>{endDate ? `${endDate[1]} ${endDate[2]}` : 'Add when you want to go' }</SearchSecondary>
+              </NavBarSearchExpandedExperienceCalendarText>
+              {searchBarState !== 8
+                ? (
+                  <LargeSearchIconContainer>
+                    <LargeSearchIcon viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                      <g>
+                        <path d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9" />
+                      </g>
+                    </LargeSearchIcon>
+                    <LargeSearchIconText>
+                      Search
+                    </LargeSearchIconText>
+                  </LargeSearchIconContainer>
+                )
+                : (
+                  <RoundSearchIconContainer>
+                    <LargeSearchIcon viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                      <g>
+                        <path d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9" />
+                      </g>
+                    </LargeSearchIcon>
+                  </RoundSearchIconContainer>
+                )}
+            </NavBarSearchExpandedExperienceCalendar>
+            {searchBarState === 6 && RenderLocationModel}
+            {(searchBarState === 7) && (
+            <GallerySearchBarCalendar
+              props={{
+                calendar, startDate, endDate, selectedMonthIndex, hoveredDate,
+              }}
+              setHoveredDate={(date) => this.setState({ hoveredDate: date })}
+              setMonthIndex={this.setMonthIndex}
+              setCalendarDate={this.setCalendarDate}
+            />
+            )}
+          </NavBarSearchExperienceContainer>
         </DivPadding>
         <NavBarModal onClick={(e) => this.handleSearchBarState(0, e)} />
       </>
@@ -554,16 +680,18 @@ class GalleryNavBar extends Component {
               )
               : (
                 <NavBarSearchCategories>
-                  <NavBarSearchCategoriesItem>
+                  <NavBarSearchCategoriesItem onClick={(e) => e.stopPropagation()}>
                     <NavBarSearchCategoriesItemHeading
                       valid={searchBarState >= 1 && searchBarState <= 5}
+                      onClick={searchBarState > 5 ? (e) => this.handleSearchBarState(1, e) : null}
                     >
                       Places to stay
                     </NavBarSearchCategoriesItemHeading>
                   </NavBarSearchCategoriesItem>
-                  <NavBarSearchCategoriesItem>
+                  <NavBarSearchCategoriesItem onClick={(e) => e.stopPropagation()}>
                     <NavBarSearchCategoriesItemHeading
                       valid={searchBarState >= 6 && searchBarState <= 8}
+                      onClick={searchBarState <= 5 ? (e) => this.handleSearchBarState(6, e) : null}
                     >
                       Experiences
                     </NavBarSearchCategoriesItemHeading>
@@ -573,7 +701,15 @@ class GalleryNavBar extends Component {
             <ButtonsContainer>
               <ProfileIconButton onClick={(e) => this.handlePopUpState(2, e)}>
                 <MenuIcon src="../../public/img/icons/menu.png" />
-                <ProfileIconProfileImg src="../../public/img/icons/profile.png" />
+                {loggedIn
+                  ? <ProfileIconProfileImg src="../../public/img/icons/profile.png" />
+                  : (
+                    <ProfileIconProfileDiv>
+                      <AvatarIconSVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false">
+                        <path d="m16 .7c-8.437 0-15.3 6.863-15.3 15.3s6.863 15.3 15.3 15.3 15.3-6.863 15.3-15.3-6.863-15.3-15.3-15.3zm0 28c-4.021 0-7.605-1.884-9.933-4.81a12.425 12.425 0 0 1 6.451-4.4 6.507 6.507 0 0 1 -3.018-5.49c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5a6.513 6.513 0 0 1 -3.019 5.491 12.42 12.42 0 0 1 6.452 4.4c-2.328 2.925-5.912 4.809-9.933 4.809z" />
+                      </AvatarIconSVG>
+                    </ProfileIconProfileDiv>
+                  )}
               </ProfileIconButton>
               <WorldButtonContainer onClick={(e) => this.handlePopUpState(1, e)}>
                 <WorldButtonIcon src="../../public/img/icons/world.png" />
@@ -587,7 +723,8 @@ class GalleryNavBar extends Component {
               {userModalState === 1 && RenderWorldModal}
             </ButtonsContainer>
           </NavBarContainer>
-          {searchBarState !== 0 && RenderExpandedSearchBar}
+          {(searchBarState > 0 && searchBarState <= 5) && RenderExpandedSearchBar}
+          {(searchBarState >= 6 && searchBarState <= 8) && RenderExperienceSearchBar}
           {userModalState > 0 && <DivPaddingToExitModal onClick={() => this.setState({ searchBarState: 0, userModalState: 0 })} />}
         </TopContainer>
       </>

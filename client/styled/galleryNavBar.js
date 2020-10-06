@@ -60,7 +60,7 @@ flex-basis: 100%;
 
 export const SearchInputContainer = styled.div`
 height: 36px;
-width: 183px;
+width: 100%;
 `;
 
 export const SearchInput = styled.input`
@@ -70,7 +70,7 @@ font-size: 14px;
 line-height: 18px;
 font-weight: 600px; 
 border: none;
-background-color: ${({ state }) => (state === 1 || state === 5 ? 'white' : '#F6F6F6')};
+background-color: ${({ state }) => ((state === 1 || state === 5 || state === 6 || state === 8) ? 'white' : '#F6F6F6')};
 padding: 0 0;
 overflow: hidden; 
 text-overflow: ellipsis; 
@@ -79,7 +79,7 @@ white-space: nowrap;
 flex-basis: 100%;
 
 &:hover {
-    background-color: ${({ state }) => (state === 1 ? 'white' : '#F6F6F6')}
+    background-color: ${({ state }) => ((state === 1 || state === 6) ? 'white' : '#F6F6F6')}
 }
 
 &:focus {
@@ -131,13 +131,45 @@ border-bottom-right-radius: 50px 50px;
 
 border: 1px solid rgb(235,235,235);
 
-display: flex;
-justify-content: space-between;
+display: grid;
+grid-template-columns: ${({ state }) => (state === 5 ? '270px 179px 179px 227px' : '248px 165px 165px 278px')};
+`;
+
+export const NavBarSearchExperienceContainer = styled.div`
+--white-bg: white;
+--grey-bg: #F6F6F6;
+height: 66px;
+width: 850px;
+background-color: ${({ state }) => (state < 8 ? '#F6F6F6' : 'white')};
+
+${({ modal }) => {
+    if (modal > 0) {
+      return 'background-color: white;';
+    }
+    return '';
+  }}
+
+position: relative;
+
+margin: 12px auto 0 auto;
+padding: 0 0;
+
+border-top-left-radius: 50px 50px;
+border-bottom-left-radius: 50px 50px;
+border-top-right-radius: 50px 50px;
+border-bottom-right-radius: 50px 50px;
+
+border: 1px solid rgb(235,235,235);
+
+display: grid;
+grid-template-columns: ${({ state }) => (state === 8 ? '410px 440px' : '375px 474px')};
 `;
 
 export const NavBarSearchExpandedLocation = styled.div`
 height: 66px;
-width: 270px;
+width: 100%;
+
+grid-column: 1;
 
 display: flex;
 align-items: center;
@@ -148,11 +180,13 @@ padding-left 32px;
 border-top-left-radius: 50px 50px;
 border-bottom-left-radius: 50px 50px;
 
-box-shadow: 0 1px 15px rgb(240, 240, 240);
+-webkit-box-shadow: 3px 3px 15px transparent;
+-moz-box-shadow: 3px 3px 15px transparent;
+box-shadow: 3px 3px 15px transparent;
 
 ${({ state }) => {
-    if (state === 1) {
-      return 'box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-right-radius: 50px 50px;border-bottom-right-radius: 50px 50px;}';
+    if (state === 1 || state === 6) {
+      return '-webkit-box-shadow: 3px 3px 15px transparent; -moz-box-shadow: 3px 3px 15px transparent; box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-right-radius: 50px 50px;border-bottom-right-radius: 50px 50px;}';
     }
     return 'box-shadow: 0 0 0 white;';
   }}
@@ -173,11 +207,11 @@ ${({ state, modal }) => {
     ${({ state }) => state !== 1 && 'background-color: rgb(235,235,235)'};
 
 
-    ${({ state }) => state === 1 && 'background-color: white'}
+    ${({ state }) => (state === 1 || state === 6) && 'background-color: white'};
 
 
     ${SearchInput} {
-        background-color: ${({ state }) => (state === 1 ? 'white' : 'rgb(235,235,235)')};
+        background-color: ${({ state }) => ((state === 1 || state === 6) ? 'white' : 'rgb(235,235,235)')};
     }
 }
 `;
@@ -244,9 +278,23 @@ align-items: center;
 }
 `;
 
+const ExpandedSearchDividerLeft = css`
+&:after {
+  position: absolute;
+  height: 32px;
+  content: '';
+  left: 0;
+  border-left: 1px solid lightgrey;
+}
+`;
+
 export const NavBarSearchExpandedCalendarFrom = styled.div`
 height: 66px;
-width: 180px;
+width: 100%;
+
+position: relative;
+
+grid-column: 2;
 
 display: flex;
 align-items: center;
@@ -254,9 +302,15 @@ flex-wrap: wrap;
 align-content: center;
 padding-left: 24px;
 
+-webkit-box-shadow: 3px 3px 15px transparent;
+-moz-box-shadow: 3px 3px 15px transparent;
+box-shadow: 3px 3px 15px transparent;
+
+${({ state, hoveringState }) => (state !== 1 && state !== 2 && hoveringState !== 1 && hoveringState !== 2) && ExpandedSearchDividerLeft}
+
 ${({ state }) => {
     if (state === 2) {
-      return 'box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-left-radius: 50px 50px; border-bottom-left-radius: 50px 50px; border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px;}';
+      return '-webkit-box-shadow: 3px 3px 15px transparent; -moz-box-shadow: 3px 3px 15px transparent; box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-left-radius: 50px 50px; border-bottom-left-radius: 50px 50px; border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px;}';
     }
     return '';
   }}
@@ -282,7 +336,11 @@ ${({ modal }) => {
 
 export const NavBarSearchExpandedCalendarTo = styled.div`
 height: 66px;
-width: 180px;
+width: 100%;
+
+position: relative;
+
+grid-column: 3;
 
 display: flex;
 align-items: center;
@@ -290,9 +348,15 @@ flex-wrap: wrap;
 align-content: center;
 padding-left: 24px;
 
+-webkit-box-shadow: 3px 3px 15px transparent;
+-moz-box-shadow: 3px 3px 15px transparent;
+box-shadow: 3px 3px 15px transparent;
+
+${({ state, hoveringState }) => (state !== 2 && state !== 3 && hoveringState !== 2 && hoveringState !== 3) && ExpandedSearchDividerLeft}
+
 ${({ state }) => {
     if (state === 3) {
-      return 'box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-left-radius: 50px 50px;border-bottom-left-radius: 50px 50px; border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px;}';
+      return '-webkit-box-shadow: 3px 3px 15px transparent; -moz-box-shadow: 3px 3px 15px transparent; box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-left-radius: 50px 50px;border-bottom-left-radius: 50px 50px; border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px;}';
     }
     return '';
   }}
@@ -314,6 +378,67 @@ ${({ modal }) => {
 
     ${({ state }) => state === 3 && 'background-color: white'}
 }
+`;
+
+export const NavBarSearchExpandedExperienceCalendar = styled.div`
+height: 66px;
+width: 100%;
+
+position: relative;
+
+grid-column: 2;
+
+
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+padding-left: 24px;
+padding-right: 8px;
+
+-webkit-box-shadow: 3px 3px 15px transparent;
+-moz-box-shadow: 3px 3px 15px transparent;
+box-shadow: 3px 3px 15px transparent;
+
+${({ state, hoveringState }) => (state !== 6 && state !== 7 && hoveringState !== 6 && hoveringState !== 7) && ExpandedSearchDividerLeft}
+
+${({ state }) => {
+    if (state === 7) {
+      return '-webkit-box-shadow: 3px 3px 15px transparent; -moz-box-shadow: 3px 3px 15px transparent; box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-left-radius: 50px 50px;border-bottom-left-radius: 50px 50px; border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px;}';
+    }
+    return '';
+  }}
+
+${({ modal }) => {
+    if (modal > 0) {
+      return 'background-color: none; box-shadow: 0 0 0 white;';
+    }
+    return '';
+  }}
+
+&:hover {
+    cursor: pointer;
+    border-top-right-radius: 50px 50px;
+    border-bottom-right-radius: 50px 50px;
+    border-top-left-radius: 50px 50px;
+    border-bottom-left-radius: 50px 50px;
+    background-color: rgb(235,235,235);
+
+    ${({ state }) => state === 7 && 'background-color: white'}
+}
+`;
+
+export const NavBarSearchExpandedExperienceCalendarText = styled.div`
+height: 66px;
+width: 322px;
+
+display: flex;
+flex-grow: 1.4;
+align-items: center;
+flex-wrap: wrap;
+align-content: center;
+
+border-top-right-radius: 50px 50px;
+border-bottom-right-radius: 50px 50px;
 `;
 
 export const NavBarSearchExpandedCalendarModal = styled.div`
@@ -464,6 +589,8 @@ display: flex;
 justify-content: center;
 align-items: center;
 
+border: 1px solid parent;
+
 &:hover {
   cursor: ${({ validDay }) => (validDay ? 'pointer' : 'auto')};
    ${({ validDay }) => (validDay ? 'border-radius: 100px; border: 1px solid black' : '')};
@@ -483,15 +610,24 @@ user-select: none;
 `;
 
 export const ExpandedSearchGuestContainer = styled.div`
-width: 223px;
+width: 100%;
 height: 66px;
-padding-right: 8px;
+
+grid-column: 4;
+
+padding-right: 12px;
 display: flex;
 align-items: center;
 
+position: relative; 
+
+box-shadow: 3px 3px 15px transparent;
+
+${({ state, hoveringState }) => (state !== 3 && state !== 4 && hoveringState !== 3 && hoveringState !== 4) && ExpandedSearchDividerLeft}
+
 ${({ state }) => {
     if (state === 4) {
-      return 'box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-left-radius: 50px 50px; border-bottom-left-radius: 50px 50px; border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px; }';
+      return 'padding-right: 8px; box-shadow: 3px 3px 15px rgb(210, 210, 210); background-color: var(--white-bg); border-top-left-radius: 50px 50px; border-bottom-left-radius: 50px 50px; border-top-right-radius: 50px 50px; border-bottom-right-radius: 50px 50px; }';
     }
     return '';
   }}
@@ -591,28 +727,68 @@ opacity: ${({ valid }) => (valid ? '0.8' : '0.2')};
 }
 `;
 
-export const LargeSearchIconContainer = styled.div`
+export const RoundSearchIconContainer = styled.div`
 height: 48px;
 width: 48px;
 border-radius: 50%;
 background-color: rgb(146,23,77);
 
-position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
 `;
 
-export const LargeSearchIcon = styled.img`
-position: absolute;
-z-index: 5;
+export const LargeSearchIconContainer = styled.div`
+height: 48px;
+width: 120px;
+flex-basis: 120px;
 
-top: 50%;
-left: 50%;
+border-top-right-radius: 25px 25px;
+border-bottom-right-radius: 25px 25px;
+border-top-left-radius: 25px 25px;
+border-bottom-left-radius: 25px 25px;
 
-transform: translate(-50%, -50%);
+--mouse-x: 30.625;
+--mouse-y: 87.5;
+
+transition: opacity 1.25s ease 0s !important;
+
+background-size: 200% 200% !important;
+background-image: radial-gradient(circle at center center, rgb(255, 56, 92) 0%, rgb(230, 30, 77) 27.5%, rgb(227, 28, 95) 40%, rgb(215, 4, 102) 57.5%, rgb(189, 30, 89) 75%, rgb(189, 30, 89) 100%) !important;
+background-position: calc((100 - var(--mouse-x, 0)) * 1%) calc((100 - var(--mouse-y, 0)) * 1%);
+
+
+grid-column: 5;
+
+display: flex;
+justify-content: center;
+align-items: center;
+`;
+
+export const LargeSearchIcon = styled.svg`
+display: block; 
+fill: none; 
+color: white;
+height: 16px; 
+width: 16px; 
+stroke: currentcolor; 
+stroke-width: 4; 
+overflow: visible;"
+`;
+
+export const LargeSearchIconText = styled.div`
+padding-left: 8px;
+
+font-family: 'Airbnb Cereal App Light';
+color: white;
+font-size: 16px;
+line-height: 16px;
+font-weight: 600px; 
 `;
 
 export const NavBarSearchExpandedGuests = styled.div`
 height: 66px;
-width: 172px;
+width: 166px;
 
 display: flex;
 align-items: center;
@@ -661,8 +837,6 @@ width: 300px;
 
 display: flex;
 align-items: center;
-&:hover {
-}
 `;
 
 export const NavBarSearchCategoriesItem = styled.div`
@@ -953,6 +1127,17 @@ border-radius: 50px;
 margin-left: 13px;
 `;
 
+export const ProfileIconProfileDiv = styled.div`
+height: 30px;
+width: 30px;
+
+pointer-events: none;
+user-select: none;
+
+border-radius: 50px;
+margin-left: 13px;
+`;
+
 export const ProfileModal = styled.div`
 width: 243px;
 background-color: white;
@@ -1034,4 +1219,13 @@ align-items: center;
         background-color: #F6F6F6;
     }
 }
+`;
+
+// SVGS
+
+export const AvatarIconSVG = styled.svg`
+display: block; 
+height: 100%; 
+width: 100%; 
+fill: #717171;
 `;
