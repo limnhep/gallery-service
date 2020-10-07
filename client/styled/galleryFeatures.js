@@ -4,10 +4,10 @@ import { slideUp } from './keyframes/galleryAnimations';
 export const GalleryFeaturesContainer = styled.div`
 padding-bottom: 54px;
 
-animation:         0.4s ${slideUp} linear;
--webkit-animation: 0.4s ${slideUp} linear;
--moz-animation:    0.4s ${slideUp} linear;
--o-animation:      0.4s ${slideUp} linear;
+// animation:         0.4s ${slideUp} linear;
+// -webkit-animation: 0.4s ${slideUp} linear;
+// -moz-animation:    0.4s ${slideUp} linear;
+// -o-animation:      0.4s ${slideUp} linear;
 `;
 
 export const Header = styled.div`

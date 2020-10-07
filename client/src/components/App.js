@@ -3,6 +3,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import { Helmet } from 'react-helmet';
 import GalleryMain from './GalleryMain.jsx';
 import GalleryFeatures from './GalleryFeatures.jsx';
@@ -179,11 +180,19 @@ class App extends Component {
         );
       } if (features && !modal) {
         return (
-          <GalleryFeatures
-            listing={listing}
-            ModalToggle={() => this.setState({ features: !features })}
-            setModalImage={(url) => this.setModalImage(url)}
-          />
+          <CSSTransition
+            in={features && !modal}
+            classNames="slideIn"
+            timeout={300}
+            appear
+            exit
+          >
+            <GalleryFeatures
+              listing={listing}
+              ModalToggle={() => this.setState({ features: !features })}
+              setModalImage={(url) => this.setModalImage(url)}
+            />
+          </CSSTransition>
         );
       }
       return null;

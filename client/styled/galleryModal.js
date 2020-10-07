@@ -113,8 +113,7 @@ transform: translateY(-50%);
 
 &:hover {
     cursor: pointer;
-    -webkit-filter: brightness(85%);
-    transition: -webkit-filter 0.3s;
+    background-color: #F7F7F7;
 }
 `;
 
@@ -142,8 +141,7 @@ transform: translateY(-50%);
 
 &:hover {
     cursor: pointer;
-    -webkit-filter: brightness(85%);
-    transition: -webkit-filter 0.3s;
+    background-color: #F7F7F7;
 }
 `;
 
@@ -155,11 +153,6 @@ max-height: 78vh;
 
 // animation: 0.35s ${ImageFadeIn} ease-in-out;
 // -webkit-animation: 0.35s ${ImageFadeIn} ease-in-out;
-
-&.fade-enter { opacity: 0 },
-&.fade-enter-active { opacity: 1 },
-&.fade-exit { opacity: 1 },
-&.fade-exit-active: { opacity: 0 },
 `;
 
 export const ImageFrameComment = styled.h4`
