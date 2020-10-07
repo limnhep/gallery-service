@@ -2,10 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 import { createGlobalStyle } from 'styled-components';
 
-import AirbnbCerealBlack from '../public/fonts/AirbnbCerealBlack.woff';
-import AirbnbCerealBold from '../public/fonts/AirbnbCerealBold.woff';
 import AirbnbCerealBook from '../public/fonts/AirbnbCerealBook.woff';
-import AirbnbCerealExtraBold from '../public/fonts/AirbnbCerealExtraBold.woff';
 import AirbnbCerealLight from '../public/fonts/AirbnbCerealLight.woff';
 import AirbnbCerealMedium from '../public/fonts/AirbnbCerealMedium.woff';
 
@@ -85,29 +82,5 @@ font-family: 'Airbnb Cereal App Medium';
 font-style: normal;
 font-weight: normal;
 src: local('Airbnb Cereal App Medium'), url(${AirbnbCerealMedium}) format('woff');
-}
-
-
-@font-face {
-font-family: 'Airbnb Cereal App Bold';
-font-style: normal;
-font-weight: normal;
-src: local('Airbnb Cereal App Bold'), url(${AirbnbCerealBold}) format('woff');
-}
-
-
-@font-face {
-font-family: 'Airbnb Cereal App Extra Bold';
-font-style: normal;
-font-weight: normal;
-src: local('Airbnb Cereal App Extra Bold'), url(${AirbnbCerealExtraBold}) format('woff');
-}
-
-
-@font-face {
-font-family: 'Airbnb Cereal App Black';
-font-style: normal;
-font-weight: normal;
-src: local('Airbnb Cereal App Black'), url(${AirbnbCerealBlack}) format('woff');
 }
 `;

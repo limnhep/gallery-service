@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { ImageFadeIn } from './keyframes/galleryAnimations';
 
 export const TopContainer = styled.div`
-height: 100vh;
+height: 100%;
 width: 100vw;
 position: relative;
 `;
@@ -151,8 +150,27 @@ width: auto;
 max-width: 80vw;
 max-height: 78vh;
 
-// animation: 0.35s ${ImageFadeIn} ease-in-out;
-// -webkit-animation: 0.35s ${ImageFadeIn} ease-in-out;
+&.fade-appear {
+    opacity: 0;
+}
+&.fade-enter-active {
+    opacity: 1;
+    transition: opacity 150ms ease-out; 
+}
+&.fade-enter {
+    opacity: 0;
+}
+&.fade-enter-active {
+    opacity: 1;
+    transition: opacity 100ms ease-out 250ms; 
+}
+&.fade-exit {
+    display: none;
+
+}
+&.fade-exit-active {
+    display: none;
+}
 `;
 
 export const ImageFrameComment = styled.h4`

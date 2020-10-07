@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const AppTopContainer = styled.div`
 display: grid;
-grid-template-rows: 80px minmax(88px, max-content) minmax(min-content, max-content) max-content;
+grid-template-rows: minmax(80px, max-content) minmax(88px, max-content) minmax(min-content, max-content) max-content;
 justify-items: center;
 
 @media screen and (max-width: 750px) {
@@ -432,7 +432,13 @@ background-color:orange;
 `;
 
 export const GalleryIcon = styled.img`
-height:22px;
+height: 18px;
 vertical-align: middle;
-padding-right:4px;
+padding-bottom: 4px;
+`;
+
+export const GalleryDotIcon = styled.img`
+height: 22px;
+vertical-align: middle;
+padding-right: 4px;
 `;

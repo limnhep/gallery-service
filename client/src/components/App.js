@@ -32,6 +32,7 @@ class App extends Component {
       selectedImage: '',
       modalState: 0,
       savedListing: false,
+      fontReady: false,
     };
     this.setModalImage = this.setModalImage.bind(this);
     this.handleAddCategory = this.handleAddCategory.bind(this);
@@ -158,10 +159,10 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.imagesArray.length) {
+    const { imagesArray, fontReady } = this.state;
+    if (!imagesArray.length) {
       return (
         <>
-          Loading
         </>
       );
     }

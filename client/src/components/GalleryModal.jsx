@@ -61,7 +61,7 @@ const GalleryModal = ({
         <TransitionGroup>
           <CSSTransition
             key={selectedImage}
-            timeout={350}
+            timeout={400}
             classNames="fade"
             appear
           >

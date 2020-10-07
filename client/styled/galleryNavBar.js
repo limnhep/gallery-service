@@ -13,10 +13,10 @@ align-items: center;
 `;
 
 export const DivPadding = styled.div`
-padding-top: 80px;
 height: 112px;
 width: 100vw;
 position: absolute;
+top: 64px;
 z-index: 18;
 background-color: white;
 border-bottom: 1px solid rgb(245, 245, 245);
@@ -36,9 +36,10 @@ height: 100vw;
 width: 100vw;
 position: fixed;
 z-index: 5;
-background-color: pink;
 opacity: 0.5;
 background-color: #484848;
+
+top: 80px;
 `;
 
 export const NavBarContainer = styled.div`
@@ -62,7 +63,8 @@ align-items: center;
 `;
 
 export const NavBarContainerMinWidth = styled.div`
-
+height: 0px;
+width: 0px;
 display: none;
 
 @media screen and (max-width: 750px) {
