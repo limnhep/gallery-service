@@ -16,8 +16,8 @@ import {
 const GalleryTitleBar = ({
   handleToggleFavorite, listing, savedListing, handleModalState,
 }) => {
-  const starIcon = (<GalleryIcon src="../../public/img/icons/star.png" />);
-  const medalIcon = (<GalleryIcon src="../../public/img/icons/medal.png" />);
+  const starIcon = (<GalleryIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/star.png" />);
+  const medalIcon = (<GalleryIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/medal.png" />);
 
   return (
     <TitleContainer>
@@ -47,7 +47,7 @@ const GalleryTitleBar = ({
           ? (
             <>
               <NavBarButtons onClick={() => handleToggleFavorite('remove')}>
-                <NavBarIcon src="../../public/img/icons/heart.png" />
+                <NavBarIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/heart.png" />
                 <>&nbsp;&nbsp;</>
                 <NavBarButtonsFont>Saved</NavBarButtonsFont>
               </NavBarButtons>
@@ -56,14 +56,14 @@ const GalleryTitleBar = ({
           : (
             <>
               <NavBarButtons onClick={() => handleModalState(1)}>
-                <NavBarIcon src="../../public/img/icons/noheart.png" />
+                <NavBarIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/noheart.png" />
                 <>&nbsp;&nbsp;</>
                 <NavBarButtonsFont>Save</NavBarButtonsFont>
               </NavBarButtons>
             </>
           )}
         <NavBarButtons onClick={() => handleModalState(3)}>
-          <NavBarIcon src="../../public/img/icons/upload.svg" />
+          <NavBarIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/upload.svg" />
                   &nbsp;&nbsp;
           <NavBarButtonsFont>Share</NavBarButtonsFont>
         </NavBarButtons>

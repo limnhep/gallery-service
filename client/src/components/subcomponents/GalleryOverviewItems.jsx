@@ -7,8 +7,10 @@ import {
   RoomsContainerItemsTitle,
 } from '../../../styled/galleryOverviewItems';
 
-const GalleryOverviewItems = ({ name, image }) => (
-  <RoomsContainerItems>
+const GalleryOverviewItems = ({
+  name, image, index, scrollToRoom,
+}) => (
+  <RoomsContainerItems onClick={() => scrollToRoom(index)}>
     <RoomsContainerItemsImg src={image} alt="img" />
     <RoomsContainerItemsTitle>{name}</RoomsContainerItemsTitle>
   </RoomsContainerItems>
