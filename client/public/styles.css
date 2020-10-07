@@ -23,14 +23,14 @@
 
 /* // -------------------------------------------------------- -> */
 
-.slideIn-appear {
+.slide-appear {
     transform: translateY(100%);
     opacity: 0;
     overflow: hidden;
     overflow-y: hidden;
 
   }
-.slideIn-appear-active {
+.slide-appear-active {
     transform: translateY(0);
     opacity: 1;
     overflow: visible;

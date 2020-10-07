@@ -31,6 +31,7 @@ import {
   TitleAirbnbIconContainer,
   TitleAirbnbIconMinWidth,
   GalleryIcon,
+  GalleryDotIcon,
 } from '../../styled/galleryMain';
 
 import {
@@ -74,7 +75,7 @@ class Gallery extends Component {
     } = this.props;
     const ModalToggle = this.props.toggle;
 
-    const dotIcon = (<GalleryIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/dotdotdot.png" />);
+    const dotIcon = (<GalleryDotIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/dotdotdot.png" />);
 
     return (
       <>

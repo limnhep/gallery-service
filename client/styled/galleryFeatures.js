@@ -3,6 +3,21 @@ import styled from 'styled-components';
 export const GalleryFeaturesContainer = styled.div`
 padding-bottom: 54px;
 width: 100%;
+
+&.slide-appear {
+    transform: translateY(100%);
+    opacity: 0;
+    overflow: hidden;
+    overflow-y: hidden;
+
+  }
+&.slide-appear-active {
+    transform: translateY(0);
+    opacity: 1;
+    overflow: visible;
+    overflow-y: visible;
+    transition: transform 150ms ease, opacity 150ms ease, overflow 150ms ease, overflow-y 150ms ease;
+}
 `;
 
 export const Header = styled.div`
