@@ -11,9 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
-const folderPath = path.join(__dirname, '..');
-
-app.use('/', express.static(folderPath + '/client/public'))
+app.use('/', express.static(__dirname + '/client/dist'))
 
 //MONGOOSE CONNECTION
 mongoose.connect('mongodb://localhost:27017/airbnb_plus', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {

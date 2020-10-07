@@ -11,10 +11,11 @@ import GalleryTitleBar from './subcomponents/GalleryTitleBar.jsx';
 import GallerySaveShareModal from './subcomponents/GallerySaveShareModal.jsx';
 
 import {
-  AppTopContainer,
-  ContainerLarge,
+  GalleryListingTitleContainer,
+  MainImageContainer,
   ShowMoreButton,
   ContainerLargeMain,
+  ContainerLargeMainImgDIV,
   ContainerLargeMainImg,
   ContainerLargeAlt,
   ContainerLargeAltPair,
@@ -27,6 +28,9 @@ import {
   ListingRoomHeading,
   ListingRoomSecondary,
   ListingAvatarContainer,
+  TitleAirbnbIconContainer,
+  TitleAirbnbIconMinWidth,
+  GalleryIcon,
 } from '../../styled/galleryMain';
 
 import {
@@ -40,7 +44,9 @@ class Gallery extends Component {
     if (listing.gallery.featured.length === 3) {
       return [
         <ContainerLargeMain key={Math.random()}>
-          <ContainerLargeMainImg onClick={ModalToggle} src={listing.gallery.featured[0]} />
+          <ContainerLargeMainImgDIV>
+            <ContainerLargeMainImg onClick={ModalToggle} src={listing.gallery.featured[0]} />
+          </ContainerLargeMainImgDIV>
         </ContainerLargeMain>,
         <ContainerLargeAlt key={Math.random()}>
           <ContainerLargeAltImg onClick={ModalToggle} src={listing.gallery.featured[1]} />
@@ -52,7 +58,9 @@ class Gallery extends Component {
     }
     return [
       <ContainerLargeMain key={Math.random()}>
-        <ContainerLargeMainImg onClick={ModalToggle} src={listing.gallery.featured[0]} />
+        <ContainerLargeMainImgDIV>
+          <ContainerLargeMainImg onClick={ModalToggle} src={listing.gallery.featured[0]} />
+        </ContainerLargeMainImgDIV>
       </ContainerLargeMain>,
       <ContainerLargeAltPair key={Math.random()}>
         <ContainerLargeAltPairImg onClick={ModalToggle} src={listing.gallery.featured[1]} />
@@ -66,57 +74,19 @@ class Gallery extends Component {
     } = this.props;
     const ModalToggle = this.props.toggle;
 
-    const dotIcon = (<img className="gallery-dot-icon" src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/dotdotdot.png" />);
+    const dotIcon = (<GalleryIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/dotdotdot.png" />);
 
     return (
       <>
         <CssReset />
-        <AppTopContainer>
+        <GalleryListingTitleContainer>
           <GalleryTitleBar
             listing={listing}
             savedListing={savedListing}
             handleModalState={handleModalState}
             handleToggleFavorite={handleToggleFavorite}
           />
-          <ContainerLarge>
-            {this.renderPhotoGalleryMain(listing)}
-            <ShowMoreButton onClick={ModalToggle}>
-              {dotIcon}
-              {' '}
-              Show all photos
-            </ShowMoreButton>
-          </ContainerLarge>
-          <ListingBodyContainer>
-            <ListingInfoContainer>
-              <ListingRoomInfo>
-                <ListingRoomHeading>
-                  {listing.name}
-                  {' '}
-                  hosted by
-                  {' '}
-                  {listing.hostname}
-                </ListingRoomHeading>
-                <ListingRoomSecondary>
-                  {listing.guests}
-                  {' '}
-                  guests ·
-                  {' '}
-                  {listing.bedrooms}
-                  {' '}
-                  bedroom ·
-                  {' '}
-                  {listing.beds}
-                  {' '}
-                  bed ·
-                  {' '}
-                  {listing.bathrooms}
-                  {' '}
-                  bath
-                </ListingRoomSecondary>
-                <ListingAvatarContainer />
-              </ListingRoomInfo>
-            </ListingInfoContainer>
-          </ListingBodyContainer>
+
           <GallerySaveShareModal
             modalState={modalState}
             handleModalState={handleModalState}
@@ -124,7 +94,49 @@ class Gallery extends Component {
             handleAddCategory={handleAddCategory}
             handleToggleFavorite={handleToggleFavorite}
           />
-        </AppTopContainer>
+        </GalleryListingTitleContainer>
+        <MainImageContainer>
+          {this.renderPhotoGalleryMain(listing)}
+          <ShowMoreButton onClick={ModalToggle}>
+            {dotIcon}
+            {' '}
+            Show all photos
+          </ShowMoreButton>
+        </MainImageContainer>
+        <TitleAirbnbIconContainer>
+          <TitleAirbnbIconMinWidth />
+        </TitleAirbnbIconContainer>
+        <ListingBodyContainer>
+          <ListingInfoContainer>
+            <ListingRoomInfo>
+              <ListingRoomHeading>
+                {listing.name}
+                {' '}
+                hosted by
+                {' '}
+                {listing.hostname}
+              </ListingRoomHeading>
+              <ListingRoomSecondary>
+                {listing.guests}
+                {' '}
+                guests ·
+                {' '}
+                {listing.bedrooms}
+                {' '}
+                bedroom ·
+                {' '}
+                {listing.beds}
+                {' '}
+                bed ·
+                {' '}
+                {listing.bathrooms}
+                {' '}
+                bath
+              </ListingRoomSecondary>
+              <ListingAvatarContainer />
+            </ListingRoomInfo>
+          </ListingInfoContainer>
+        </ListingBodyContainer>
       </>
     );
   }

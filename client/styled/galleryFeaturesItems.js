@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TopContainer = styled.div`
+export const RoomImagesContainer = styled.div`
 max-width: 1120px;
 margin: 46px auto 0 auto;
 padding-bottom: 18px;

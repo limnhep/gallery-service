@@ -1,18 +1,13 @@
 import styled from 'styled-components';
-import { slideUp } from './keyframes/galleryAnimations';
 
 export const GalleryFeaturesContainer = styled.div`
 padding-bottom: 54px;
-
-// animation:         0.4s ${slideUp} linear;
-// -webkit-animation: 0.4s ${slideUp} linear;
-// -moz-animation:    0.4s ${slideUp} linear;
-// -o-animation:      0.4s ${slideUp} linear;
+width: 100%;
 `;
 
 export const Header = styled.div`
 height: 48px;
-width: 100vw !important;
+width: 100%;
 position: fixed;
 background-color: white;
 z-index: 2;

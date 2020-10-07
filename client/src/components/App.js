@@ -12,6 +12,14 @@ import GalleryNavBar from './GalleryNavBar.jsx';
 import requestListing from '../api/Listings';
 import { requestFavorites, addFavorites, addFavoritesCategory } from '../api/Favorites';
 
+import {
+  AppTopContainer,
+} from '../../styled/galleryMain';
+
+import {
+  CssReset,
+} from '../../styled/global';
+
 class App extends Component {
   constructor() {
     super();
@@ -165,7 +173,12 @@ class App extends Component {
       if (!features && !modal) {
         return (
           <>
-            <GalleryNavBar />
+            <GalleryNavBar
+              savedListing={savedListing}
+              setFeaturePage={() => this.setState({ features: !features })}
+              handleModalState={this.handleModalState}
+              handleToggleFavorite={this.handleToggleFavorite}
+            />
             <GalleryMain
               listing={listing}
               favorites={favorites}
@@ -189,7 +202,7 @@ class App extends Component {
           >
             <GalleryFeatures
               listing={listing}
-              ModalToggle={() => this.setState({ features: !features })}
+              setFeaturePage={() => this.setState({ features: !features })}
               setModalImage={(url) => this.setModalImage(url)}
             />
           </CSSTransition>
@@ -222,13 +235,14 @@ class App extends Component {
     };
 
     return (
-      <>
+      <AppTopContainer>
+        <CssReset />
         <Helmet>
           <title>{this.state.listing.title}</title>
         </Helmet>
         {renderCurrentPage()}
         {renderModal()}
-      </>
+      </AppTopContainer>
     );
   }
 }
