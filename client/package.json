@@ -47,7 +47,7 @@
   },
   "scripts": {
     "start": "node_modules/.bin/webpack-dev-server --mode development --open --hot",
-    "build": "webpack — mode production",
+    "build": "webpack -d --watch",
     "test": "jest"
   },
   "keywords": [

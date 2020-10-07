@@ -11,13 +11,20 @@ margin-bottom:2px;
 }
 `;
 
-export const RoomsContainerItemsImg = styled.img`
-object-fit: cover;
+export const RoomsContainerItemDiv = styled.div`
 width: 146px;
 height: 96px;
 margin-bottom: 10px;
 
+background-image: url('https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/loading-blur.jpg');
+
 box-shadow: 2px 2px rgb(238, 238, 238);
+`;
+
+export const RoomsContainerItemsImg = styled.img`
+object-fit: cover;
+height: 100%;
+width: 100%;
 `;
 
 export const RoomsContainerItemsTitle = styled.h4`

@@ -17,6 +17,10 @@ import {
   AmenitiesModule,
 } from '../../styled/galleryFeatures';
 
+import {
+  CssReset,
+} from '../../styled/global';
+
 class GalleryFeatures extends Component {
   constructor(props) {
     super(props);
@@ -57,7 +61,7 @@ class GalleryFeatures extends Component {
   }
 
   render() {
-    const { listing, ModalToggle, setModalImage } = this.props;
+    const { listing, setFeaturePage, setModalImage } = this.props;
     const { stickyStyleRooms } = this.state;
 
     const amenitiesItems = listing.gallery.rooms.map((room, index) => (
@@ -87,9 +91,10 @@ class GalleryFeatures extends Component {
     return (
       <>
         {/* GALLERY FEATURES PARENT  */}
+        <CssReset />
         <GalleryFeaturesContainer>
           <Header>
-            <ToggleButton onClick={ModalToggle}>
+            <ToggleButton onClick={setFeaturePage}>
               <img src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow.png" alt="img" />
             </ToggleButton>
           </Header>

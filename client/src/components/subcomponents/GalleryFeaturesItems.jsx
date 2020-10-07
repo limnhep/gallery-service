@@ -5,7 +5,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { Component } from 'react';
 import {
-  TopContainer,
+  RoomImagesContainer,
   OverviewHeading,
   HeadingSecondary,
   TinyMarginBot,
@@ -248,14 +248,14 @@ class GalleryFeaturesItems extends Component {
 
     return (
       <>
-        <TopContainer ref={(ref) => setRef(ref, index)}>
+        <RoomImagesContainer ref={(ref) => setRef(ref, index)}>
           {this.renderPositionClass(name, features)}
           <RightContainer id={name}>
             <ImagesContainer>
               {this.renderRoomGallery()}
             </ImagesContainer>
           </RightContainer>
-        </TopContainer>
+        </RoomImagesContainer>
       </>
     );
   }

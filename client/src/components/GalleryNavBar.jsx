@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import GallerySearchBarCalendar from './subcomponents/GallerySearchBarCalendar.jsx';
 import {
-  TopContainer,
+  NavBarFullSpan,
   DivPadding,
   DivPaddingToExitModal,
   NavBarModal,
   NavBarContainer,
+  NavBarContainerMinWidth,
+  NavBarContainerMinWidthBackButton,
   AirbnbIconContainer,
   AirbnbIcon,
   NavBarSearch,
@@ -66,6 +68,12 @@ import {
   NewMessagesNotification,
   ProfileContainersStatus,
 } from '../../styled/galleryNavBar';
+
+import {
+  IconContainer,
+  ShareIcon,
+  HeartIcon,
+} from '../../styled/galleryModal';
 
 import calendar from '../../public/calendar';
 
@@ -287,6 +295,7 @@ class GalleryNavBar extends Component {
     const {
       startDate, endDate, hoveredDate, selectedMonthIndex,
     } = this.state; // Calendar
+    const { savedListing, handleModalState, handleToggleFavorite, setFeaturePage } = this.props;
     const totalGuests = adults + infants + children;
 
     const RenderProfileModal = (
@@ -663,71 +672,80 @@ class GalleryNavBar extends Component {
     );
 
     return (
-      <>
-        <TopContainer onClick={(e) => this.handleCloseState(e)}>
-          <NavBarContainer>
-            <AirbnbIconContainer>
-              <AirbnbIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/plus.png" />
-            </AirbnbIconContainer>
-            {searchBarState === 0
-              ? (
-                <NavBarSearch onClick={(e) => this.handleSearchBarState(1, e)}>
-                  <NavBarSearchText>Start your search</NavBarSearchText>
-                  <NavBarSearchIconContainer>
-                    <NavBarSearchIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/search-tool.png" />
-                  </NavBarSearchIconContainer>
-                </NavBarSearch>
-              )
-              : (
-                <NavBarSearchCategories>
-                  <NavBarSearchCategoriesItem onClick={(e) => e.stopPropagation()}>
-                    <NavBarSearchCategoriesItemHeading
-                      valid={searchBarState >= 1 && searchBarState <= 5}
-                      onClick={searchBarState > 5 ? (e) => this.handleSearchBarState(1, e) : null}
-                    >
-                      Places to stay
-                    </NavBarSearchCategoriesItemHeading>
-                  </NavBarSearchCategoriesItem>
-                  <NavBarSearchCategoriesItem onClick={(e) => e.stopPropagation()}>
-                    <NavBarSearchCategoriesItemHeading
-                      valid={searchBarState >= 6 && searchBarState <= 8}
-                      onClick={searchBarState <= 5 ? (e) => this.handleSearchBarState(6, e) : null}
-                    >
-                      Experiences
-                    </NavBarSearchCategoriesItemHeading>
-                  </NavBarSearchCategoriesItem>
-                </NavBarSearchCategories>
-              )}
-            <ButtonsContainer>
-              <ProfileIconButton onClick={(e) => this.handlePopUpState(2, e)}>
-                <MenuIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/menu.png" />
-                {loggedIn
-                  ? <ProfileIconProfileImg src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/profile.png" />
-                  : (
-                    <ProfileIconProfileDiv>
-                      <AvatarIconSVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false">
-                        <path d="m16 .7c-8.437 0-15.3 6.863-15.3 15.3s6.863 15.3 15.3 15.3 15.3-6.863 15.3-15.3-6.863-15.3-15.3-15.3zm0 28c-4.021 0-7.605-1.884-9.933-4.81a12.425 12.425 0 0 1 6.451-4.4 6.507 6.507 0 0 1 -3.018-5.49c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5a6.513 6.513 0 0 1 -3.019 5.491 12.42 12.42 0 0 1 6.452 4.4c-2.328 2.925-5.912 4.809-9.933 4.809z" />
-                      </AvatarIconSVG>
-                    </ProfileIconProfileDiv>
-                  )}
-              </ProfileIconButton>
-              <WorldButtonContainer onClick={(e) => this.handlePopUpState(1, e)}>
-                <WorldButtonIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/world.png" />
-                <WorldButtonIconDown src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/down-arrow.png" />
-              </WorldButtonContainer>
-              <BecomeAHostButton>
-                Become a host
-              </BecomeAHostButton>
-              {(userModalState === 2 && loggedIn) && RenderProfileModal}
-              {(userModalState === 2 && !loggedIn) && RenderLoginProfileModal}
-              {userModalState === 1 && RenderWorldModal}
-            </ButtonsContainer>
-          </NavBarContainer>
-          {(searchBarState > 0 && searchBarState <= 5) && RenderExpandedSearchBar}
-          {(searchBarState >= 6 && searchBarState <= 8) && RenderExperienceSearchBar}
-          {userModalState > 0 && <DivPaddingToExitModal onClick={() => this.setState({ searchBarState: 0, userModalState: 0 })} />}
-        </TopContainer>
-      </>
+      <NavBarFullSpan onClick={(e) => this.handleCloseState(e)}>
+        <NavBarContainer>
+          <AirbnbIconContainer>
+            <AirbnbIcon />
+          </AirbnbIconContainer>
+          {searchBarState === 0
+            ? (
+              <NavBarSearch onClick={(e) => this.handleSearchBarState(1, e)}>
+                <NavBarSearchText>Start your search</NavBarSearchText>
+                <NavBarSearchIconContainer>
+                  <NavBarSearchIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/search-tool.png" />
+                </NavBarSearchIconContainer>
+              </NavBarSearch>
+            )
+            : (
+              <NavBarSearchCategories>
+                <NavBarSearchCategoriesItem onClick={(e) => e.stopPropagation()}>
+                  <NavBarSearchCategoriesItemHeading
+                    valid={searchBarState >= 1 && searchBarState <= 5}
+                    onClick={searchBarState > 5 ? (e) => this.handleSearchBarState(1, e) : null}
+                  >
+                    Places to stay
+                  </NavBarSearchCategoriesItemHeading>
+                </NavBarSearchCategoriesItem>
+                <NavBarSearchCategoriesItem onClick={(e) => e.stopPropagation()}>
+                  <NavBarSearchCategoriesItemHeading
+                    valid={searchBarState >= 6 && searchBarState <= 8}
+                    onClick={searchBarState <= 5 ? (e) => this.handleSearchBarState(6, e) : null}
+                  >
+                    Experiences
+                  </NavBarSearchCategoriesItemHeading>
+                </NavBarSearchCategoriesItem>
+              </NavBarSearchCategories>
+            )}
+          <ButtonsContainer>
+            <ProfileIconButton onClick={(e) => this.handlePopUpState(2, e)}>
+              <MenuIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/menu.png" />
+              {loggedIn
+                ? <ProfileIconProfileImg src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/profile.png" />
+                : (
+                  <ProfileIconProfileDiv>
+                    <AvatarIconSVG viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false">
+                      <path d="m16 .7c-8.437 0-15.3 6.863-15.3 15.3s6.863 15.3 15.3 15.3 15.3-6.863 15.3-15.3-6.863-15.3-15.3-15.3zm0 28c-4.021 0-7.605-1.884-9.933-4.81a12.425 12.425 0 0 1 6.451-4.4 6.507 6.507 0 0 1 -3.018-5.49c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5a6.513 6.513 0 0 1 -3.019 5.491 12.42 12.42 0 0 1 6.452 4.4c-2.328 2.925-5.912 4.809-9.933 4.809z" />
+                    </AvatarIconSVG>
+                  </ProfileIconProfileDiv>
+                )}
+            </ProfileIconButton>
+            <WorldButtonContainer onClick={(e) => this.handlePopUpState(1, e)}>
+              <WorldButtonIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/world.png" />
+              <WorldButtonIconDown src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/down-arrow.png" />
+            </WorldButtonContainer>
+            <BecomeAHostButton>
+              Become a host
+            </BecomeAHostButton>
+            {(userModalState === 2 && loggedIn) && RenderProfileModal}
+            {(userModalState === 2 && !loggedIn) && RenderLoginProfileModal}
+            {userModalState === 1 && RenderWorldModal}
+          </ButtonsContainer>
+        </NavBarContainer>
+        <NavBarContainerMinWidth>
+          <NavBarContainerMinWidthBackButton onClick={setFeaturePage}>
+            <img src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow.png" alt="img" />
+          </NavBarContainerMinWidthBackButton>
+          <IconContainer>
+            <ShareIcon onClick={() => handleModalState(3)} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/upload.png" />
+            {savedListing !== false
+              ? <HeartIcon onClick={() => handleToggleFavorite('remove')} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/heart.png" />
+              : <HeartIcon onClick={() => handleModalState(1)} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/noheart.png" />}
+          </IconContainer>
+        </NavBarContainerMinWidth>
+        {(searchBarState > 0 && searchBarState <= 5) && RenderExpandedSearchBar}
+        {(searchBarState >= 6 && searchBarState <= 8) && RenderExperienceSearchBar}
+        {userModalState > 0 && <DivPaddingToExitModal onClick={() => this.setState({ searchBarState: 0, userModalState: 0 })} />}
+      </NavBarFullSpan>
     );
   }
 }

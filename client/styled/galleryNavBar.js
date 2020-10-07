@@ -1,12 +1,19 @@
 import styled, { css } from 'styled-components';
 
-export const TopContainer = styled.div`
-height: 80px;
+export const NavBarFullSpan = styled.div`
+max-height: 80px;
+max-width: 100vw;
+width: 100%;
 border-bottom: 1px solid rgb(245, 245, 245);
 box-shadow: 0 1px 15px rgb(240, 240, 240);
+grid-row: 1;
+
+display: flex;
+align-items: center;
 `;
 
 export const DivPadding = styled.div`
+padding-top: 80px;
 height: 112px;
 width: 100vw;
 position: absolute;
@@ -35,8 +42,9 @@ background-color: #484848;
 `;
 
 export const NavBarContainer = styled.div`
-width: 1120px;
-padding-top: 16px;
+height: 80px;
+max-width: 1120px;
+width: 90vw;
 margin: 0 auto;
 
 display: flex;
@@ -46,6 +54,56 @@ display: -ms-flexbox;
 display: -webkit-flex;
 
 justify-content: space-between;
+align-items: center;
+
+@media screen and (max-width: 750px) {
+  display: none;
+}
+`;
+
+export const NavBarContainerMinWidth = styled.div`
+
+display: none;
+
+@media screen and (max-width: 750px) {
+  display: flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  max-width: 1120px;
+  max-height: 64px;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 0 24px 0 12px;
+  
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+`;
+
+export const NavBarContainerMinWidthBackButton = styled.div`
+color: rgb(34, 34, 34);
+height: 32px;
+width: 32px;
+
+border-radius: 100px;
+border-width: 0px;
+background-color: white; 
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+&:focus {
+    outline:0;
+}
+
+&:hover {
+    cursor: pointer;
+    background-color: rgb(245, 245, 245); 
+}
 `;
 
 export const SearchHeading = styled.div`
@@ -803,11 +861,24 @@ border-bottom-right-radius: 50px 50px;
 export const AirbnbIconContainer = styled.div`
 width: 300px;
 vertical-align: top;
+@media screen and (max-width: 950px) {
+  width: 100px;
+}
 `;
 
-export const AirbnbIcon = styled.img`
+export const AirbnbIcon = styled.div`
+height: 52px;
+width: 112px;
+background-image: url("https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/plus.png"); 
+
 &:hover {
     cursor: pointer;
+}
+
+@media screen and (min-width: 745px) and (max-width: 1120px){
+  height: 40px;
+  width: 36px;
+  background-image: url("https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/plus-small.jpeg");
 }
 `;
 

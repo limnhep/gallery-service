@@ -4,6 +4,7 @@ import React from 'react';
 import {
   RoomsContainerItems,
   RoomsContainerItemsImg,
+  RoomsContainerItemDiv,
   RoomsContainerItemsTitle,
 } from '../../../styled/galleryOverviewItems';
 
@@ -11,7 +12,9 @@ const GalleryOverviewItems = ({
   name, image, index, scrollToRoom,
 }) => (
   <RoomsContainerItems onClick={() => scrollToRoom(index)}>
-    <RoomsContainerItemsImg src={image} alt="img" />
+    <RoomsContainerItemDiv>
+      <RoomsContainerItemsImg src={image} alt="img" />
+    </RoomsContainerItemDiv>
     <RoomsContainerItemsTitle>{name}</RoomsContainerItemsTitle>
   </RoomsContainerItems>
 );

@@ -9,6 +9,7 @@ import {
   TopContainer,
   NavBar,
   BackButton,
+  IconContainer,
   ShareIcon,
   HeartIcon,
   ImageIndex,
@@ -18,18 +19,17 @@ import {
   ImageFramePhoto,
   ImageFrameComment,
   ImageArrowButton,
-  IconContainer,
 } from '../../styled/galleryModal';
+
+import {
+  CssReset,
+} from '../../styled/global';
 
 const GalleryModal = ({
   images, changeImage, closeModal, favorites, handleAddCategory, handleToggleFavorite, savedListing, selectedImage,
 }) => {
   const totalPhotos = images.length;
   const [modalState, setModalState] = useState(0);
-
-  const fadeInOut = {
-    
-  }
 
   let imageIndex;
   images.forEach((image, index) => {
@@ -39,6 +39,7 @@ const GalleryModal = ({
   });
   return (
     <TopContainer>
+      <CssReset />
       <NavBar>
         <BackButton onClick={() => closeModal()}>✕ &nbsp;Close</BackButton>
         <ImageIndex>
