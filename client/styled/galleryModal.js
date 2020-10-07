@@ -153,8 +153,13 @@ width: auto;
 max-width: 80vw;
 max-height: 78vh;
 
-animation: 0.35s ${ImageFadeIn} ease-in-out;
--webkit-animation: 0.35s ${ImageFadeIn} ease-in-out;
+// animation: 0.35s ${ImageFadeIn} ease-in-out;
+// -webkit-animation: 0.35s ${ImageFadeIn} ease-in-out;
+
+&.fade-enter { opacity: 0 },
+&.fade-enter-active { opacity: 1 },
+&.fade-exit { opacity: 1 },
+&.fade-exit-active: { opacity: 0 },
 `;
 
 export const ImageFrameComment = styled.h4`

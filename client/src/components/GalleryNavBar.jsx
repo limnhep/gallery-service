@@ -712,8 +712,8 @@ class GalleryNavBar extends Component {
                   )}
               </ProfileIconButton>
               <WorldButtonContainer onClick={(e) => this.handlePopUpState(1, e)}>
-                <WorldButtonIcon src="../../public/img/icons/world.png" />
-                <WorldButtonIconDown src="../../public/img/icons/down-arrow.png" />
+                <WorldButtonIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/world.png" />
+                <WorldButtonIconDown src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/down-arrow.png" />
               </WorldButtonContainer>
               <BecomeAHostButton>
                 Become a host

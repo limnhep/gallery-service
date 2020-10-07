@@ -29,7 +29,7 @@ const favoritesRoute = require('./routes/favorites');
 app.use('/listing', listingsRoute);
 app.use('/favorites', favoritesRoute);
 
-const PORT = 5000;
+const PORT = 3001;
 app.listen(PORT, (err) => {
     if (err){
         throw err;
