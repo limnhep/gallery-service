@@ -1,5 +1,4 @@
 node_modules
 node_modules
 
-/client/dist/index_bundle.js
-/client/dist/index_bundle.js.map
+/client/dist/bundle.js

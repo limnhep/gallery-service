@@ -10,6 +10,7 @@ mongoose.connect('mongodb://localhost:27017/airbnb_plus', { useNewUrlParser: tru
     console.log('MongoDB Connection Error');
 });
 
+
 //SAMPLE DATA LISTINGS
 const listing1 = require('../sample_data/listing1');
 const listing2 = require('../sample_data/listing2');
@@ -75,6 +76,7 @@ const sampleSavedList = [
 //SEEDING FUNCTION
 async function seedAll(){
     try {
+        await mongoose.connection.db.dropDatabase();
         for(let i=0; i<sampleListings.length; i++){
             const newListing = new Listings(sampleListings[i]);
             await newListing.save();

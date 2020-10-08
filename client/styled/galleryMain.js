@@ -405,6 +405,8 @@ export const ListingInfoHostAvatar = styled.img`
 height: 56px;
 width: 56px;
 
+object-fit: cover;
+
 border-radius: 50%;
 `;
 
