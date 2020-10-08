@@ -4,6 +4,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/extensions */
 import React, { Component } from 'react';
+
 import GalleryOverviewItems from './subcomponents/GalleryOverviewItems.jsx';
 import GalleryFeaturesItems from './subcomponents/GalleryFeaturesItems.jsx';
 import {
