@@ -6,8 +6,9 @@ const listingSchema = new Schema({
     title: String, 
     name: String,
     location: String,
+    description: String,
+    quote: String,
     hostname: String,
-    avatar: String,
     rating: String,
     guests: {
         type: Number,

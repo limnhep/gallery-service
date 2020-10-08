@@ -2,9 +2,9 @@
 /* eslint-disable import/prefer-default-export */
 import { createGlobalStyle } from 'styled-components';
 
-import AirbnbCerealBook from '../public/fonts/AirbnbCerealBook.woff';
-import AirbnbCerealLight from '../public/fonts/AirbnbCerealLight.woff';
-import AirbnbCerealMedium from '../public/fonts/AirbnbCerealMedium.woff';
+import AirbnbCerealBook from './fonts/AirbnbCerealBook.woff';
+import AirbnbCerealLight from './fonts/AirbnbCerealLight.woff';
+import AirbnbCerealMedium from './fonts/AirbnbCerealMedium.woff';
 
 export const CssReset = createGlobalStyle`
 html, body, div, span, applet, object, iframe,

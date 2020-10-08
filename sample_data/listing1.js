@@ -3,8 +3,12 @@ const listing = {
   title: 'Peaceful Treehouse with Ocean View',
   name: 'Treehouse',
   location: 'Aptos, California, United States',
+  description: `Featured by Sunset Magazine as a “chic escape.”
+  Inside, mid-century furniture and architectural details are made of natural materials like wood and stone setting a calming, sanctuary tone throughout. Curl up with a good read by the light streaming through floor to ceiling windows and under soaring wooden beams or tuck in for the evening by closing the sliding doors inspired by Japanese screens.
+  
+  Strive to provide a safe environment for guests to enjoy. We thoroughly clean and sanitize after each guest.`,
+  quote: 'We love resting in the hammock on a sunny afternoon, detaching from the world surrounded by quiet and beauty.',
   hostname: 'Janiece',
-  avatar: null,
   rating: '4.90',
   guests: 6,
   bedrooms: 3,

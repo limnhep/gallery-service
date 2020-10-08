@@ -3,8 +3,10 @@ const listing = {
   title: 'Loft Estiloso em meio à Natureza,com Visual Deslumbrante da Lagoa e do Mar',
   name: 'Entire loft',
   location: 'Florianópolis, Santa Catarina, Brazil',
+  description: `Ambiente Estiloso,com visual deslumbrante,em meio a Natureza, na encosta da Lagoa da Conceição (coração da ilha).Visual da Lagoa e do Mar das praias: “Mole, Galheta e Joaquina”.A 2 km do Centrinho da Lagoa,onde se encontram Cafés,Restaurantes ,Baladas e Mercados.Acesso de carro por rua calçada até garagem coberta.Pacotes Natal/Réveillon/Carnaval(Mínimo 5 diárias).
+  O LOFT NÃO ESTÁ DISPONÍVEL PARA ENSAIOS FOTOGRÁFICOS PROFISSIONAIS.`,
+  quote: 'Desfrute de um Visual Deslumbrante ,numa atmosfera de Paz e Harmonia junto à Natureza,com Excelente Hospitalidade Personalizada .Perto de tudo, com total privacidade e segurança .Num dos bairros mais charmosos da Ilha da Magia.Acesso de carro por rua calçada em subida nível médio até garagem coberta.A 300 metros de ponto de ônibus e de barco.PACOTES NATAL/RÉVEILLON/CARNAVAL(Mínimo 5 diárias).',
   hostname: 'Alvaro',
-  avatar: null,
   rating: '4.97',
   guests: 2,
   bedrooms: 1,

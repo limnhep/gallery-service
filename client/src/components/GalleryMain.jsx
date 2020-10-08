@@ -24,13 +24,17 @@ import {
   ContainerLargeAltPairImg,
   ListingBodyContainer,
   ListingInfoContainer,
+  ListingInfoTitle,
+  ListingInfoDesc,
   ListingRoomInfo,
+  ListingInfoQuote,
+  ListingInfoQuoteHost,
+  ListingInfoContactHost,
   ListingRoomHeading,
   ListingRoomSecondary,
-  ListingAvatarContainer,
+  ListingInfoHostAvatar,
   TitleAirbnbIconContainer,
   TitleAirbnbIconMinWidth,
-  GalleryIcon,
   GalleryDotIcon,
 } from '../../styled/galleryMain';
 
@@ -75,6 +79,8 @@ class Gallery extends Component {
     } = this.props;
     const ModalToggle = this.props.toggle;
 
+    const avatarURL = `https://airbnb-bougie.s3-us-west-1.amazonaws.com/listing_images/listing${listing.listingID}/avatar.jpg`;
+
     const dotIcon = (<GalleryDotIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/dotdotdot.png" />);
 
     return (
@@ -109,33 +115,55 @@ class Gallery extends Component {
         </TitleAirbnbIconContainer>
         <ListingBodyContainer>
           <ListingInfoContainer>
-            <ListingRoomInfo>
-              <ListingRoomHeading>
-                {listing.name}
-                {' '}
-                hosted by
+            <ListingInfoTitle>
+              <ListingRoomInfo>
+                <ListingRoomHeading>
+                  {listing.name}
+                  {' '}
+                  hosted by
+                  {' '}
+                  {listing.hostname}
+                </ListingRoomHeading>
+                <ListingRoomSecondary>
+                  {listing.guests}
+                  {' '}
+                  guests ·
+                  {' '}
+                  {listing.bedrooms}
+                  {' '}
+                  bedroom ·
+                  {' '}
+                  {listing.beds}
+                  {' '}
+                  bed ·
+                  {' '}
+                  {listing.bathrooms}
+                  {' '}
+                  bath
+                </ListingRoomSecondary>
+              </ListingRoomInfo>
+              <ListingInfoHostAvatar src={avatarURL} />
+            </ListingInfoTitle>
+            <ListingInfoDesc>
+              {listing.description}
+            </ListingInfoDesc>
+            {listing.quote
+            && (
+            <>
+              <ListingInfoQuote>
+                &ldquo;
+                {listing.quote}
+                &rdquo;
+              </ListingInfoQuote>
+              <ListingInfoQuoteHost>
+                -
                 {' '}
                 {listing.hostname}
-              </ListingRoomHeading>
-              <ListingRoomSecondary>
-                {listing.guests}
-                {' '}
-                guests ·
-                {' '}
-                {listing.bedrooms}
-                {' '}
-                bedroom ·
-                {' '}
-                {listing.beds}
-                {' '}
-                bed ·
-                {' '}
-                {listing.bathrooms}
-                {' '}
-                bath
-              </ListingRoomSecondary>
-              <ListingAvatarContainer />
-            </ListingRoomInfo>
+                , your host
+              </ListingInfoQuoteHost>
+            </>
+            )}
+            <ListingInfoContactHost>Contact host</ListingInfoContactHost>
           </ListingInfoContainer>
         </ListingBodyContainer>
       </>
