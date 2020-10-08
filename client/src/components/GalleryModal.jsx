@@ -5,8 +5,9 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 // import styled, { css } from 'styled-components';
 
 import GallerySaveShareModal from './subcomponents/GallerySaveShareModal.jsx';
+
 import {
-  TopContainer,
+  GalleryModalContainer,
   NavBar,
   BackButton,
   IconContainer,
@@ -38,7 +39,7 @@ const GalleryModal = ({
     }
   });
   return (
-    <TopContainer>
+    <GalleryModalContainer>
       <CssReset />
       <NavBar>
         <BackButton onClick={() => closeModal()}>✕ &nbsp;Close</BackButton>
@@ -83,7 +84,7 @@ const GalleryModal = ({
             />
           ) : null
       }
-    </TopContainer>
+    </GalleryModalContainer>
   );
 };
 

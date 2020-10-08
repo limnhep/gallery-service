@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "seed": "node database/seed_database.js",
+    "build": "cd client && npm run build"
   },
   "author": "Harris Li",
   "license": "MIT",

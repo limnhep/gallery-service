@@ -3,8 +3,12 @@ const listing = {
   title: 'The Oak Escape with Hot Tub & Stunning Country Views',
   name: 'Tiny house',
   location: 'Somerset, England, United Kingdom',
+  description: `Breathe in the fresh Somerset air from this secluded cabin. The cosy retreat boasts an open-plan living area, soothing grey tones, a walkout to a private wraparound deck with a dining area, a BBQ, and an outdoor hot tub.
+
+
+  Please note if Oak Escape is not available we have a similar house available on Airbnb called the Otterford Retreat - Please message us.`,
+  quote: 'To watch the sun go down across the field while relaxing in the hot tub is a must for all who visit.',
   hostname: 'Lee',
-  avatar: null,
   rating: '4.95',
   guests: 4,
   bedrooms: null,

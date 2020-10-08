@@ -369,7 +369,7 @@ margin: 0 auto;
 grid-row: 4;
 
 display: grid;
-grid-template-columns: 653px 467px;
+grid-template-columns: minmax(min-content, 653px) minmax(467px);
 
 @media screen and (max-width: 750px) {
     grid-row: 5;
@@ -380,16 +380,32 @@ grid-template-columns: 653px 467px;
 `;
 
 export const ListingInfoContainer = styled.div`
-display: inline;
-grid-column: 1/2;
+display: block;
+grid-column: 1;
 height: 56px;
 padding-top:48px;
-padding-bottom:24px;
 
 @media screen and (max-width: 750px) {
     padding-top: 18px;
     padding-bottom: 24px;
 }
+`;
+
+export const ListingInfoTitle = styled.div`
+max-width: 653px;
+padding-bottom: 24px;
+
+display: flex;
+justify-content: space-between;
+
+flex-basis: 100%;
+`;
+
+export const ListingInfoHostAvatar = styled.img`
+height: 56px;
+width: 56px;
+
+border-radius: 50%;
 `;
 
 export const ListingRoomInfo = styled.div`
@@ -422,13 +438,56 @@ line-height: 20px;
 font-weight: 400px; 
 `;
 
-export const ListingAvatarContainer = styled.div`
-display: inline-block;
-float:right
-width: 56px;
-height: 56px;
-border-radius:50%;
-background-color:orange;
+export const ListingInfoDesc = styled.div`
+max-width: 653px;
+padding-top: 38px;
+padding-bottom: 32px;
+
+border-top: 1px solid rgb(235, 235, 235);
+
+font-family: 'Airbnb Cereal App Light';
+color: rgb(34, 34, 34);
+background-color: #ffffff;
+font-size: 16px;
+line-height: 24px;
+font-weight: 400px; 
+`;
+
+export const ListingInfoQuote = styled.div`
+max-width: 458px;
+padding-top: 32px;
+
+border-top: 1px solid rgb(235, 235, 235);
+
+font-family: 'Airbnb Cereal App Light';
+color: rgb(34, 34, 34);
+background-color: #ffffff;
+font-size: 16px;
+line-height: 24px;
+font-weight: 400px; 
+`;
+
+export const ListingInfoQuoteHost = styled.div`
+max-width: 458px;
+
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+font-size: 16px;
+line-height: 24px;
+font-weight: 600px; 
+`;
+
+export const ListingInfoContactHost = styled.div`
+max-width: 653px;
+padding-top: 32px;
+padding-bottom: 48px;
+text-decoration: underline;
+
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+font-size: 16px;
+line-height: 20px;
+font-weight: 600px; 
 `;
 
 export const GalleryIcon = styled.img`

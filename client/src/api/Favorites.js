@@ -3,7 +3,7 @@ import axios from 'axios';
 export const requestFavorites = async () => {
   let response;
   try {
-    response = await axios.get('http://localhost:3001/favorites');
+    response = await axios.get('/favorites');
   } catch (err) {
     if (err.response.status === 403) {
       throw new Error('Error in retriving favorites');
@@ -15,7 +15,7 @@ export const requestFavorites = async () => {
 export const addFavorites = async (favoritesList) => {
   let response;
   try {
-    response = await axios.patch('http://localhost:3001/favorites', { favoritesList });
+    response = await axios.patch('/favorites', { favoritesList });
   } catch (err) {
     if (err.response.status === 403) {
       throw new Error('Error in retriving favorites');
@@ -27,7 +27,7 @@ export const addFavorites = async (favoritesList) => {
 export const addFavoritesCategory = async (newFavoritesList) => {
   let response;
   try {
-    response = await axios.post('http://localhost:5000/favorites', { newFavoritesList });
+    response = await axios.post('/favorites', { newFavoritesList });
   } catch (err) {
     if (err.response.status === 403) {
       throw new Error('Error in retriving favorites');

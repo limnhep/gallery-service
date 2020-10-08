@@ -3,8 +3,13 @@ const listing = {
   title: 'Lush Deluxe Jungle Loft Villa with Rice Field Views',
   name: 'Entire villa',
   location: 'Ubud, Bali, Indonesia',
+  description: `Experience the charm of tropical living lifestyle from this modern, loft-style designer's villa, featuring a lush backdrop of tropical jungle and Balinese rice field.
+
+  Indulge in the home spa, prepare a meal in the super-size kitchen, or lounge your heart away at the villa's splendid open-air deck before taking a plunge into the picturesque infinity pool.
+  
+  So beautiful that it has been featured on Airbnb's official Instagram account, and named as one of the coolest Airbnb spots in Bali by The Culture Trip and Qantas Travel Insider and many more publications. Enjoy!`,
+  quote: 'Our infinity pool is definitely a gem while avid home-cooks will surely enjoy our open-plan kitchen!',
   hostname: 'Risyiana',
-  avatar: null,
   rating: '4.93',
   guests: 8,
   bedrooms: 3,

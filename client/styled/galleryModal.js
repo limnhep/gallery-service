@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const TopContainer = styled.div`
-height: 100%;
+export const GalleryModalContainer = styled.div`
+height: 90vh;
 width: 100vw;
 position: relative;
 `;

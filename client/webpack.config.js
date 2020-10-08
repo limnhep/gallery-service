@@ -1,66 +1,55 @@
-/* eslint-disable no-useless-escape */
+const webpack = require('webpack');
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-module.exports = {
-  devtool: 'source-map',
-  entry: './src/index.js',
+const config = {
+  entry: [
+    './src/index.js',
+  ],
   output: {
-    path: path.join(__dirname, '/dist'),
-    filename: 'index_bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /.(js|jsx)$/,
         exclude: /node_modules/,
-        use: {
+        use: [{
           loader: 'babel-loader',
-        },
+          options: {
+            cacheDirectory: true,
+            plugins: ['@babel/plugin-transform-runtime'],
+          },
+        }],
       },
       {
-        test: /\.(eot|woff|woff2|ttf)([\?]?.*)$/,
-        loader: 'file-loader',
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+        ],
+      },
+      {
+        test: /\.(woff|woff2)$/,
+        use: {
+          loader: 'url-loader',
+        },
       },
       {
         test: /\.svg$/,
-        loader: 'svg-inline-loader',
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-react'],
-          },
-        },
-      }, {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract(
-          {
-            fallback: 'style-loader',
-            use: ['css-loader'],
-          },
-        ),
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
-          },
-        ],
+        use: ['@svgr/webpack'],
       },
     ],
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      hash: true,
-      filename: 'index.html', // target html
-      template: './public/index.html', // source html
-    }),
-    new ExtractTextPlugin({ filename: './style.css' }),
-  ],
+  resolve: {
+    extensions: [
+      '.js',
+      '.jsx',
+    ],
+  },
+  devServer: {
+    contentBase: './dist',
+  },
 };
+
+module.exports = config;
