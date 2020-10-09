@@ -63,8 +63,7 @@ align-items: center;
 `;
 
 export const NavBarContainerMinWidth = styled.div`
-height: 0px;
-width: 0px;
+height: 64px;
 display: none;
 
 @media screen and (max-width: 750px) {
@@ -77,11 +76,24 @@ display: none;
   max-height: 64px;
   width: 100vw;
   margin: 0 auto;
-  padding: 0 24px 0 12px;
+  padding: 0 36px 0 12px;
   
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+}
+`;
+
+export const NavBarContainerMinWidthLeftNavigation = styled.div`
+display: flex;
+width: 250px;
+height: 64px;
+flex-wrap: nowrap;
+align-items: center;
+user-select: none;
+
+&:hover {
+  cursor: pointer;
 }
 `;
 
@@ -104,8 +116,15 @@ justify-content: center;
 
 &:hover {
     cursor: pointer;
-    background-color: rgb(245, 245, 245); 
 }
+`;
+
+export const NavBarContainerMinWidthText = styled.div`
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+font-size: 14px;
+line-height: 20px;
+font-weight: 800px; 
 `;
 
 export const SearchHeading = styled.div`

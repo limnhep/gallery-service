@@ -26,13 +26,14 @@ class App extends Component {
     this.state = {
       features: false,
       imagesArray: [],
+      bedroomsArray: [],
+      imagesIndexMap: [],
       listing: null,
       favorites: [],
       modal: 0,
       selectedImage: '',
       modalState: 0,
       savedListing: false,
-      fontReady: false,
     };
     this.setModalImage = this.setModalImage.bind(this);
     this.handleAddCategory = this.handleAddCategory.bind(this);
@@ -52,12 +53,15 @@ class App extends Component {
     } finally {
       const { rooms } = listing.gallery;
       const imagesArray = [];
+      const bedroomsArray = [];
       rooms.forEach((room) => {
         imagesArray.push(...room.images);
+        if (room.name.toLowerCase().includes('bedroom')) bedroomsArray.push(room);
       });
       this.setState({
-        imagesArray, listing, favorites: favorites.savedList,
+        bedroomsArray, imagesArray, listing, favorites: favorites.savedList,
       }, () => {
+        this.randomizeIndex();
         this.checkFavorite();
       });
     }
@@ -77,6 +81,21 @@ class App extends Component {
         }
       }
     }
+  }
+
+  randomizeIndex() {
+    const randomImagesMap = {};
+    const { imagesArray } = this.state;
+    let numberOfImages = 0;
+
+    while (numberOfImages < 5) {
+      const randomImageIndex = Math.floor(Math.random() * imagesArray.length);
+      if (randomImagesMap[randomImageIndex] === undefined) {
+        randomImagesMap[randomImageIndex] = true;
+        numberOfImages += 1;
+      }
+    }
+    this.setState({ imagesIndexMap: Object.keys(randomImagesMap) });
   }
 
   async handleAddCategory(categoryName) {
@@ -159,7 +178,7 @@ class App extends Component {
   }
 
   render() {
-    const { imagesArray, fontReady } = this.state;
+    const { imagesArray } = this.state;
     if (!imagesArray.length) {
       return (
         <>
@@ -169,7 +188,7 @@ class App extends Component {
 
     const renderCurrentPage = () => {
       const {
-        favorites, features, listing, modal, modalState, savedListing,
+        bedroomsArray, imagesIndexMap, favorites, features, listing, modal, modalState, savedListing,
       } = this.state;
       if (!features && !modal) {
         return (
@@ -183,11 +202,14 @@ class App extends Component {
             <GalleryMain
               listing={listing}
               favorites={favorites}
+              bedroomsArray={bedroomsArray}
+              imagesArray={imagesArray}
+              imagesIndexMap={imagesIndexMap}
+              modalState={modalState}
+              savedListing={savedListing}
               handleModalState={this.handleModalState}
               handleAddCategory={this.handleAddCategory}
               handleToggleFavorite={this.handleToggleFavorite}
-              modalState={modalState}
-              savedListing={savedListing}
               toggle={() => this.setState({ features: !features })}
             />
           </>
@@ -214,7 +236,7 @@ class App extends Component {
 
     const renderModal = () => {
       const {
-        favorites, modal, modalState, imagesArray, savedListing, selectedImage,
+        favorites, modal, modalState, savedListing, selectedImage,
       } = this.state;
       if (modal) {
         return (

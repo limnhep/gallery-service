@@ -22,6 +22,8 @@ import {
   ContainerLargeAltImg,
   ContainerLargeAltImg2,
   ContainerLargeAltPairImg,
+  ListingAvatarContainer,
+  ListingInfoSuperHost,
   ListingBodyContainer,
   ListingInfoContainer,
   ListingInfoTitle,
@@ -33,6 +35,21 @@ import {
   ListingRoomHeading,
   ListingRoomSecondary,
   ListingInfoHostAvatar,
+  ListingInfoGallery,
+  ListingInfoGalleryImg,
+  ListingInfoGalleryShowButton,
+  SleepingArrangementContainer,
+  SleepingArrangementHeadingBar,
+  SleepingArrangementHeadingTitle,
+  SleepingArrangementHeadingNavigation,
+  SleepingArrangementRoomSliderContainer,
+  SleepingArrangementRoomSlider,
+  SleepingArrangementRoomSliderButton,
+  SleepingArrangementRoomSliderButtonIcon,
+  SleepingArrangementRoomItem,
+  SleepingArrangementRoomImage,
+  SleepingArrangementRoomTitle,
+  SleepingArrangementRoomFeatures,
   TitleAirbnbIconContainer,
   TitleAirbnbIconMinWidth,
   GalleryDotIcon,
@@ -43,6 +60,37 @@ import {
 } from '../../styled/global';
 
 class Gallery extends Component {
+  constructor() {
+    super();
+    this.state = {
+      view: 0,
+    };
+  }
+
+  handleViewScroll(direction) {
+    const { bedroomsArray } = this.props;
+    let { view } = this.state;
+    const numOfRooms = Math.ceil(bedroomsArray.length / 2);
+    const map = {
+      2: 100,
+      3: 200,
+      4: 300,
+      5: 400,
+    };
+    if (direction === 'right') {
+      if (view === 0) {
+        view = map[numOfRooms];
+      } else {
+        view -= 100;
+      }
+    } else if (view === map[numOfRooms]) {
+      view -= 100;
+    } else {
+      view += 100;
+    }
+    this.setState({ view });
+  }
+
   renderPhotoGalleryMain(listing) {
     const ModalToggle = this.props.toggle;
 
@@ -73,15 +121,58 @@ class Gallery extends Component {
     ];
   }
 
+  renderBodyGalley() {
+    const { imagesArray, imagesIndexMap } = this.props;
+
+    return imagesIndexMap.map((imgIndex, index) => (
+      <ListingInfoGalleryImg
+        index={index}
+        key={Math.random()}
+        src={imagesArray[imgIndex].url}
+        id={imagesArray[imgIndex].url}
+      />
+    ));
+  }
+
+  renderSleepingArrangements() {
+    const { bedroomsArray } = this.props;
+
+    const combineRoomAmenities = (roomAmenitiesArray) => {
+      let string = '';
+      for (let i = 0; i < roomAmenitiesArray.length; i += 1) {
+        if (i < roomAmenitiesArray.length - 1) {
+          string += `${roomAmenitiesArray[i]}, `;
+        } else {
+          string += roomAmenitiesArray[i];
+        }
+      }
+      return string;
+    };
+
+    return bedroomsArray.map((room) => (
+      <SleepingArrangementRoomItem key={Math.random()}>
+        <SleepingArrangementRoomImage src={room.images[0].url} id={room.images[0].url} />
+        <SleepingArrangementRoomTitle>
+          {room.name}
+        </SleepingArrangementRoomTitle>
+        <SleepingArrangementRoomFeatures>
+          {combineRoomAmenities(room.amenities)}
+        </SleepingArrangementRoomFeatures>
+      </SleepingArrangementRoomItem>
+    ));
+  }
+
   render() {
     const {
-      favorites, handleModalState, handleAddCategory, handleToggleFavorite, listing, modalState, savedListing,
+      bedroomsArray, favorites, handleModalState, handleAddCategory, handleToggleFavorite, imagesIndexMap, listing, modalState, savedListing,
     } = this.props;
     const ModalToggle = this.props.toggle;
+    const { view } = this.state;
 
     const avatarURL = `https://airbnb-bougie.s3-us-west-1.amazonaws.com/listing_images/listing${listing.listingID}/avatar.jpg`;
 
     const dotIcon = (<GalleryDotIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/dotdotdot.png" />);
+    const superHostSVG = (<ListingInfoSuperHost src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/airbnb-superhost-seeklogo.com.svg" />);
 
     return (
       <>
@@ -142,7 +233,10 @@ class Gallery extends Component {
                   bath
                 </ListingRoomSecondary>
               </ListingRoomInfo>
-              <ListingInfoHostAvatar src={avatarURL} />
+              <ListingAvatarContainer>
+                <ListingInfoHostAvatar src={avatarURL} />
+                {listing.superhost && superHostSVG}
+              </ListingAvatarContainer>
             </ListingInfoTitle>
             <ListingInfoDesc>
               {listing.description}
@@ -156,7 +250,7 @@ class Gallery extends Component {
                 &rdquo;
               </ListingInfoQuote>
               <ListingInfoQuoteHost>
-                -
+                &ndash;
                 {' '}
                 {listing.hostname}
                 , your host
@@ -164,6 +258,39 @@ class Gallery extends Component {
             </>
             )}
             <ListingInfoContactHost>Contact host</ListingInfoContactHost>
+            <ListingInfoGallery>
+              {imagesIndexMap.length && this.renderBodyGalley()}
+            </ListingInfoGallery>
+            <ListingInfoGalleryShowButton>Show all photos</ListingInfoGalleryShowButton>
+            <SleepingArrangementContainer>
+              <SleepingArrangementHeadingBar>
+                <SleepingArrangementHeadingTitle>
+                  Sleeping arrangements
+                </SleepingArrangementHeadingTitle>
+                {bedroomsArray.length > 2
+                && (
+                <SleepingArrangementHeadingNavigation>
+                  <SleepingArrangementRoomSliderButton onClick={() => this.handleViewScroll()}>
+                    <SleepingArrangementRoomSliderButtonIcon
+                      src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow.png"
+                      alt="img"
+                    />
+                  </SleepingArrangementRoomSliderButton>
+                  <SleepingArrangementRoomSliderButton onClick={() => this.handleViewScroll('right')}>
+                    <SleepingArrangementRoomSliderButtonIcon
+                      src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/right-arrow.png"
+                      alt="img"
+                    />
+                  </SleepingArrangementRoomSliderButton>
+                </SleepingArrangementHeadingNavigation>
+                )}
+              </SleepingArrangementHeadingBar>
+              <SleepingArrangementRoomSliderContainer>
+                <SleepingArrangementRoomSlider view={view}>
+                  {this.renderSleepingArrangements()}
+                </SleepingArrangementRoomSlider>
+              </SleepingArrangementRoomSliderContainer>
+            </SleepingArrangementContainer>
           </ListingInfoContainer>
         </ListingBodyContainer>
       </>

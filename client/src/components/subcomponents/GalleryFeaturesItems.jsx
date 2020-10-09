@@ -30,15 +30,15 @@ import {
 class GalleryFeaturesItems extends Component {
   renderRoomGallery() {
     const {
-      name, hostname, images, index, setModalImage,
+      hostname, images, index, setModalImage,
     } = this.props;
     if (images.length === 1 && index === 0) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={name} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
       ]);
     } if (images.length === 1 && !images[0].comment) {
       return ([
-        <ImagesLarge key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesLarge key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
       ]);
     } if (images.length === 1 && images[0].comment) {
       return ([
@@ -52,31 +52,31 @@ class GalleryFeaturesItems extends Component {
             </ImagesCommentTextHost>
           </ImagesCommentTextContainer>
         </ImagesComment>,
-        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
+        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
       ]);
     } if (images.length === 2) {
       return ([
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
       ]);
     } if (images.length === 3) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} id={images[2].url} />,
       ]);
     } if (images.length === 4 && !images[3].comment) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} id={images[2].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} id={images[3].url} />,
       ]);
     } if (images.length === 4 && images[3].comment) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} id={images[2].url} />,
         <ImagesComment key={Math.random()}>
           <ImagesCommentTextContainer key={Math.random()}>
             <ImagesCommentTextIcon key={Math.random()} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/quotes.png" />
@@ -87,32 +87,32 @@ class GalleryFeaturesItems extends Component {
             </ImagesCommentTextHost>
           </ImagesCommentTextContainer>
         </ImagesComment>,
-        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
+        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} id={images[3].url} />,
       ]);
     } if (images.length === 5) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
-        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
-        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} id={images[2].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} id={images[3].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} id={images[4].url} />,
       ]);
     } if (images.length === 6 && !images[5].comment) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
-        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
-        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} id={images[2].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} id={images[3].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} id={images[4].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} id={images[5].url} />,
       ]);
     } if (images.length === 6 && images[5].comment) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
-        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
-        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} id={images[2].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} id={images[3].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} id={images[4].url} />,
         <ImagesComment key={Math.random()}>
           <ImagesCommentTextContainer key={Math.random()}>
             <ImagesCommentTextIcon key={Math.random()} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/quotes.png" />
@@ -123,26 +123,26 @@ class GalleryFeaturesItems extends Component {
             </ImagesCommentTextHost>
           </ImagesCommentTextContainer>
         </ImagesComment>,
-        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
+        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} id={images[5].url} />,
       ]);
     } if (images.length === 7 && !images[6].comment) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
-        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
-        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} id={images[2].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} id={images[3].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} id={images[4].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} id={images[5].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} id={images[6].url} />,
       ]);
     } if (images.length === 7 && images[6].comment) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
-        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
-        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} id={images[2].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} id={images[3].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} id={images[4].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} id={images[5].url} />,
         <ImagesComment key={Math.random()}>
           <ImagesCommentTextContainer key={Math.random()}>
             <ImagesCommentTextIcon key={Math.random()} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/quotes.png" />
@@ -153,28 +153,28 @@ class GalleryFeaturesItems extends Component {
             </ImagesCommentTextHost>
           </ImagesCommentTextContainer>
         </ImagesComment>,
-        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} />,
+        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} id={images[6].url} />,
       ]);
     } if (images.length === 8 && !images[7].comment) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
-        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
-        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[7].url)} src={images[7].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} id={images[2].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} id={images[3].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} id={images[4].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} id={images[5].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} id={images[6].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[7].url)} src={images[7].url} id={images[7].url} />,
       ]);
     } if (images.length === 8 && images[7].comment) {
       return ([
-        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} />,
-        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} />,
-        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} />,
-        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} />,
+        <ImagesSingle key={Math.random()} onClick={() => setModalImage(images[0].url)} src={images[0].url} id={images[0].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[1].url)} src={images[1].url} id={images[1].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[2].url)} src={images[2].url} id={images[2].url} />,
+        <ImagesSkewed1 key={Math.random()} onClick={() => setModalImage(images[3].url)} src={images[3].url} id={images[3].url} />,
+        <ImagesSkewed2 key={Math.random()} onClick={() => setModalImage(images[4].url)} src={images[4].url} id={images[4].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[5].url)} src={images[5].url} id={images[5].url} />,
+        <ImagesPair key={Math.random()} onClick={() => setModalImage(images[6].url)} src={images[6].url} id={images[6].url} />,
         <ImagesComment key={Math.random()}>
           <ImagesCommentTextContainer key={Math.random()}>
             <ImagesCommentTextIcon key={Math.random()} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/quotes.png" />
@@ -185,7 +185,7 @@ class GalleryFeaturesItems extends Component {
             </ImagesCommentTextHost>
           </ImagesCommentTextContainer>
         </ImagesComment>,
-        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[7].url)} src={images[7].url} />,
+        <ImagesCommentPhoto key={Math.random()} onClick={() => setModalImage(images[7].url)} src={images[7].url} id={images[7].url} />,
       ]);
     }
     return null;
@@ -239,7 +239,7 @@ class GalleryFeaturesItems extends Component {
     const {
       amenities, name, index, setRef,
     } = this.props;
-    const features = amenities.reduce((string, feature, index) => {
+    const features = amenities.reduce((string, feature, idx) => {
       if (index !== amenities.length - 1) {
         return `${string + feature} · `;
       }

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const AppTopContainer = styled.div`
 display: grid;
-grid-template-rows: minmax(80px, max-content) minmax(88px, max-content) minmax(min-content, max-content) max-content;
+grid-template-rows: minmax(80px, max-content) minmax(88px, max-content) minmax(min-content, max-content) minmax(min-content, max-content);
 justify-items: center;
 
 @media screen and (max-width: 750px) {
@@ -370,7 +370,6 @@ grid-row: 4;
 
 display: grid;
 grid-template-columns: minmax(min-content, 653px) minmax(467px);
-
 @media screen and (max-width: 750px) {
     grid-row: 5;
     width: 92vw;
@@ -382,7 +381,6 @@ grid-template-columns: minmax(min-content, 653px) minmax(467px);
 export const ListingInfoContainer = styled.div`
 display: block;
 grid-column: 1;
-height: 56px;
 padding-top:48px;
 
 @media screen and (max-width: 750px) {
@@ -401,13 +399,33 @@ justify-content: space-between;
 flex-basis: 100%;
 `;
 
+export const ListingAvatarContainer = styled.div`
+height: 56px;
+width: 56px;
+
+border-radius: 50%;
+position: relative;
+`;
+
 export const ListingInfoHostAvatar = styled.img`
 height: 56px;
 width: 56px;
 
-object-fit: cover;
+user-select: none;
 
 border-radius: 50%;
+object-fit: cover;
+`;
+
+export const ListingInfoSuperHost = styled.img`
+height: 28px;
+width: 28px;
+
+user-select: none;
+
+position: absolute;
+bottom: -2px;
+right: -8px;
 `;
 
 export const ListingRoomInfo = styled.div`
@@ -481,14 +499,222 @@ font-weight: 600px;
 
 export const ListingInfoContactHost = styled.div`
 max-width: 653px;
-padding-top: 32px;
-padding-bottom: 48px;
+margin-top: 32px;
+margin-bottom: 48px;
 text-decoration: underline;
 
 font-family: 'Airbnb Cereal App Medium';
 color: rgb(34, 34, 34);
 font-size: 16px;
 line-height: 20px;
+font-weight: 600px; 
+
+user-selected: none;
+
+&:hover {
+    cursor: pointer;
+}
+`;
+
+export const ListingInfoGallery = styled.div`
+max-width: 653px;
+margin-bottom: 32px;
+
+height: 442px;
+
+border-radius: 12px;
+
+display: grid;
+grid-gap: 10px;
+grid-template-rows: 290px 142px;
+grid-template-columns: 212px 212px 212px;
+`;
+
+export const ListingInfoGalleryImg = styled.img`
+width: 100%;
+height: 100%;
+
+object-fit: cover;
+
+${({ index }) => index === 0 && 'grid-column: 1/3; grid-row: 1; border-top-left-radius: 8px;'}
+${({ index }) => index === 1 && 'grid-column: 3/4; grid-row: 1; border-top-right-radius: 8px;'}
+${({ index }) => index === 2 && 'grid-column: 1/2; grid-row: 2; border-bottom-left-radius: 8px;'}
+${({ index }) => index === 3 && 'grid-column: 2/3; grid-row: 2;'}
+${({ index }) => index === 4 && 'grid-column: 3/4; grid-row: 2; border-bottom-right-radius: 8px;'}
+
+&:hover {
+    cursor: pointer;
+    -webkit-filter: brightness(85%);
+    transition: -webkit-filter 0.3s;
+}
+`;
+
+export const ListingInfoGalleryShowButton = styled.button`
+width: 166px;
+height: 48px;
+margin-bottom: 48px;
+
+background-color: white;
+border-radius: 6px; 
+border: 1px solid rgb(112, 112, 112);
+
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+font-size: 16px;
+line-height: 20px;
+font-weight: 600px; 
+
+&:hover {
+    cursor: pointer;
+}
+
+&:focus {
+    outline: none;
+}
+`;
+
+export const SleepingArrangementContainer = styled.div`
+padding: 48px 0;
+max-width: 653px;
+max-height: 458px;
+
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+font-size: 16px;
+line-height: 20px;
+font-weight: 600px; 
+
+border-top: 1px solid rgb(235, 235, 235);
+`;
+
+export const SleepingArrangementHeadingBar = styled.div`
+padding-bottom: 24px;
+height: 56px;
+
+display: flex;
+justify-content: space-between;
+align-items: center;
+`;
+
+export const SleepingArrangementHeadingTitle = styled.div`
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+font-size: 20px;
+line-height: 26px;
+font-weight: 600px; 
+`;
+
+export const SleepingArrangementHeadingNavigation = styled.div`
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+font-size: 16px;
+line-height: 20px;
+font-weight: 600px; 
+
+display: flex;
+`;
+
+export const SleepingArrangementRoomSliderContainer = styled.div`
+height: 306px;
+margin: 0 -8px;
+max-width: 680px;
+max-height: 306px;
+overflow: hidden;
+`;
+
+export const SleepingArrangementRoomSlider = styled.div`
+height: 100%;
+
+display: flex;
+justify-content: space-between;
+-webkit-overflow-scrolling: touch;
+-webkit-overflow-scrolling property;
+
+transform: translateX(-${({ view }) => view}%);
+
+transo
+`;
+
+export const SleepingArrangementRoomSliderButton = styled.div`
+color: rgb(34, 34, 34);
+height: 32px;
+width: 32px;
+margin-left: 12px;
+
+border-radius: 100px;
+border-width: 0px;
+background-color: white; 
+border-radius: 1px solid rgb(0, 0, 0);
+box-shadow: transparent 0px 0px 0px 1px, transparent 0px 0px 0px 4px, rgba(0, 0, 0, 0.18) 0px 2px 4px !important;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+&:focus {
+    outline:0;
+}
+
+&:hover {
+    cursor: pointer;
+    box-shadow: transparent 0px 0px 0px 12px, transparent 0px 0px 0px 12px, rgba(0, 0, 0, 0.18) 0px 6px 12px !important;
+}
+
+&:active {
+    box-shadow: transparent 0px 0px 0px 1px, transparent 0px 0px 0px 4px, rgba(0, 0, 0, 0.18) 0px 2px 4px !important;
+}
+`;
+
+export const SleepingArrangementRoomSliderButtonIcon = styled.img`
+height: 12px;
+width: 12px;
+
+user-select: none;
+`;
+
+export const SleepingArrangementRoomItem = styled.div`
+height: 100%;
+width: 100%;
+flex-basis: 50%;
+flex-shrink: 0;
+padding: 0 8px;
+
+display: block;
+
+&:hover {
+    cursor: pointer;
+}
+`;
+
+export const SleepingArrangementRoomImage = styled.img`
+height: 69.5%;
+width: 100%;
+
+object-fit: cover;
+
+border-radius: 8px;
+
+
+&:hover {
+    cursor: pointer;
+}
+`;
+
+export const SleepingArrangementRoomTitle = styled.div`
+margin-top: 16px;
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+font-size: 16px;
+line-height: 20px;
+font-weight: 600px; 
+`;
+
+export const SleepingArrangementRoomFeatures = styled.div`
+margin-top: 4px;
+font-family: 'Airbnb Cereal App Light';
+color: rgb(34, 34, 34);
+font-size: 14px;
+line-height: 18px;
 font-weight: 600px; 
 `;
 

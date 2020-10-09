@@ -7,7 +7,9 @@ import {
   NavBarModal,
   NavBarContainer,
   NavBarContainerMinWidth,
+  NavBarContainerMinWidthLeftNavigation,
   NavBarContainerMinWidthBackButton,
+  NavBarContainerMinWidthText,
   AirbnbIconContainer,
   AirbnbIcon,
   NavBarSearch,
@@ -320,7 +322,9 @@ class GalleryNavBar extends Component {
     const {
       startDate, endDate, hoveredDate, selectedMonthIndex,
     } = this.state; // Calendar
-    const { savedListing, handleModalState, handleToggleFavorite, setFeaturePage } = this.props;
+    const {
+      savedListing, handleModalState, handleToggleFavorite, setFeaturePage,
+    } = this.props;
     const totalGuests = adults + infants + children;
 
     const RenderProfileModal = (
@@ -757,9 +761,14 @@ class GalleryNavBar extends Component {
           </ButtonsContainer>
         </NavBarContainer>
         <NavBarContainerMinWidth>
-          <NavBarContainerMinWidthBackButton onClick={setFeaturePage}>
-            <img src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow.png" alt="img" />
-          </NavBarContainerMinWidthBackButton>
+          <NavBarContainerMinWidthLeftNavigation>
+            <NavBarContainerMinWidthBackButton onClick={setFeaturePage}>
+              <img src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow.png" alt="img" />
+            </NavBarContainerMinWidthBackButton>
+            <NavBarContainerMinWidthText>
+              Homes · Airbnb
+            </NavBarContainerMinWidthText>
+          </NavBarContainerMinWidthLeftNavigation>
           <IconContainer>
             <ShareIcon onClick={() => handleModalState(3)} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/upload.png" />
             {savedListing !== false
