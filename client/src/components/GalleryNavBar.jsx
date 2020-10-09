@@ -12,6 +12,8 @@ import {
   NavBarContainerMinWidthText,
   AirbnbIconContainer,
   AirbnbIcon,
+  CloseButton,
+  CloseButtonIMG,
   NavBarSearch,
   NavBarSearchCategories,
   NavBarSearchCategoriesItem,
@@ -552,6 +554,11 @@ class GalleryNavBar extends Component {
                   onChange={(event) => this.setState({ location: event.target.value })}
                 />
               </SearchInputContainer>
+              {(searchBarState === 1 && location) && (
+              <CloseButton onClick={() => this.setState({ location: '' })}>
+                <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
+              </CloseButton>
+              )}
             </NavBarSearchExpandedLocation>
             <NavBarSearchExpandedCalendarFrom
               state={searchBarState}
@@ -562,6 +569,11 @@ class GalleryNavBar extends Component {
             >
               <SearchHeading>Check in</SearchHeading>
               <SearchSecondary bold={startDate}>{startDate ? `${startDate[1]} ${startDate[2]}` : 'Add dates' }</SearchSecondary>
+              {(searchBarState === 2 && startDate && endDate) && (
+              <CloseButton onClick={() => this.setState({ startDate: null, endDate: null, searchBarState: 2 })}>
+                <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
+              </CloseButton>
+              )}
             </NavBarSearchExpandedCalendarFrom>
             <NavBarSearchExpandedCalendarTo
               state={searchBarState}
@@ -572,6 +584,11 @@ class GalleryNavBar extends Component {
             >
               <SearchHeading>Check out</SearchHeading>
               <SearchSecondary bold={endDate}>{endDate ? `${endDate[1]} ${endDate[2]}` : 'Add dates' }</SearchSecondary>
+              {(searchBarState === 3 && startDate && endDate) && (
+              <CloseButton onClick={() => this.setState({ startDate: null, endDate: null, searchBarState: 2 })}>
+                <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
+              </CloseButton>
+              )}
             </NavBarSearchExpandedCalendarTo>
             <ExpandedSearchGuestContainer
               state={searchBarState}
@@ -583,6 +600,14 @@ class GalleryNavBar extends Component {
               <NavBarSearchExpandedGuests>
                 <SearchHeading>Guests</SearchHeading>
                 <SearchSecondary bold={!!totalGuests}>{totalGuests === 0 ? 'Add guests' : `${totalGuests} guests`}</SearchSecondary>
+                {(searchBarState === 4 && totalGuests > 0) && (
+                <CloseButton onClick={() => this.setState({
+                  adults: 0, children: 0, infants: 0, searchBarState: 4,
+                })}
+                >
+                  <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
+                </CloseButton>
+                )}
               </NavBarSearchExpandedGuests>
               {searchBarState !== 5
                 ? (
@@ -648,6 +673,14 @@ class GalleryNavBar extends Component {
                   onChange={(event) => this.setState({ location: event.target.value })}
                 />
               </SearchInputContainer>
+              {(searchBarState === 6 && location !== '') && (
+                <CloseButton onClick={() => this.setState({
+                  adults: 0, children: 0, infants: 0, searchBarState: 4,
+                })}
+                >
+                  <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
+                </CloseButton>
+              )}
             </NavBarSearchExpandedLocation>
             <NavBarSearchExpandedExperienceCalendar
               state={searchBarState}
@@ -660,6 +693,14 @@ class GalleryNavBar extends Component {
                 <SearchHeading>Check out</SearchHeading>
                 <SearchSecondary bold={endDate}>{endDate ? `${endDate[1]} ${endDate[2]}` : 'Add when you want to go' }</SearchSecondary>
               </NavBarSearchExpandedExperienceCalendarText>
+              {(searchBarState === 7 && startDate !== null) && (
+                <CloseButton onClick={() => this.setState({
+                  adults: 0, children: 0, infants: 0, searchBarState: 4,
+                })}
+                >
+                  <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
+                </CloseButton>
+              )}
               {searchBarState !== 8
                 ? (
                   <LargeSearchIconContainer>

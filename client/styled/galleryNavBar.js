@@ -248,6 +248,8 @@ export const NavBarSearchExpandedLocation = styled.div`
 height: 66px;
 width: 100%;
 
+position: relative;
+
 grid-column: 1;
 
 display: flex;
@@ -875,6 +877,8 @@ flex-wrap: wrap;
 align-content: center;
 padding-left 32px;
 
+position: relative;
+
 border-top-right-radius: 50px 50px;
 border-bottom-right-radius: 50px 50px;
 `;
@@ -1320,4 +1324,28 @@ display: block;
 height: 100%; 
 width: 100%; 
 fill: #717171;
+`;
+
+export const CloseButton = styled.div`
+height: 24px;
+width: 24px;
+
+border-radius: 50%;
+
+position: absolute;
+top: 50%;
+right: 7%;
+
+transform: translateY(-50%);
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+background-color: rgb(235,235,235);
+`;
+
+export const CloseButtonIMG = styled.img`
+height: 10px;
+width: 10px;
 `;
