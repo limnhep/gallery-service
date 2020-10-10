@@ -247,10 +247,9 @@ class App extends Component {
         return (
           <CSSTransition
             in={features && !modal}
-            classNames="slideIn"
-            timeout={300}
+            classNames="slide"
+            timeout={800}
             appear
-            enter
             exit
           >
             <GalleryFeatures
@@ -289,23 +288,35 @@ class App extends Component {
       return null;
     };
 
+    console.log(this.state.triggerSaveModal);
+
     const SaveModalStatusPopUp = () => {
       const { favorites, savedListing } = this.state;
       return (
-        <SaveSharePopUpContainer id="pop-up-modal">
-          <SaveSharePopUpTextBox>
-            <SaveSharePopUpStatusMain>
-              {savedListing !== false && `Saved to ${favorites[savedListing].name}`}
-              {(savedListModalPopUp !== false) && `Removed from ${favorites[savedListModalPopUp].name}`}
-            </SaveSharePopUpStatusMain>
-            <SaveSharePopUpStatusSecondary>
-              Any time
-            </SaveSharePopUpStatusSecondary>
-          </SaveSharePopUpTextBox>
-          <SaveSharePopUpRevertButton onClick={savedListing ? () => this.handleToggleFavorite('add', savedListing) : () => this.handleToggleFavorite('add', savedListModalPopUp)}>
-            { savedListing ? 'Change' : 'Undo'}
-          </SaveSharePopUpRevertButton>
-        </SaveSharePopUpContainer>
+        <CSSTransition
+          in={triggerSaveModal}
+          classNames="slideUp"
+          timeout={1000}
+          appear
+          enter
+          exit
+          unmountOnExit
+        >
+          <SaveSharePopUpContainer id="pop-up-modal">
+            <SaveSharePopUpTextBox>
+              <SaveSharePopUpStatusMain>
+                {savedListing !== false && `Saved to ${favorites[savedListing].name}`}
+                {(savedListModalPopUp !== false) && `Removed from ${favorites[savedListModalPopUp].name}`}
+              </SaveSharePopUpStatusMain>
+              <SaveSharePopUpStatusSecondary>
+                Any time
+              </SaveSharePopUpStatusSecondary>
+            </SaveSharePopUpTextBox>
+            <SaveSharePopUpRevertButton onClick={savedListing ? () => this.handleToggleFavorite('add', savedListing) : () => this.handleToggleFavorite('add', savedListModalPopUp)}>
+              { savedListing ? 'Change' : 'Undo'}
+            </SaveSharePopUpRevertButton>
+          </SaveSharePopUpContainer>
+        </CSSTransition>
       );
     };
 
@@ -318,18 +329,7 @@ class App extends Component {
         {renderCurrentPage()}
         {renderModal()}
         {triggerSaveModal
-        && (
-        <CSSTransition
-          in={triggerSaveModal}
-          classNames="slideUp"
-          timeout={1000}
-          appear
-          enter
-          exit
-        >
-          {SaveModalStatusPopUp()}
-        </CSSTransition>
-        )}
+        && SaveModalStatusPopUp()}
       </AppTopContainer>
     );
   }

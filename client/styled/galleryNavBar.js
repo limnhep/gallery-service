@@ -221,6 +221,7 @@ export const NavBarSearchExperienceContainer = styled.div`
 --grey-bg: #F6F6F6;
 height: 66px;
 width: 100%;
+max-width: 850px;
 background-color: ${({ state }) => (state < 8 ? '#F6F6F6' : 'white')};
 
 ${({ modal }) => {
