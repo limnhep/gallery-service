@@ -25,6 +25,7 @@ border-bottom: 1px solid rgb(245, 245, 245);
 export const DivPaddingToExitModal = styled.div`
 height: 100vh;
 width: 100vw;
+pointer-events: none;
 
 position: absolute;
 z-index: 15;
@@ -32,7 +33,7 @@ opacity: 100%;
 `;
 
 export const NavBarModal = styled.div`
-height: 100vw;
+height: 100vh;
 width: 100vw;
 position: fixed;
 z-index: 5;
@@ -188,7 +189,8 @@ export const NavBarSearchExpandedContainer = styled.div`
 --white-bg: white;
 --grey-bg: #F6F6F6;
 height: 66px;
-width: 850px;
+max-width: 850px;
+width: 90vw;
 background-color: ${({ state }) => (state < 5 ? '#F6F6F6' : 'white')};
 
 ${({ modal }) => {
@@ -218,7 +220,7 @@ export const NavBarSearchExperienceContainer = styled.div`
 --white-bg: white;
 --grey-bg: #F6F6F6;
 height: 66px;
-width: 850px;
+width: 100%;
 background-color: ${({ state }) => (state < 8 ? '#F6F6F6' : 'white')};
 
 ${({ modal }) => {
@@ -901,9 +903,27 @@ background-image: url("https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/pl
 }
 
 @media screen and (min-width: 745px) and (max-width: 1120px){
-  height: 40px;
-  width: 36px;
-  background-image: url("https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/plus-small.jpeg");
+  display: none;
+  // height: 40px;
+  // width: 36px;
+  // background-image: url("https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/plus-small.jpeg");
+}
+`;
+
+export const AirbnbIconSmall = styled.div`
+display: none
+height: 40px;
+width: 36px;
+background-image: url("https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/plus-small.jpeg");
+
+
+
+@media screen and (min-width: 745px) and (max-width: 1120px){
+  display: block;
+
+  &:hover {
+    cursor: pointer;
+}
 }
 `;
 
@@ -1014,7 +1034,7 @@ margin-right: 8px;
 display: flex;
 align-items: center;
 justify-content: center;
-user-select: none
+user-select: none;
 
 transform: translate(0px, 0px)!important;
 

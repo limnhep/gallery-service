@@ -14,6 +14,11 @@ import { requestFavorites, addFavorites, addFavoritesCategory } from '../api/Fav
 
 import {
   AppTopContainer,
+  SaveSharePopUpContainer,
+  SaveSharePopUpTextBox,
+  SaveSharePopUpStatusMain,
+  SaveSharePopUpStatusSecondary,
+  SaveSharePopUpRevertButton,
 } from '../../styled/galleryMain';
 
 import {
@@ -34,8 +39,12 @@ class App extends Component {
       selectedImage: '',
       modalState: 0,
       savedListing: false,
+      scrollToImageID: null,
+      savedListModalPopUp: false,
+      triggerSaveModal: false,
     };
     this.setModalImage = this.setModalImage.bind(this);
+    this.setScrollToImg = this.setScrollToImg.bind(this);
     this.handleAddCategory = this.handleAddCategory.bind(this);
     this.handleAddFavorite = this.handleAddFavorite.bind(this);
     this.handleModalState = this.handleModalState.bind(this);
@@ -69,6 +78,10 @@ class App extends Component {
 
   setModalImage(url) {
     this.setState({ selectedImage: url, modal: true, features: false });
+  }
+
+  setScrollToImg(id) {
+    this.setState({ scrollToImageID: id });
   }
 
   checkFavorite() {
@@ -123,7 +136,7 @@ class App extends Component {
     }
   }
 
-  async handleAddFavorite(favoritesList, closeModal = false) {
+  async handleAddFavorite(favoritesList, closeModal = false, id = null, triggerSaveModal) {
     let results;
     try {
       results = await addFavorites(favoritesList);
@@ -131,12 +144,20 @@ class App extends Component {
       throw new Error(err);
     } finally {
       if (closeModal) {
-        this.setState({ favorites: results.savedList, modalState: 0, savedListing: false }, () => {
+        this.setState({
+          favorites: results.savedList, modalState: 0, savedListing: false, savedListModalPopUp: id, triggerSaveModal,
+        }, () => {
           this.checkFavorite();
+          this.renderSaveModalStatusPopUp();
+          this.handleModalState(0);
         });
       } else {
-        this.setState({ favorites: results.savedList, savedListing: false }, () => {
+        this.setState({
+          favorites: results.savedList, savedListing: false, savedListModalPopUp: id, triggerSaveModal,
+        }, () => {
           this.checkFavorite();
+          this.renderSaveModalStatusPopUp();
+          this.handleModalState(0);
         });
       }
     }
@@ -174,11 +195,18 @@ class App extends Component {
       });
       favorites[index].listingID = newArr;
     }
-    this.handleAddFavorite(favorites);
+    this.handleAddFavorite(favorites, true, savedListing, true);
+  }
+
+  renderSaveModalStatusPopUp() {
+    setTimeout(() => {
+      this.setState({ triggerSaveModal: false });
+    }, 3000);
   }
 
   render() {
-    const { imagesArray } = this.state;
+    const { imagesArray, savedListModalPopUp, triggerSaveModal } = this.state;
+
     if (!imagesArray.length) {
       return (
         <>
@@ -188,7 +216,7 @@ class App extends Component {
 
     const renderCurrentPage = () => {
       const {
-        bedroomsArray, imagesIndexMap, favorites, features, listing, modal, modalState, savedListing,
+        bedroomsArray, imagesIndexMap, favorites, features, listing, modal, modalState, savedListing, scrollToImageID,
       } = this.state;
       if (!features && !modal) {
         return (
@@ -210,7 +238,8 @@ class App extends Component {
               handleModalState={this.handleModalState}
               handleAddCategory={this.handleAddCategory}
               handleToggleFavorite={this.handleToggleFavorite}
-              toggle={() => this.setState({ features: !features })}
+              setScrollToImg={this.setScrollToImg}
+              modalToggle={() => this.setState({ features: !features })}
             />
           </>
         );
@@ -221,12 +250,15 @@ class App extends Component {
             classNames="slideIn"
             timeout={300}
             appear
+            enter
             exit
           >
             <GalleryFeatures
               listing={listing}
               setFeaturePage={() => this.setState({ features: !features })}
               setModalImage={(url) => this.setModalImage(url)}
+              scrollToImageID={scrollToImageID}
+              setScrollToImg={this.setScrollToImg}
             />
           </CSSTransition>
         );
@@ -257,6 +289,26 @@ class App extends Component {
       return null;
     };
 
+    const SaveModalStatusPopUp = () => {
+      const { favorites, savedListing } = this.state;
+      return (
+        <SaveSharePopUpContainer id="pop-up-modal">
+          <SaveSharePopUpTextBox>
+            <SaveSharePopUpStatusMain>
+              {savedListing !== false && `Saved to ${favorites[savedListing].name}`}
+              {(savedListModalPopUp !== false) && `Removed from ${favorites[savedListModalPopUp].name}`}
+            </SaveSharePopUpStatusMain>
+            <SaveSharePopUpStatusSecondary>
+              Any time
+            </SaveSharePopUpStatusSecondary>
+          </SaveSharePopUpTextBox>
+          <SaveSharePopUpRevertButton onClick={savedListing ? () => this.handleToggleFavorite('add', savedListing) : () => this.handleToggleFavorite('add', savedListModalPopUp)}>
+            { savedListing ? 'Change' : 'Undo'}
+          </SaveSharePopUpRevertButton>
+        </SaveSharePopUpContainer>
+      );
+    };
+
     return (
       <AppTopContainer>
         <CssReset />
@@ -265,6 +317,19 @@ class App extends Component {
         </Helmet>
         {renderCurrentPage()}
         {renderModal()}
+        {triggerSaveModal
+        && (
+        <CSSTransition
+          in={triggerSaveModal}
+          classNames="slideUp"
+          timeout={1000}
+          appear
+          enter
+          exit
+        >
+          {SaveModalStatusPopUp()}
+        </CSSTransition>
+        )}
       </AppTopContainer>
     );
   }

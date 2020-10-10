@@ -5,7 +5,7 @@ const listing = {
     location: 'Joshua Tree, California, United States',
     description: `Re-energize in solace under the desert sky in this modern-bohemian dome, featuring many personally designed and handcrafted items. Stimulate your mind and spirit with natural wood and stone elements, and enjoy antique books and games while you take in sprawling mountain views by day and twinkling stars by night. The natural wood burning stove and space heaters warm the home on chilly evenings, and ample AC keeps the dome cool on hot desert days.
 
-    Dome in the Desert has been featured in many magazines, including Condé Nast Traveler, Esquire Magazine, Goop, Refinery29, and Apartment Therapy.`,
+Dome in the Desert has been featured in many magazines, including Condé Nast Traveler, Esquire Magazine, Goop, Refinery29, and Apartment Therapy.`,
     quote: 'A place to re-energize in solace under the desert sky.',
     hostname: 'Kathrin And Brian',
     rating: '4.96',

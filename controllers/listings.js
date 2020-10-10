@@ -1,7 +1,8 @@
 const { addOneListing, getOneListing, getOneRandomListing } = require('../models/listings');
 
 exports.getListing = (request, response) => {
-    const { id } = request.query;
+    const { id } = request.params;
+    console.log(request.params);
     if (id){
         getOneListing(id, (err, listing) => {
             if (err){

@@ -6,7 +6,7 @@ const {
     getListing
 } = require('../controllers/listings');
 
-router.get('/', getListing);
+router.get('/:id?', getListing);
 
 router.post('/', addListing);
 

@@ -126,10 +126,17 @@ justify-content: center;
 `;
 
 export const ModalBody = styled.div`
-grid-row: 2/3;
 
+${({ saveModalState }) => saveModalState === 1 && `
+grid-row: 2/4;
+border-top: 1px solid lightgrey;
+`}
+
+${({ saveModalState }) => saveModalState === 2 && `
+grid-row: 2/3;
 border-top: 1px solid lightgrey;
 border-bottom: 1px solid lightgrey;
+`}
 `;
 
 export const ModalFooter = styled.div`
@@ -184,9 +191,14 @@ export const SaveModalBodyButton = styled.button`
 height: 88px;
 background-color: white;
 border: none;
+padding-left: 12px;
+padding-right: 12px;
 
 &:hover {
     cursor: pointer;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+}
 }
 &:active {
     transform: scale(0.99);
@@ -217,24 +229,29 @@ width: 100%;
 export const SaveModalBodyButtonDivTextContainer = styled.div`
 height: 64px;
 width: 432px;
-text-align: left;
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start;
+align-items: center;
 `;
 
 export const SaveModalBodyButtonDivTextContainerTime = styled.div`
 height: 16x;
-width: 432px;
+width: 100%;
+text-align: left;
 margin-bottom: 4px;
 
 font-family: 'Airbnb Cereal App Light';
 color: rgb(113, 113, 113);
-font-size: 12px;
-line-height: 16px;
+font-size: 16px;
+line-height: 20px;
 font-weight: 400px; 
 `;
 
 export const SaveModalBodyButtonDivTextContainerTitle = styled.div`
 height: 20px;
-width: 432px;
+width: 100%;
+text-align: left;
 
 font-family: 'Airbnb Cereal App Medium';
 color: rgb(34, 34, 34);
@@ -245,7 +262,8 @@ font-weight: 600px;
 
 export const SaveModalBodyButtonDivTextContainerStays = styled.div`
 height: 18px;
-width: 432px;
+width: 100%;
+text-align: left;
 margin-top: 4px;
 
 font-family: 'Airbnb Cereal App Light';

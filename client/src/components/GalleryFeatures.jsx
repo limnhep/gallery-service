@@ -29,10 +29,24 @@ class GalleryFeatures extends Component {
       stickyStyleRooms: {},
     };
     this.roomRefs = [];
+    this.mountStickyHeading = this.mountStickyHeading.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', () => this.mountStickyHeading());
+    const { scrollToImageID, setScrollToImg } = this.props;
+    window.addEventListener('scroll', this.mountStickyHeading);
+    if (scrollToImageID !== null) {
+      setTimeout(() => {
+        document.getElementById(scrollToImageID).scrollIntoView({ behavior: 'smooth' });
+        setScrollToImg(null);
+      }, 600);
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.mountStickyHeading);
   }
 
   setRef(ref, index) {

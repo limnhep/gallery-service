@@ -11,7 +11,6 @@ import {
   SaveModalBodyContainer,
   SaveModalBodyButton,
   ModalFooter,
-  SaveModalFooterButton,
   CreateListModal,
   CreateListModalCreateButton,
   CreateListModalInputContainer,
@@ -59,14 +58,27 @@ class GallerySaveShareModal extends Component {
     const defaultURL = 'https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/emptylisting.png';
     const { createListName } = this.state;
 
-    const renderStays = (length) => {
-      if (length > 1) {
-        return `${length} Stays`;
-      } if (length === 1) {
-        return '1 Stay';
-      }
-      return 'Nothing saved yet';
-    };
+    // const renderStays = (length) => {
+    //   if (length > 1) {
+    //     return `${length} Stays`;
+    //   } if (length === 1) {
+    //     return '1 Stay';
+    //   }
+    //   return 'Nothing saved yet';
+    // };
+
+    const renderModalStateListCreateButton = (
+      <SaveModalBodyButton key={Math.random()} onClick={() => handleModalState(2)}>
+        <SaveModalBodyButtonDiv>
+          <SaveModalBodyButtonDivImgContainer>
+            <SaveModalBodyButtonDivImg src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/createlist.png" />
+          </SaveModalBodyButtonDivImgContainer>
+          <SaveModalBodyButtonDivTextContainer>
+            <SaveModalBodyButtonDivTextContainerTitle>Create a new list</SaveModalBodyButtonDivTextContainerTitle>
+          </SaveModalBodyButtonDivTextContainer>
+        </SaveModalBodyButtonDiv>
+      </SaveModalBodyButton>
+    );
 
     // Time, Name, Stays
     const renderModalStateList = favorites.map((list, index) => (
@@ -76,11 +88,8 @@ class GallerySaveShareModal extends Component {
             <SaveModalBodyButtonDivImg src={list.listingID.length ? list.listingID[list.listingID.length - 1][1] : defaultURL} />
           </SaveModalBodyButtonDivImgContainer>
           <SaveModalBodyButtonDivTextContainer>
-            <SaveModalBodyButtonDivTextContainerTime>{list.time}</SaveModalBodyButtonDivTextContainerTime>
             <SaveModalBodyButtonDivTextContainerTitle>{list.name}</SaveModalBodyButtonDivTextContainerTitle>
-            <SaveModalBodyButtonDivTextContainerStays>
-              {renderStays(list.listingID.length)}
-            </SaveModalBodyButtonDivTextContainerStays>
+            <SaveModalBodyButtonDivTextContainerTime>{list.time}</SaveModalBodyButtonDivTextContainerTime>
           </SaveModalBodyButtonDivTextContainer>
         </SaveModalBodyButtonDiv>
       </SaveModalBodyButton>
@@ -97,14 +106,15 @@ class GallerySaveShareModal extends Component {
               onClick={() => handleModalState(0)}
             />
           </ModalNavBar>
-          <ModalBody>
+          <ModalBody saveModalState={1}>
             <SaveModalBodyContainer>
+              {renderModalStateListCreateButton}
               {renderModalStateList}
             </SaveModalBodyContainer>
           </ModalBody>
-          <ModalFooter>
+          {/* <ModalFooter>
             <SaveModalFooterButton onClick={() => handleModalState(2)}>Create a list</SaveModalFooterButton>
-          </ModalFooter>
+          </ModalFooter> */}
         </SaveModal>
       </>
     );
@@ -120,7 +130,7 @@ class GallerySaveShareModal extends Component {
               onClick={() => handleModalState(1)}
             />
           </ModalNavBar>
-          <ModalBody>
+          <ModalBody saveModalState={2}>
             <CreateListModalInputContainer>
               <CreateListModalInputContainerForm>
                 <CreateListModalInputContainerFormText visibility={createListName.length ? 'visible' : 'hidden'}>Name</CreateListModalInputContainerFormText>

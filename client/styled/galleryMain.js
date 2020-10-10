@@ -369,18 +369,21 @@ margin: 0 auto;
 grid-row: 4;
 
 display: grid;
-grid-template-columns: minmax(min-content, 653px) minmax(467px);
+grid-template-columns: minmax(56vw, 653px) minmax(34vw, 467px);
+
 @media screen and (max-width: 750px) {
     grid-row: 5;
     width: 92vw;
     padding-bottom: 24px;
     border-bottom: 1px solid rgb(238, 238, 238);
+    grid-template-columns: 92vw;
 }
 `;
 
 export const ListingInfoContainer = styled.div`
 display: block;
 grid-column: 1;
+width: 100%;
 padding-top:48px;
 
 @media screen and (max-width: 750px) {
@@ -391,6 +394,7 @@ padding-top:48px;
 
 export const ListingInfoTitle = styled.div`
 max-width: 653px;
+width: 100%;
 padding-bottom: 24px;
 
 display: flex;
@@ -458,10 +462,12 @@ line-height: 20px;
 font-weight: 400px; 
 `;
 
-export const ListingInfoDesc = styled.div`
+export const ListingInfoDesc = styled.p`
 max-width: 653px;
 padding-top: 38px;
 padding-bottom: 32px;
+
+white-space: pre-wrap;
 
 border-top: 1px solid rgb(235, 235, 235);
 
@@ -509,7 +515,7 @@ font-size: 16px;
 line-height: 20px;
 font-weight: 600px; 
 
-user-selected: none;
+user-select: none;
 
 &:hover {
     cursor: pointer;
@@ -518,16 +524,48 @@ user-selected: none;
 
 export const ListingInfoGallery = styled.div`
 max-width: 653px;
-margin-bottom: 32px;
-
-height: 442px;
+min-height: 280px;
+max-height: 442px;
+width: 100%;
+margin-bottom: 42px;
+height: 39vh;
 
 border-radius: 12px;
 
 display: grid;
-grid-gap: 10px;
-grid-template-rows: 290px 142px;
-grid-template-columns: 212px 212px 212px;
+grid-gap: 8px;
+grid-template-rows: 66% 34%;
+grid-template-columns: 33% 33% 33%;
+
+@media screen and (max-width: 750px) {
+    grid-row: 5;
+    width: 92vw;
+    padding-bottom: 24px;
+    grid-template-rows: 16% 16% 16% 16% 16% 16%;
+    grid-template-columns: 50% 50%;
+    min-height: 1365px;
+    height: auto;
+}
+
+@media screen and (min-width: 750px) and (max-width: 950px) {
+    height: 30vh;
+}
+`;
+
+export const ListingInfoGalleryImgDIV = styled.div`
+${({ index }) => index === 0 && 'grid-column: 1/3; grid-row: 1; border-top-left-radius: 8px;'}
+${({ index }) => index === 1 && 'grid-column: 3/4; grid-row: 1; border-top-right-radius: 8px;'}
+${({ index }) => index === 2 && 'grid-column: 1/2; grid-row: 2; border-bottom-left-radius: 8px;'}
+${({ index }) => index === 3 && 'grid-column: 2/3; grid-row: 2;'}
+${({ index }) => index === 4 && 'grid-column: 3/4; grid-row: 2; border-bottom-right-radius: 8px;'}
+
+@media screen and (max-width: 750px) {
+    ${({ index }) => index === 0 && 'grid-column: 1/3; grid-row: 1/3; border-top-left-radius: 8px; border-top-right-radius: 8px;'}
+    ${({ index }) => index === 1 && 'grid-column: 1/2; grid-row: 3/5;'}
+    ${({ index }) => index === 2 && 'grid-column: 2/3; grid-row: 3/4;'}
+    ${({ index }) => index === 3 && 'grid-column: 2/3; grid-row: 4/5;'}
+    ${({ index }) => index === 4 && 'grid-column: 1/3; grid-row: 5/7; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;'}
+}
 `;
 
 export const ListingInfoGalleryImg = styled.img`
@@ -536,11 +574,19 @@ height: 100%;
 
 object-fit: cover;
 
-${({ index }) => index === 0 && 'grid-column: 1/3; grid-row: 1; border-top-left-radius: 8px;'}
-${({ index }) => index === 1 && 'grid-column: 3/4; grid-row: 1; border-top-right-radius: 8px;'}
-${({ index }) => index === 2 && 'grid-column: 1/2; grid-row: 2; border-bottom-left-radius: 8px;'}
-${({ index }) => index === 3 && 'grid-column: 2/3; grid-row: 2;'}
-${({ index }) => index === 4 && 'grid-column: 3/4; grid-row: 2; border-bottom-right-radius: 8px;'}
+${({ index }) => index === 0 && 'border-top-left-radius: 8px;'}
+${({ index }) => index === 1 && 'border-top-right-radius: 8px;'}
+${({ index }) => index === 2 && 'border-bottom-left-radius: 8px;'}
+${({ index }) => index === 3 && ''}
+${({ index }) => index === 4 && 'border-bottom-right-radius: 8px;'}
+
+@media screen and (max-width: 750px) {
+    ${({ index }) => index === 0 && 'grid-column: 1/3; grid-row: 1/3; border-top-left-radius: 8px; border-top-right-radius: 8px;'}
+    ${({ index }) => index === 1 && 'grid-column: 1/2; grid-row: 3/5;'}
+    ${({ index }) => index === 2 && 'grid-column: 2/3; grid-row: 3/4;'}
+    ${({ index }) => index === 3 && 'grid-column: 2/3; grid-row: 4/5;'}
+    ${({ index }) => index === 4 && 'grid-column: 1/3; grid-row: 5/7; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;'}
+}
 
 &:hover {
     cursor: pointer;
@@ -571,6 +617,11 @@ font-weight: 600px;
 &:focus {
     outline: none;
 }
+
+@media screen and (max-width: 750px) {
+    width: 92vw;
+}
+
 `;
 
 export const SleepingArrangementContainer = styled.div`
@@ -687,17 +738,18 @@ display: block;
 `;
 
 export const SleepingArrangementRoomImage = styled.img`
-height: 69.5%;
 width: 100%;
+height: auto;
+max-height: 212px;
 
 object-fit: cover;
 
 border-radius: 8px;
 
-
 &:hover {
     cursor: pointer;
 }
+
 `;
 
 export const SleepingArrangementRoomTitle = styled.div`
@@ -728,4 +780,106 @@ export const GalleryDotIcon = styled.img`
 height: 22px;
 vertical-align: middle;
 padding-right: 4px;
+`;
+
+export const SaveSharePopUpContainer = styled.div`
+width: 330px;
+height: 105px;
+border-radius: 25px;
+box-shadow: 2px 2px 10px rgb(210, 210, 210);
+padding: 24px;
+
+background-color: white;
+
+position: absolute;
+bottom: 22px;
+left: 22px;
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+&.slideUp-appear {
+    display: none;
+    bottom: -200px;
+}
+
+&.slideUp-appear-active {
+    display: flex;
+    bottom: 22px;
+    transition: all 0.5s ease; 
+}
+
+&.slideUp-enter {
+    display: none;
+    bottom: -200px;
+}
+
+&.slideUp-enter-active {
+    display: flex;
+    bottom: 22px;
+    transition: all 0.5s ease; 
+}
+
+&.slideUp-exit {
+    display: flex;
+    bottom: 22px;
+}
+
+&.slideUp-exit-active {
+    display: none;
+    bottom: -200px;    
+    transition: all 0.5s ease; 
+}
+`;
+
+export const SaveSharePopUpTextBox = styled.div`
+width: 200px;
+height: 60px;
+
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+`;
+
+export const SaveSharePopUpStatusMain = styled.div`
+width: 100%;
+text-align: left;
+
+font-family: 'Airbnb Cereal App Light';
+color: rgb(34, 34, 34);
+font-size: 15px;
+line-height: 16px;
+font-weight: 600px;
+`;
+
+export const SaveSharePopUpStatusSecondary = styled.div`
+width: 100%;
+text-align: left;
+
+
+font-family: 'Airbnb Cereal App Light';
+color: rgb(34, 34, 34);
+font-size: 12px;
+line-height: 16px;
+font-weight: 400px;
+`;
+
+export const SaveSharePopUpRevertButton = styled.div`
+width: 90px;
+border-radius: 25px;
+text-align: right;
+text-decoration: underline;
+
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(34, 34, 34);
+font-size: 14px;
+line-height: 20px;
+font-weight: 600px;
+
+user-select: none;
+
+&:hover {
+    cursor:pointer;
+}
 `;

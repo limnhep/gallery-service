@@ -36,6 +36,7 @@ import {
   ListingRoomSecondary,
   ListingInfoHostAvatar,
   ListingInfoGallery,
+  ListingInfoGalleryImgDIV,
   ListingInfoGalleryImg,
   ListingInfoGalleryShowButton,
   SleepingArrangementContainer,
@@ -67,6 +68,12 @@ class Gallery extends Component {
     };
   }
 
+  handleFindImageInFeatures(id) {
+    const { modalToggle, setScrollToImg } = this.props;
+    setScrollToImg(id);
+    modalToggle();
+  }
+
   handleViewScroll(direction) {
     const { bedroomsArray } = this.props;
     let { view } = this.state;
@@ -92,31 +99,31 @@ class Gallery extends Component {
   }
 
   renderPhotoGalleryMain(listing) {
-    const ModalToggle = this.props.toggle;
+    const { modalToggle } = this.props;
 
     if (listing.gallery.featured.length === 3) {
       return [
         <ContainerLargeMain key={Math.random()}>
           <ContainerLargeMainImgDIV>
-            <ContainerLargeMainImg onClick={ModalToggle} src={listing.gallery.featured[0]} />
+            <ContainerLargeMainImg onClick={modalToggle} src={listing.gallery.featured[0]} />
           </ContainerLargeMainImgDIV>
         </ContainerLargeMain>,
         <ContainerLargeAlt key={Math.random()}>
-          <ContainerLargeAltImg onClick={ModalToggle} src={listing.gallery.featured[1]} />
+          <ContainerLargeAltImg onClick={modalToggle} src={listing.gallery.featured[1]} />
         </ContainerLargeAlt>,
         <ContainerLargeAlt key={Math.random()}>
-          <ContainerLargeAltImg2 onClick={ModalToggle} src={listing.gallery.featured[2]} />
+          <ContainerLargeAltImg2 onClick={modalToggle} src={listing.gallery.featured[2]} />
         </ContainerLargeAlt>,
       ];
     }
     return [
       <ContainerLargeMain key={Math.random()}>
         <ContainerLargeMainImgDIV>
-          <ContainerLargeMainImg onClick={ModalToggle} src={listing.gallery.featured[0]} />
+          <ContainerLargeMainImg onClick={modalToggle} src={listing.gallery.featured[0]} />
         </ContainerLargeMainImgDIV>
       </ContainerLargeMain>,
       <ContainerLargeAltPair key={Math.random()}>
-        <ContainerLargeAltPairImg onClick={ModalToggle} src={listing.gallery.featured[1]} />
+        <ContainerLargeAltPairImg onClick={modalToggle} src={listing.gallery.featured[1]} />
       </ContainerLargeAltPair>,
     ];
   }
@@ -125,12 +132,17 @@ class Gallery extends Component {
     const { imagesArray, imagesIndexMap } = this.props;
 
     return imagesIndexMap.map((imgIndex, index) => (
-      <ListingInfoGalleryImg
+      <ListingInfoGalleryImgDIV
         index={index}
         key={Math.random()}
-        src={imagesArray[imgIndex].url}
-        id={imagesArray[imgIndex].url}
-      />
+        onClick={() => this.handleFindImageInFeatures(imagesArray[imgIndex].url)}
+      >
+        <ListingInfoGalleryImg
+          index={index}
+          src={imagesArray[imgIndex].url}
+          id={imagesArray[imgIndex].url}
+        />
+      </ListingInfoGalleryImgDIV>
     ));
   }
 
@@ -150,7 +162,7 @@ class Gallery extends Component {
     };
 
     return bedroomsArray.map((room) => (
-      <SleepingArrangementRoomItem key={Math.random()}>
+      <SleepingArrangementRoomItem key={Math.random()} onClick={() => this.handleFindImageInFeatures(room.images[0].url)}>
         <SleepingArrangementRoomImage src={room.images[0].url} id={room.images[0].url} />
         <SleepingArrangementRoomTitle>
           {room.name}
@@ -164,9 +176,8 @@ class Gallery extends Component {
 
   render() {
     const {
-      bedroomsArray, favorites, handleModalState, handleAddCategory, handleToggleFavorite, imagesIndexMap, listing, modalState, savedListing,
+      bedroomsArray, favorites, handleModalState, handleAddCategory, handleToggleFavorite, imagesIndexMap, listing, modalState, modalToggle, savedListing,
     } = this.props;
-    const ModalToggle = this.props.toggle;
     const { view } = this.state;
 
     const avatarURL = `https://airbnb-bougie.s3-us-west-1.amazonaws.com/listing_images/listing${listing.listingID}/avatar.jpg`;
@@ -195,7 +206,7 @@ class Gallery extends Component {
         </GalleryListingTitleContainer>
         <MainImageContainer>
           {this.renderPhotoGalleryMain(listing)}
-          <ShowMoreButton onClick={ModalToggle}>
+          <ShowMoreButton onClick={modalToggle}>
             {dotIcon}
             {' '}
             Show all photos
@@ -261,7 +272,7 @@ class Gallery extends Component {
             <ListingInfoGallery>
               {imagesIndexMap.length && this.renderBodyGalley()}
             </ListingInfoGallery>
-            <ListingInfoGalleryShowButton>Show all photos</ListingInfoGalleryShowButton>
+            <ListingInfoGalleryShowButton onClick={modalToggle}>Show all photos</ListingInfoGalleryShowButton>
             <SleepingArrangementContainer>
               <SleepingArrangementHeadingBar>
                 <SleepingArrangementHeadingTitle>

@@ -153,7 +153,7 @@ max-height: 78vh;
 &.fade-appear {
     opacity: 0;
 }
-&.fade-enter-active {
+&.fade-appear-active {
     opacity: 1;
     transition: opacity 150ms ease-out; 
 }

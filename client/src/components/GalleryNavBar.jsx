@@ -12,6 +12,7 @@ import {
   NavBarContainerMinWidthText,
   AirbnbIconContainer,
   AirbnbIcon,
+  AirbnbIconSmall,
   CloseButton,
   CloseButtonIMG,
   NavBarSearch,
@@ -293,7 +294,6 @@ class GalleryNavBar extends Component {
   handleCloseState(event) {
     const { searchBarState, userModalState } = this.state;
     const { className } = event.target;
-
     if (
       (className.includes('CalendarModal') && searchBarState === 2)
       || (className.includes('CalendarModal') && searchBarState === 3)
@@ -746,6 +746,7 @@ class GalleryNavBar extends Component {
         <NavBarContainer>
           <AirbnbIconContainer>
             <AirbnbIcon />
+            <AirbnbIconSmall />
           </AirbnbIconContainer>
           {searchBarState === 0
             ? (

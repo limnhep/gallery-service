@@ -24,7 +24,7 @@ mongoose.connect('mongodb://localhost:27017/airbnb_plus', { useNewUrlParser: tru
 const listingsRoute = require('./routes/listing');
 const favoritesRoute = require('./routes/favorites');
 
-app.use('/listing', listingsRoute);
+app.use('/listing/', listingsRoute);
 app.use('/favorites', favoritesRoute);
 
 const PORT = 3001;
