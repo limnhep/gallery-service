@@ -663,6 +663,16 @@ line-height: 20px;
 font-weight: 600px; 
 
 display: flex;
+align-items: center;
+`;
+
+export const SleepingArrangementHeadingNavigationIndex = styled.div`
+font-family: 'Airbnb Cereal App Light';
+color: rgb(34, 34, 34);
+font-size: 14px;
+line-height: 16px;
+font-weight: 400px; 
+align-text: center;
 `;
 
 export const SleepingArrangementRoomSliderContainer = styled.div`

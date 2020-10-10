@@ -43,6 +43,7 @@ import {
   SleepingArrangementHeadingBar,
   SleepingArrangementHeadingTitle,
   SleepingArrangementHeadingNavigation,
+  SleepingArrangementHeadingNavigationIndex,
   SleepingArrangementRoomSliderContainer,
   SleepingArrangementRoomSlider,
   SleepingArrangementRoomSliderButton,
@@ -281,6 +282,9 @@ class Gallery extends Component {
                 {bedroomsArray.length > 2
                 && (
                 <SleepingArrangementHeadingNavigation>
+                  <SleepingArrangementHeadingNavigationIndex>
+                    {`${view / 100 + 1} / ${Math.ceil(bedroomsArray.length / 2)}`}
+                  </SleepingArrangementHeadingNavigationIndex>
                   <SleepingArrangementRoomSliderButton onClick={() => this.handleViewScroll()}>
                     <SleepingArrangementRoomSliderButtonIcon
                       src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow.png"
