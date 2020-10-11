@@ -692,15 +692,15 @@ class GalleryNavBar extends Component {
               <NavBarSearchExpandedExperienceCalendarText>
                 <SearchHeading>Check out</SearchHeading>
                 <SearchSecondary bold={endDate}>{endDate ? `${endDate[1]} ${endDate[2]}` : 'Add when you want to go' }</SearchSecondary>
-              </NavBarSearchExpandedExperienceCalendarText>
-              {(searchBarState === 7 && startDate !== null) && (
+                {(searchBarState === 7 && startDate !== null) && (
                 <CloseButton onClick={() => this.setState({
-                  adults: 0, children: 0, infants: 0, searchBarState: 4,
+                  adults: 0, children: 0, infants: 0, searchBarState: 7,
                 })}
                 >
                   <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
                 </CloseButton>
-              )}
+                )}
+              </NavBarSearchExpandedExperienceCalendarText>
               {searchBarState !== 8
                 ? (
                   <LargeSearchIconContainer>

@@ -515,6 +515,8 @@ export const NavBarSearchExpandedExperienceCalendarText = styled.div`
 height: 66px;
 width: 322px;
 
+position: relative;
+
 display: flex;
 flex-grow: 1.4;
 align-items: center;
@@ -917,14 +919,14 @@ height: 40px;
 width: 36px;
 background-image: url("https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/plus-small.jpeg");
 
-
-
 @media screen and (min-width: 745px) and (max-width: 1120px){
   display: block;
+  height: 40px;
+  width: 36px;
+  background-image: url("https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/plus-small.jpeg");
 
   &:hover {
     cursor: pointer;
-}
 }
 `;
 
