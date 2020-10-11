@@ -31,6 +31,10 @@ const GalleryModal = ({
 }) => {
   const totalPhotos = images.length;
   const [modalState, setModalState] = useState(0);
+  const node = document.getElementById('turn-off'); // PROXY SERVER CODE ONLY
+  if (node !== undefined) {
+    node.style.display = 'none';
+  }
 
   let imageIndex;
   images.forEach((image, index) => {

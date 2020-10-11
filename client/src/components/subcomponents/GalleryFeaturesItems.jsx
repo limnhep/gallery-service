@@ -240,7 +240,7 @@ class GalleryFeaturesItems extends Component {
       amenities, name, index, setRef,
     } = this.props;
     const features = amenities.reduce((string, feature, idx) => {
-      if (index !== amenities.length - 1) {
+      if (idx !== amenities.length - 1) {
         return `${string + feature} · `;
       }
       return string + feature;

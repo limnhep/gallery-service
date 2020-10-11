@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const GalleryFeaturesContainer = styled.div`
+position: relative:
+z-index: 12000;
+background-color: white;
 padding-bottom: 54px;
 width: 100%;
 

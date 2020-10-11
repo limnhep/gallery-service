@@ -75,7 +75,13 @@ export const ImagesSingle = styled.img`
 object-fit: cover;
 vertical-align: bottom;
 width: 100%;
-height: 100%;
+max-height: 500px;
+
+&:hover {
+    cursor: pointer;
+    -webkit-filter: brightness(85%);
+    transition: -webkit-filter 0.3s;
+}
 `;
 
 export const ImagesPair = styled.img`
@@ -180,7 +186,6 @@ width: 33.05%;
     transition: -webkit-filter 0.3s;
 }
 `;
-
 
 // export const ImagesSingleContainer = styled.div`
 // object-fit: cover;

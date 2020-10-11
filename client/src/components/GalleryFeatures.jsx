@@ -34,6 +34,10 @@ class GalleryFeatures extends Component {
 
   componentDidMount() {
     const { scrollToImageID, setScrollToImg } = this.props;
+    const node = document.getElementById('turn-off'); // PROXY SERVER CODE ONLY
+    if (node !== undefined) {
+      node.style.display = 'none';
+    }
     window.addEventListener('scroll', this.mountStickyHeading);
     if (scrollToImageID !== null) {
       setTimeout(() => {

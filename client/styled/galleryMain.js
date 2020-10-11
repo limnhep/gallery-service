@@ -540,7 +540,7 @@ grid-template-columns: 33% 33% 33%;
 @media screen and (max-width: 750px) {
     grid-row: 5;
     width: 92vw;
-    padding-bottom: 24px;
+    margin-bottom: 18px;
     grid-template-rows: 16% 16% 16% 16% 16% 16%;
     grid-template-columns: 50% 50%;
     min-height: 1365px;
@@ -692,8 +692,6 @@ justify-content: space-between;
 -webkit-overflow-scrolling property;
 
 transform: translateX(-${({ view }) => view}%);
-
-transo
 `;
 
 export const SleepingArrangementRoomSliderButton = styled.div`

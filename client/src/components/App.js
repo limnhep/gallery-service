@@ -72,7 +72,20 @@ class App extends Component {
       }, () => {
         this.randomizeIndex();
         this.checkFavorite();
+        const node = document.getElementById('turn-off'); // PROXY SERVER CODE ONLY
+        if (node !== null) {
+          node.style.display = 'block';
+        }
       });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.features === true && this.state.features === false && this.state.modal === false) {
+      const node = document.getElementById('turn-off'); // PROXY SERVER CODE ONLY
+      if (node !== null) {
+        node.style.display = 'block';
+      }
     }
   }
 

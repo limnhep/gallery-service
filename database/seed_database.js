@@ -3,7 +3,7 @@ const { Listings } = require('./listings');
 const { Favorites } = require('./favorites');
 
 //MONGOOSE CONNECTION
-mongoose.connect('mongodb://localhost:27017/airbnb_plus', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+mongoose.connect('mongodb://172.17.0.3:27017/airbnb_plus', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log('MongoDB Connected!');
     seedAll();
 }).catch((err) => {
