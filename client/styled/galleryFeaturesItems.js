@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const RoomImagesContainer = styled.div`
 max-width: 1120px;
-margin: 46px auto 0 auto;
 padding-bottom: 18px;
 `;
 
@@ -32,9 +31,8 @@ margin-bottom: 6px !important;
 `;
 
 export const RightContainer = styled.div`
-display: inline-block;
-max-width: 742px;
-width: 100vw;
+grid-column: 2;
+width: 100%;
 `;
 
 export const ImagesContainer = styled.div`
@@ -44,27 +42,19 @@ flex-wrap: wrap;
 justify-content: space-around;
 `;
 
-export const LeftContainerHeadingSticky = styled.div`
-position: fixed;
-top: 42px;
-`;
-
-export const LeftContainerBottom = styled.div`
-display: inline-block;
-vertical-align: bottom;
-
-max-width: 378px;
-width:100%;
-
-padding-bottom: 30px;
+export const LeftContainerStickyContainer = styled.div`
+position: -webkit-sticky;
+position: sticky;
+top: 68px;
 `;
 
 export const LeftContainer = styled.div`
-display: inline-block;
-vertical-align: top;
+grid-column: 1;
 
-max-width: 378px;
-width:100%;
+width: 100%;
+height: 100%;
+
+padding-bottom: 48px;
 `;
 
 // ----------//

@@ -147,6 +147,8 @@ border-width: 1px;
 border-color: black;
 box-shadow: none;
 
+border: 1px solid rgb(43, 43, 43) !important;
+
 font-family: 'Airbnb Cereal App Medium';
 color: rgb(34, 34, 34);
 background-color: #ffffff;
@@ -334,7 +336,7 @@ margin-left: 4px;
 width: 76px;
 height: 34px;
 vertical-align: top;
-right: -10px;
+right: -5px;
 bottom: 6px;
 
 &:hover {
@@ -817,7 +819,6 @@ justify-content: space-between;
 }
 
 &.slideUp-enter {
-    display: none;
     bottom: -200px;
 }
 

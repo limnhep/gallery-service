@@ -25,63 +25,29 @@ import {
 class GalleryFeatures extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      stickyStyleRooms: {},
-    };
     this.roomRefs = [];
-    this.mountStickyHeading = this.mountStickyHeading.bind(this);
   }
 
   componentDidMount() {
-    const { scrollToImageID, setScrollToImg } = this.props;
     const node = document.getElementById('turn-off'); // PROXY SERVER CODE ONLY
-    if (node !== undefined) {
+    if (node !== null) {
       node.style.display = 'none';
     }
-    window.addEventListener('scroll', this.mountStickyHeading);
+    const { scrollToImageID, setScrollToImg } = this.props;
     if (scrollToImageID !== null) {
       setTimeout(() => {
         document.getElementById(scrollToImageID).scrollIntoView({ behavior: 'smooth' });
         setScrollToImg(null);
-      }, 600);
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      }, 500);
     }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.mountStickyHeading);
   }
 
   setRef(ref, index) {
     this.roomRefs[index] = ref;
   }
 
-  mountStickyHeading() {
-    const { listing } = this.props;
-    const { rooms } = listing.gallery;
-    const stickyStyleRooms = {};
-    rooms.forEach((room) => {
-      const roomName = document.getElementById(room.name).id;
-      const topBoundary = document.getElementById(room.name).getBoundingClientRect().y;
-      const bottomBoundary = document.getElementById(room.name).getBoundingClientRect().height + topBoundary;
-      // // return {roomName, topBoundary, bottomBoundary};
-      // console.log('room:' + roomName +'-top:' + topBoundary + '-bottom:' + bottomBoundary);
-      if (topBoundary < 45 && bottomBoundary > 145) {
-        stickyStyleRooms[roomName] = 1; // current stickied mode;
-      } else if (bottomBoundary < 145) {
-        stickyStyleRooms[roomName] = 2; // indicating the heading location is at the bottom,
-      } else {
-        stickyStyleRooms[roomName] = 0; // indicating the default mode which is at the top;
-      }
-    });
-    // console.log(stickyStyleRooms);
-    this.setState({ stickyStyleRooms });
-  }
-
   render() {
     const { listing, setFeaturePage, setModalImage } = this.props;
-    const { stickyStyleRooms } = this.state;
 
     const amenitiesItems = listing.gallery.rooms.map((room, index) => (
       <GalleryFeaturesItems
@@ -92,7 +58,6 @@ class GalleryFeatures extends Component {
         name={room.name}
         setRef={(ref) => this.setRef(ref, index)}
         setModalImage={setModalImage}
-        sticky={stickyStyleRooms[room.name]}
         key={Math.random()}
       />
     ));

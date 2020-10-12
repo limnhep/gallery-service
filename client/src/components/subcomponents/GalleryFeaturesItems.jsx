@@ -11,8 +11,7 @@ import {
   TinyMarginBot,
   RightContainer,
   ImagesContainer,
-  LeftContainerHeadingSticky,
-  LeftContainerBottom,
+  LeftContainerStickyContainer,
   LeftContainer,
   ImagesSingle,
   ImagesPair,
@@ -191,50 +190,6 @@ class GalleryFeaturesItems extends Component {
     return null;
   }
 
-  renderStickyClass(name, features) {
-    const { sticky } = this.props;
-    if (sticky === 0) {
-      return (
-        <>
-          <OverviewHeading>{name}</OverviewHeading>
-          <TinyMarginBot />
-          <HeadingSecondary><span>{features}</span></HeadingSecondary>
-        </>
-      );
-    } if (sticky === 1) {
-      return (
-        <LeftContainerHeadingSticky>
-          <OverviewHeading>{name}</OverviewHeading>
-          <TinyMarginBot />
-          <HeadingSecondary><span>{features}</span></HeadingSecondary>
-        </LeftContainerHeadingSticky>
-      );
-    }
-    return (
-      <>
-        <OverviewHeading>{name}</OverviewHeading>
-        <TinyMarginBot />
-        <HeadingSecondary><span>{features}</span></HeadingSecondary>
-      </>
-    );
-  }
-
-  renderPositionClass(name, features) {
-    const { sticky } = this.props;
-    if (sticky === 2) {
-      return (
-        <LeftContainerBottom>
-          {this.renderStickyClass(name, features)}
-        </LeftContainerBottom>
-      );
-    }
-    return (
-      <LeftContainer>
-        {this.renderStickyClass(name, features)}
-      </LeftContainer>
-    );
-  }
-
   render() {
     const {
       amenities, name, index, setRef,
@@ -246,10 +201,20 @@ class GalleryFeaturesItems extends Component {
       return string + feature;
     }, '');
 
+    const renderPositionClass = (
+      <LeftContainer>
+        <LeftContainerStickyContainer>
+          <OverviewHeading>{name}</OverviewHeading>
+          <TinyMarginBot />
+          <HeadingSecondary><span>{features}</span></HeadingSecondary>
+        </LeftContainerStickyContainer>
+      </LeftContainer>
+    );
+
     return (
       <>
+        {renderPositionClass}
         <RoomImagesContainer ref={(ref) => setRef(ref, index)}>
-          {this.renderPositionClass(name, features)}
           <RightContainer id={name}>
             <ImagesContainer>
               {this.renderRoomGallery()}

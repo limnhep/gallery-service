@@ -71,6 +71,7 @@ class Gallery extends Component {
 
   handleFindImageInFeatures(id) {
     const { modalToggle, setScrollToImg } = this.props;
+    console.log('ID:' + id);
     setScrollToImg(id);
     modalToggle();
   }
@@ -205,7 +206,7 @@ class Gallery extends Component {
             handleToggleFavorite={handleToggleFavorite}
           />
         </GalleryListingTitleContainer>
-        <MainImageContainer>
+        <MainImageContainer id="MainImageContainer">
           {this.renderPhotoGalleryMain(listing)}
           <ShowMoreButton onClick={modalToggle}>
             {dotIcon}
@@ -216,7 +217,7 @@ class Gallery extends Component {
         <TitleAirbnbIconContainer>
           <TitleAirbnbIconMinWidth />
         </TitleAirbnbIconContainer>
-        <ListingBodyContainer>
+        <ListingBodyContainer id="ListingBodyContainer">
           <ListingInfoContainer>
             <ListingInfoTitle>
               <ListingRoomInfo>

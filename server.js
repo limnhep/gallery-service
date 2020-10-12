@@ -14,7 +14,7 @@ app.use(cors());
 app.use('/', express.static(__dirname + '/client/dist'))
 
 //MONGOOSE CONNECTION
-mongoose.connect('mongodb://172.17.0.3:27017/airbnb_plus', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+mongoose.connect('mongodb://localhost:27017/airbnb_plus', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log('MongoDB Connected!');
 }).catch((err) => {
     console.log('MongoDB Connection Error');
@@ -25,7 +25,7 @@ const listingsRoute = require('./routes/listing');
 const favoritesRoute = require('./routes/favorites');
 
 app.use('/listing/', listingsRoute);
-app.use('/favorites', favoritesRoute);
+app.use('/favorites/', favoritesRoute);
 
 const PORT = 3001;
 app.listen(PORT, (err) => {

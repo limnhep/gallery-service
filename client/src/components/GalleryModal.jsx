@@ -32,7 +32,7 @@ const GalleryModal = ({
   const totalPhotos = images.length;
   const [modalState, setModalState] = useState(0);
   const node = document.getElementById('turn-off'); // PROXY SERVER CODE ONLY
-  if (node !== undefined) {
+  if (node !== null) {
     node.style.display = 'none';
   }
 

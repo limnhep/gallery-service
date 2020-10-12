@@ -23,9 +23,9 @@ border-bottom: 1px solid rgb(245, 245, 245);
 `;
 
 export const DivPaddingToExitModal = styled.div`
-height: 100vh;
+height: 3000px;
+top: 80px;
 width: 100vw;
-pointer-events: none;
 
 position: absolute;
 z-index: 15;
@@ -819,6 +819,11 @@ width: 48px;
 border-radius: 50%;
 background-color: rgb(146,23,77);
 
+&:hover {
+  background-color: rgb(229,35,83);
+  transition: background-color 0.3s ease;
+}
+
 display: flex;
 justify-content: center;
 align-items: center;
@@ -1369,6 +1374,252 @@ background-color: rgb(235,235,235);
 `;
 
 export const CloseButtonIMG = styled.img`
+height: 10px;
+width: 10px;
+`;
+
+// ------------------------- NAVBAR STICKY  ------------ //
+
+export const StickyNavBarDIV = styled.div`
+position: fixed;
+z-index: 2000;
+top: 0;
+height: 80px;
+width: 100%;
+background-color: white;
+
+border-bottom: 1px solid rgb(245, 245, 245);
+
+&.slideDown-appear {
+  top: -100px;
+  
+}
+
+&.slideDown-appear-done {
+  top: 0;
+  transition: top 200ms ease;
+}
+
+&.slideDown-enter {
+  top: -100px;
+  
+}
+
+&.slideDown-enter-done {
+  top: 0;
+  transition: top 200ms ease;
+}
+
+&.slideDown-exit {
+  top: 0;
+  
+}
+
+&.slideDown-exit-done {
+  top: -100px;
+  transition: top 200ms ease;
+}
+
+@media screen and (max-width: 750px){
+  display: none;
+}
+`;
+
+export const StickyNavBar = styled.div`
+max-width: 1120px;
+width: 90vw;
+height: 80px;
+margin: 0 auto;
+
+display: flex;
+align-items: center;
+`;
+
+export const StickyNavBarMinWidthDIV = styled.div`
+display: none;
+
+@media screen and (max-width: 750px){
+  position: fixed;
+  bottom: 0;
+  z-index: 2000;
+  width: 100vw;
+  height: 80px;
+  background-color: white;
+
+  display: block;
+  border-top: 1px solid rgb(245, 245, 245);
+}
+`;
+
+export const StickyNavBarMinWidth = styled.div`
+width: 90vw;
+height: 80px;
+display: none;
+
+@media screen and (max-width: 750px){
+  margin: 0 auto;
+  background-color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+`;
+
+export const StickyNavBarIconContainer = styled.div`
+height: 44px;
+width: 79px;
+background-size: contain;
+background-image: url("https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/plus2.png"); 
+
+margin-right: 24px;
+
+&:hover {
+  cursor: pointer;
+}
+`;
+
+export const StickyNavBarIcon = styled.div`
+object-fit: contain;
+height: 100%;
+width: 100%;
+`;
+
+export const StickyNavBarLinks = styled.div`
+margin-right: 24px;
+height: 80px;
+display: flex;
+align-items: center;
+
+position: relative;
+
+&:hover {
+  cursor: pointer;
+
+  &:after {
+    position: absolute;
+    width: 100%;
+    content: '';
+    bottom: 0;
+    border-bottom: 5px solid black;
+  }
+}
+`;
+
+export const StickyNavBarLinksText = styled.div`
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(43, 43, 43);
+background-color: #ffffff;
+font-size: 14px;
+line-height: 16px;
+font-weight: 400px; 
+
+&:hover {
+  cursor: pointer;
+}
+`;
+
+export const StickyNavBarCalendar = styled.div`
+width: 284px;
+height: 48px;
+margin-left: auto;
+
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(43, 43, 43);
+background-color: #ffffff;
+font-size: 14px;
+line-height: 16px;
+font-weight: 400px; 
+
+display: flex;
+align-items: center;
+`;
+
+export const StickyNavBarCalendarPriceContainer = styled.div`
+width: 104px;
+height: 45px;
+flex-basis: 104px;
+
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(43, 43, 43);
+background-color: #ffffff;
+font-size: 14px;
+line-height: 16px;
+font-weight: 400px; 
+
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+`;
+
+export const StickyNavBarCalendarPrice = styled.div`
+width: 104px;
+
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(43, 43, 43);
+background-color: #ffffff;
+font-size: 18px;
+line-height: 24px;
+font-weight: 400px; 
+`;
+
+export const StickyNavBarCalendarPriceSecondary = styled.span`
+font-family: 'Airbnb Cereal App Light';
+color: rgb(43, 43, 43);
+background-color: #ffffff;
+font-size: ${({ fontSize }) => fontSize}px;
+line-height: 18px;
+font-weight: 400px; 
+`;
+
+export const StickyNavBarCalendarRating = styled.div`
+width: 104px;
+
+font-family: 'Airbnb Cereal App Medium';
+color: rgb(43, 43, 43);
+background-color: #ffffff;
+font-size: 12px;
+line-height: 14px;
+font-weight: 400px; 
+`;
+
+export const StickyNavBarCalendarCheckAvailability = styled.button`
+width: 180px;
+height: 48px;
+flex-basis: 180px;
+
+font-family: 'Airbnb Cereal App Book';
+color: white;
+
+transition: opacity 1.25s ease 0s !important;
+
+background: linear-gradient(90deg, rgba(185,29,88,1) 0%, rgba(136,21,81,1) 31%);
+
+&:hover {  
+  cursor: pointer;
+  background: radial-gradient(circle at center, #BD1E59 0%, #92174D 35%, #861453 50%, #6C0D63 100% );
+  ${({ position }) => (position !== null) && `background-position: ${position[0]}px ${position[1]}px`};
+}
+&:active {
+  background: radial-gradient(circle at center, #FF385C 0%, #E61E4D 27.5%, #E31C5F 40%, #D70466 57.5%, #BD1E59 75%, #BD1E59 100%);
+  transform: scale(.95);
+  transition: all 100ms ease-out 0s;
+}
+
+font-size: 16px;
+line-height: 20px;
+font-weight: 600px; 
+
+user-select: none;
+border-radius: 8px;
+border: none;
+
+&:focus {
+  outline: none;
+}
+`;
+
+export const StarIcon = styled.img`
 height: 10px;
 width: 10px;
 `;

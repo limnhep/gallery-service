@@ -103,4 +103,10 @@ flex-wrap: wrap;
 `;
 
 export const AmenitiesModule = styled.div`
+max-width: 1120px;
+margin: 46px auto;
+
+display: grid;
+grid-template-columns: minmax(210px, 378px) minmax(436px, 742px);
+grid-row-gap: 48px;
 `;

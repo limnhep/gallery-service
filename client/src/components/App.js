@@ -3,7 +3,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { Helmet } from 'react-helmet';
 import GalleryMain from './GalleryMain.jsx';
 import GalleryFeatures from './GalleryFeatures.jsx';
@@ -49,6 +49,7 @@ class App extends Component {
     this.handleAddFavorite = this.handleAddFavorite.bind(this);
     this.handleModalState = this.handleModalState.bind(this);
     this.handleToggleFavorite = this.handleToggleFavorite.bind(this);
+    this.handleScrollTo = this.handleScrollTo.bind(this);
   }
 
   async componentDidMount() {
@@ -185,6 +186,13 @@ class App extends Component {
     this.setState({ modalState: mode });
   }
 
+  handleScrollTo(className) {
+    const node = document.getElementById(className);
+    if (node !== null) {
+      node.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
   handleToggleFavorite(operation, index = null) {
     const {
       favorites, listing, savedListing,
@@ -239,6 +247,7 @@ class App extends Component {
               setFeaturePage={() => this.setState({ features: !features })}
               handleModalState={this.handleModalState}
               handleToggleFavorite={this.handleToggleFavorite}
+              handleScrollTo={this.handleScrollTo}
             />
             <GalleryMain
               listing={listing}
@@ -301,35 +310,35 @@ class App extends Component {
       return null;
     };
 
-    console.log(this.state.triggerSaveModal);
-
     const SaveModalStatusPopUp = () => {
       const { favorites, savedListing } = this.state;
       return (
-        <CSSTransition
-          in={triggerSaveModal}
-          classNames="slideUp"
-          timeout={1000}
-          appear
-          enter
-          exit
-          unmountOnExit
-        >
-          <SaveSharePopUpContainer id="pop-up-modal">
-            <SaveSharePopUpTextBox>
-              <SaveSharePopUpStatusMain>
-                {savedListing !== false && `Saved to ${favorites[savedListing].name}`}
-                {(savedListModalPopUp !== false) && `Removed from ${favorites[savedListModalPopUp].name}`}
-              </SaveSharePopUpStatusMain>
-              <SaveSharePopUpStatusSecondary>
-                Any time
-              </SaveSharePopUpStatusSecondary>
-            </SaveSharePopUpTextBox>
-            <SaveSharePopUpRevertButton onClick={savedListing ? () => this.handleToggleFavorite('add', savedListing) : () => this.handleToggleFavorite('add', savedListModalPopUp)}>
-              { savedListing ? 'Change' : 'Undo'}
-            </SaveSharePopUpRevertButton>
-          </SaveSharePopUpContainer>
-        </CSSTransition>
+        <TransitionGroup>
+          <CSSTransition
+            in={triggerSaveModal}
+            classNames="slideUp"
+            timeout={800}
+            appear
+            enter
+            exit
+            unmountOnExit
+          >
+            <SaveSharePopUpContainer id="pop-up-modal">
+              <SaveSharePopUpTextBox>
+                <SaveSharePopUpStatusMain>
+                  {savedListing !== false && `Saved to ${favorites[savedListing].name}`}
+                  {(savedListModalPopUp !== false) && `Removed from ${favorites[savedListModalPopUp].name}`}
+                </SaveSharePopUpStatusMain>
+                <SaveSharePopUpStatusSecondary>
+                  Any time
+                </SaveSharePopUpStatusSecondary>
+              </SaveSharePopUpTextBox>
+              <SaveSharePopUpRevertButton onClick={savedListing ? () => this.handleToggleFavorite('add', savedListing) : () => this.handleToggleFavorite('add', savedListModalPopUp)}>
+                { savedListing ? 'Change' : 'Undo'}
+              </SaveSharePopUpRevertButton>
+            </SaveSharePopUpContainer>
+          </CSSTransition>
+        </TransitionGroup>
       );
     };
 

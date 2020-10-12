@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import GallerySearchBarCalendar from './subcomponents/GallerySearchBarCalendar.jsx';
 import {
   NavBarFullSpan,
@@ -72,6 +73,20 @@ import {
   ProfileContainersHeading,
   NewMessagesNotification,
   ProfileContainersStatus,
+  StickyNavBarDIV,
+  StickyNavBar,
+  StickyNavBarIconContainer,
+  StickyNavBarLinks,
+  StickyNavBarLinksText,
+  StickyNavBarCalendar,
+  StickyNavBarCalendarPriceContainer,
+  StickyNavBarCalendarPrice,
+  StickyNavBarCalendarPriceSecondary,
+  StickyNavBarCalendarRating,
+  StickyNavBarCalendarCheckAvailability,
+  StarIcon,
+  StickyNavBarMinWidthDIV,
+  StickyNavBarMinWidth,
 } from '../../styled/galleryNavBar';
 
 import {
@@ -107,6 +122,19 @@ const calendar = [
   ['December 2021', 3, 31],
 ];
 
+/* Search BAR STATE
+
+searchBarState = 1 // Expanded Location Bar
+searchBarState = 2 // Expanded Calendar FROM Bar
+searchBarState = 3 // Expanded Calendar TO Bar
+searchBarState = 4 // Expanded Guest Bar
+searchBarState = 5 // Expanded SEARCH NO ACTIVE
+searchBarState = 6 // Expanded EXPERIENCE Location Bar
+searchBarState = 7 // Expanded EXPERIENCE Calendar Bar
+searchBarState = 8 // Expanded EXPERIENCE NO ACTIVE
+
+*/
+
 class GalleryNavBar extends Component {
   constructor() {
     super();
@@ -128,14 +156,27 @@ class GalleryNavBar extends Component {
       adults: 0,
       children: 0,
       infants: 0,
+      bookingPrice: null,
       hoveredBoxBorderCheck: null,
+      stickyNavBar: false,
+      stickyNavBarCalendar: false,
+      searchButtonCursorPosition: null,
     };
     this.setMonthIndex = this.setMonthIndex.bind(this);
     this.setCalendarDate = this.setCalendarDate.bind(this);
+    this.handleScrollCloseModal = this.handleScrollCloseModal.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', () => this.handleScrollCloseModal());
+    const price = document.getElementById('priceForHarris');
+    if (price !== null) {
+      this.setState({ bookingPrice: price.innerText });
+    }
+    window.addEventListener('scroll', this.handleScrollCloseModal);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScrollCloseModal);
   }
 
   setCalendarDate(dateArray) {
@@ -271,9 +312,21 @@ class GalleryNavBar extends Component {
   }
 
   handleScrollCloseModal() {
-    const { searchBarState } = this.state;
+    const { searchBarState, userModalState } = this.state;
+    const gallery = document.getElementById('MainImageContainer').getBoundingClientRect();
+    const listingbody = document.getElementById('ListingBodyContainer').getBoundingClientRect();
     if (window.scrollY > 55 && searchBarState > 0) {
       this.setState({ searchBarState: 0 });
+    }
+    if (window.scrollY > gallery.height + 180) {
+      this.setState({ stickyNavBar: true, userModalState: 0 });
+    } else {
+      this.setState({ stickyNavBar: false });
+    }
+    if (window.scrollY > gallery.height + listingbody.height + 60 + 518) {
+      this.setState({ stickyNavBarCalendar: true });
+    } else {
+      this.setState({ stickyNavBarCalendar: false });
     }
   }
 
@@ -317,17 +370,27 @@ class GalleryNavBar extends Component {
     }
   }
 
+  handleSearchButtonCursorPosition(e) {
+    const width = e.target.clientWidth;
+    const height = e.target.clientHeight;
+    const eventOffsetX = e.nativeEvent.offsetX + (width / 2);
+    const eventOffsetY = e.nativeEvent.offsetY + (height / 2);
+    this.setState({ searchButtonCursorPosition: [eventOffsetX, eventOffsetY] });
+  }
+
   render() {
     const {
-      adults, infants, children, hoveredBoxBorderCheck, location, loggedIn, searchBarState, userModalState,
+      adults, infants, children, bookingPrice, hoveredBoxBorderCheck, location, loggedIn, searchBarState, stickyNavBar, stickyNavBarCalendar, userModalState,
     } = this.state;
     const {
-      startDate, endDate, hoveredDate, selectedMonthIndex,
+      startDate, endDate, hoveredDate, selectedMonthIndex, searchButtonCursorPosition
     } = this.state; // Calendar
     const {
-      savedListing, handleModalState, handleToggleFavorite, setFeaturePage,
+      savedListing, handleModalState, handleScrollTo, handleToggleFavorite, setFeaturePage,
     } = this.props;
     const totalGuests = adults + infants + children;
+
+    console.log(searchButtonCursorPosition);
 
     const RenderProfileModal = (
       <ProfileModal onClick={(e) => e.stopPropagation()}>
@@ -741,6 +804,116 @@ class GalleryNavBar extends Component {
       </>
     );
 
+    const renderNavBarMinWidth = (
+      <NavBarContainerMinWidth>
+        <NavBarContainerMinWidthLeftNavigation>
+          <NavBarContainerMinWidthBackButton onClick={setFeaturePage}>
+            <img src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow.png" alt="img" />
+          </NavBarContainerMinWidthBackButton>
+          <NavBarContainerMinWidthText>
+            Homes · Airbnb
+          </NavBarContainerMinWidthText>
+        </NavBarContainerMinWidthLeftNavigation>
+        <IconContainer>
+          <ShareIcon onClick={() => handleModalState(3)} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/upload.png" />
+          {savedListing !== false
+            ? <HeartIcon onClick={() => handleToggleFavorite('remove')} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/heart.png" />
+            : <HeartIcon onClick={() => handleModalState(1)} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/noheart.png" />}
+        </IconContainer>
+      </NavBarContainerMinWidth>
+    );
+
+    const renderStickyNavBar = (
+      <CSSTransition
+        in={stickyNavBar}
+        classNames="slideDown"
+        timeout={200}
+        appear={stickyNavBar}
+        enter={stickyNavBar}
+        exit={stickyNavBar}
+      >
+        <StickyNavBarDIV>
+          <StickyNavBar>
+            <StickyNavBarIconContainer />
+            <StickyNavBarLinks>
+              <StickyNavBarLinksText onClick={() => handleScrollTo('gallery-service')}>
+                Photos
+              </StickyNavBarLinksText>
+            </StickyNavBarLinks>
+            <StickyNavBarLinks>
+              <StickyNavBarLinksText onClick={() => handleScrollTo('amenities-container')}>
+                Amenities
+              </StickyNavBarLinksText>
+            </StickyNavBarLinks>
+            <StickyNavBarLinks>
+              <StickyNavBarLinksText onClick={() => handleScrollTo('reviews')}>
+                Reviews
+              </StickyNavBarLinksText>
+            </StickyNavBarLinks>
+            <StickyNavBarLinks>
+              <StickyNavBarLinksText onClick={() => handleScrollTo('map-container')}>
+                Location
+              </StickyNavBarLinksText>
+            </StickyNavBarLinks>
+            {stickyNavBarCalendar && (
+            <StickyNavBarCalendar>
+              <StickyNavBarCalendarPriceContainer>
+                <StickyNavBarCalendarPrice>
+                  {bookingPrice ? `${bookingPrice}` : '$538' }
+&nbsp;
+                  <StickyNavBarCalendarPriceSecondary fontSize={14}>
+                    / night
+                  </StickyNavBarCalendarPriceSecondary>
+                </StickyNavBarCalendarPrice>
+                <StickyNavBarCalendarRating>
+                  <StarIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/star.png" />
+                &nbsp;&nbsp;4.98&nbsp;&nbsp;
+                  <StickyNavBarCalendarPriceSecondary fontSize={12}>
+                    (145)
+                  </StickyNavBarCalendarPriceSecondary>
+                </StickyNavBarCalendarRating>
+              </StickyNavBarCalendarPriceContainer>
+              <StickyNavBarCalendarCheckAvailability onClick={() => handleScrollTo('booking')}>
+                Check availability
+              </StickyNavBarCalendarCheckAvailability>
+            </StickyNavBarCalendar>
+            )}
+          </StickyNavBar>
+        </StickyNavBarDIV>
+      </CSSTransition>
+
+    );
+
+    const stickyNavBarMinWidth = (
+      <StickyNavBarMinWidthDIV>
+        <StickyNavBarMinWidth>
+          <StickyNavBarCalendarPriceContainer>
+            <StickyNavBarCalendarPrice>
+              {bookingPrice ? `${bookingPrice}` : '$538' }
+&nbsp;
+              <StickyNavBarCalendarPriceSecondary fontSize={14}>
+                / night
+              </StickyNavBarCalendarPriceSecondary>
+            </StickyNavBarCalendarPrice>
+            <StickyNavBarCalendarRating>
+              <StarIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/star.png" />
+                &nbsp;&nbsp;4.98&nbsp;&nbsp;
+              <StickyNavBarCalendarPriceSecondary fontSize={12}>
+                (145)
+              </StickyNavBarCalendarPriceSecondary>
+            </StickyNavBarCalendarRating>
+          </StickyNavBarCalendarPriceContainer>
+          <StickyNavBarCalendarCheckAvailability
+            onMouseMove={(e) => this.handleSearchButtonCursorPosition(e)}
+            onClick={() => handleScrollTo('booking')}
+            position={searchButtonCursorPosition}
+          >
+            Check availability
+          </StickyNavBarCalendarCheckAvailability>
+        </StickyNavBarMinWidth>
+      </StickyNavBarMinWidthDIV>
+    );
+
     return (
       <NavBarFullSpan onClick={(e) => this.handleCloseState(e)}>
         <NavBarContainer>
@@ -802,24 +975,11 @@ class GalleryNavBar extends Component {
             {userModalState === 1 && RenderWorldModal}
           </ButtonsContainer>
         </NavBarContainer>
-        <NavBarContainerMinWidth>
-          <NavBarContainerMinWidthLeftNavigation>
-            <NavBarContainerMinWidthBackButton onClick={setFeaturePage}>
-              <img src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/left-arrow.png" alt="img" />
-            </NavBarContainerMinWidthBackButton>
-            <NavBarContainerMinWidthText>
-              Homes · Airbnb
-            </NavBarContainerMinWidthText>
-          </NavBarContainerMinWidthLeftNavigation>
-          <IconContainer>
-            <ShareIcon onClick={() => handleModalState(3)} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/upload.png" />
-            {savedListing !== false
-              ? <HeartIcon onClick={() => handleToggleFavorite('remove')} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/heart.png" />
-              : <HeartIcon onClick={() => handleModalState(1)} src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/noheart.png" />}
-          </IconContainer>
-        </NavBarContainerMinWidth>
+        {renderNavBarMinWidth}
         {(searchBarState > 0 && searchBarState <= 5) && RenderExpandedSearchBar}
         {(searchBarState >= 6 && searchBarState <= 8) && RenderExperienceSearchBar}
+        {stickyNavBar && renderStickyNavBar}
+        {stickyNavBarMinWidth}
         {userModalState > 0 && <DivPaddingToExitModal onClick={() => this.setState({ searchBarState: 0, userModalState: 0 })} />}
       </NavBarFullSpan>
     );
