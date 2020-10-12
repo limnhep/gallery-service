@@ -389,9 +389,7 @@ class GalleryNavBar extends Component {
       savedListing, handleModalState, handleScrollTo, handleToggleFavorite, setFeaturePage,
     } = this.props;
     const totalGuests = adults + infants + children;
-
-    console.log(searchButtonCursorPosition);
-
+    
     const RenderProfileModal = (
       <ProfileModal onClick={(e) => e.stopPropagation()}>
         <ProfileContainers borderBottom>
@@ -835,23 +833,23 @@ class GalleryNavBar extends Component {
         <StickyNavBarDIV>
           <StickyNavBar>
             <StickyNavBarIconContainer />
-            <StickyNavBarLinks>
-              <StickyNavBarLinksText onClick={() => handleScrollTo('gallery-service')}>
+            <StickyNavBarLinks onClick={() => handleScrollTo('gallery-service')}>
+              <StickyNavBarLinksText>
                 Photos
               </StickyNavBarLinksText>
             </StickyNavBarLinks>
-            <StickyNavBarLinks>
-              <StickyNavBarLinksText onClick={() => handleScrollTo('amenities-container')}>
+            <StickyNavBarLinks onClick={() => handleScrollTo('amenities-container')}>
+              <StickyNavBarLinksText>
                 Amenities
               </StickyNavBarLinksText>
             </StickyNavBarLinks>
-            <StickyNavBarLinks>
-              <StickyNavBarLinksText onClick={() => handleScrollTo('reviews')}>
+            <StickyNavBarLinks onClick={() => handleScrollTo('reviews')}>
+              <StickyNavBarLinksText>
                 Reviews
               </StickyNavBarLinksText>
             </StickyNavBarLinks>
-            <StickyNavBarLinks>
-              <StickyNavBarLinksText onClick={() => handleScrollTo('map-container')}>
+            <StickyNavBarLinks onClick={() => handleScrollTo('map-container')}>
+              <StickyNavBarLinksText>
                 Location
               </StickyNavBarLinksText>
             </StickyNavBarLinks>
@@ -873,7 +871,11 @@ class GalleryNavBar extends Component {
                   </StickyNavBarCalendarPriceSecondary>
                 </StickyNavBarCalendarRating>
               </StickyNavBarCalendarPriceContainer>
-              <StickyNavBarCalendarCheckAvailability onClick={() => handleScrollTo('booking')}>
+              <StickyNavBarCalendarCheckAvailability
+                onMouseMove={(e) => this.handleSearchButtonCursorPosition(e)}
+                onClick={() => handleScrollTo('booking')}
+                position={searchButtonCursorPosition}
+              >
                 Check availability
               </StickyNavBarCalendarCheckAvailability>
             </StickyNavBarCalendar>

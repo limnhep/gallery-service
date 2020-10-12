@@ -1474,6 +1474,10 @@ background-image: url("https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/pl
 
 margin-right: 24px;
 
+@media screen and (max-width: 850px){
+  margin-right: 12px;
+}
+
 &:hover {
   cursor: pointer;
 }
@@ -1492,6 +1496,10 @@ display: flex;
 align-items: center;
 
 position: relative;
+
+@media screen and (max-width: 850px){
+  margin-right: 16px;
+}
 
 &:hover {
   cursor: pointer;
