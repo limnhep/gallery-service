@@ -3,7 +3,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { CSSTransition } from 'react-transition-group';
 import { Helmet } from 'react-helmet';
 import GalleryMain from './GalleryMain.jsx';
 import GalleryFeatures from './GalleryFeatures.jsx';
@@ -82,9 +82,27 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // console.log('====================================================');
+    // console.log('====================================================');
+    // console.log('====================================================');
+    // console.log('prevState');
+    // console.log(prevState);
+    // console.log('currentState');
+    // console.log(this.state);
+    // console.log('-----------------------------------------------------');
     if (prevState.features === true && this.state.features === false && this.state.modal === 0) {
       const node = document.getElementById('turn-off'); // PROXY SERVER CODE ONLY
+      // console.log('DID UPDATE CHECK');
+      // console.log('NODE' + node);
+      // console.log('Prev State. Features');
+      // console.log(prevState.features);
+      // console.log('This state. Features');
+      // console.log(this.state.features);
+      // console.log('This state. Modal');
+      // console.log(this.state.modal);
       if (node !== null) {
+        console.log(node);
+        console.log('toggled');
         node.style.display = 'block';
       }
     }
@@ -189,7 +207,12 @@ class App extends Component {
   handleScrollTo(className) {
     const node = document.getElementById(className);
     if (node !== null) {
-      node.scrollIntoView({ behavior: 'smooth' });
+      const scrollToPosition = window.scrollY + node.getBoundingClientRect().top - 100;
+      window.scrollTo({
+        top: scrollToPosition,
+        left: 0,
+        behavior: 'smooth',
+      });
     }
   }
 
@@ -205,8 +228,10 @@ class App extends Component {
         }
       }
       favorites[savedListing].listingID = newArr;
+      this.handleAddFavorite(favorites, true, savedListing, true);
     } else if (savedListing === false) {
       favorites[index].listingID.push([listing.listingID, listing.gallery.featured[0]]);
+      this.handleAddFavorite(favorites, true, savedListing, true);
     } else if (savedListing !== false && index !== null) {
       const newArr = [];
       favorites[index].listingID.forEach((currentListing) => {
@@ -226,7 +251,9 @@ class App extends Component {
   }
 
   render() {
-    const { imagesArray, savedListModalPopUp, triggerSaveModal } = this.state;
+    const {
+      imagesArray, savedListModalPopUp, triggerSaveModal, bedroomsArray, imagesIndexMap, favorites, features, listing, modal, modalState, savedListing, scrollToImageID, selectedImage,
+    } = this.state;
 
     if (!imagesArray.length) {
       return (
@@ -235,112 +262,91 @@ class App extends Component {
       );
     }
 
-    const renderCurrentPage = () => {
-      const {
-        bedroomsArray, imagesIndexMap, favorites, features, listing, modal, modalState, savedListing, scrollToImageID,
-      } = this.state;
-      if (!features && !modal) {
-        return (
-          <>
-            <GalleryNavBar
-              savedListing={savedListing}
-              setFeaturePage={() => this.setState({ features: !features })}
-              handleModalState={this.handleModalState}
-              handleToggleFavorite={this.handleToggleFavorite}
-              handleScrollTo={this.handleScrollTo}
-            />
-            <GalleryMain
-              listing={listing}
-              favorites={favorites}
-              bedroomsArray={bedroomsArray}
-              imagesArray={imagesArray}
-              imagesIndexMap={imagesIndexMap}
-              modalState={modalState}
-              savedListing={savedListing}
-              handleModalState={this.handleModalState}
-              handleAddCategory={this.handleAddCategory}
-              handleToggleFavorite={this.handleToggleFavorite}
-              setScrollToImg={this.setScrollToImg}
-              modalToggle={() => this.setState({ features: !features })}
-            />
-          </>
-        );
-      } if (features && !modal) {
-        return (
-          <CSSTransition
-            in={features && !modal}
-            classNames="slide"
-            timeout={800}
-            appear
-            exit
-          >
-            <GalleryFeatures
-              listing={listing}
-              setFeaturePage={() => this.setState({ features: !features })}
-              setModalImage={(url) => this.setModalImage(url)}
-              scrollToImageID={scrollToImageID}
-              setScrollToImg={this.setScrollToImg}
-            />
-          </CSSTransition>
-        );
-      }
-      return null;
-    };
+    const renderMainPage = (
+      <>
+        <GalleryNavBar
+          savedListing={savedListing}
+          setFeaturePage={() => this.setState({ features: !features })}
+          handleModalState={this.handleModalState}
+          handleToggleFavorite={this.handleToggleFavorite}
+          handleScrollTo={this.handleScrollTo}
+        />
+        <GalleryMain
+          listing={listing}
+          favorites={favorites}
+          bedroomsArray={bedroomsArray}
+          imagesArray={imagesArray}
+          imagesIndexMap={imagesIndexMap}
+          modalState={modalState}
+          savedListing={savedListing}
+          handleModalState={this.handleModalState}
+          handleAddCategory={this.handleAddCategory}
+          handleToggleFavorite={this.handleToggleFavorite}
+          setScrollToImg={this.setScrollToImg}
+          modalToggle={() => this.setState({ features: !features })}
+        />
+      </>
+    );
 
-    const renderModal = () => {
-      const {
-        favorites, modal, modalState, savedListing, selectedImage,
-      } = this.state;
-      if (modal) {
-        return (
-          <GalleryModal
-            changeImage={(image) => this.setState({ selectedImage: image })}
-            closeModal={() => this.setState({ modal: false, features: true })}
-            favorites={favorites}
-            images={imagesArray}
-            handleModalState={this.handleModalState}
-            handleAddCategory={this.handleAddCategory}
-            handleToggleFavorite={this.handleToggleFavorite}
-            modalState={modalState}
-            savedListing={savedListing}
-            selectedImage={selectedImage}
-          />
-        );
-      }
-      return null;
-    };
+    const renderGalleryFeatures = (
+      <CSSTransition
+        in={features && !modal}
+        classNames="slide"
+        timeout={600}
+        appear
+        unmountOnExit
+      >
+        <GalleryFeatures
+          listing={listing}
+          setFeaturePage={() => this.setState({ features: !features })}
+          setModalImage={(url) => this.setModalImage(url)}
+          scrollToImageID={scrollToImageID}
+          setScrollToImg={this.setScrollToImg}
+        />
+      </CSSTransition>
+    );
 
-    const SaveModalStatusPopUp = () => {
-      const { favorites, savedListing } = this.state;
-      return (
-        <TransitionGroup>
-          <CSSTransition
-            in={triggerSaveModal}
-            classNames="slideUp"
-            timeout={800}
-            appear
-            enter
-            exit
-            unmountOnExit
-          >
-            <SaveSharePopUpContainer id="pop-up-modal">
-              <SaveSharePopUpTextBox>
-                <SaveSharePopUpStatusMain>
-                  {savedListing !== false && `Saved to ${favorites[savedListing].name}`}
-                  {(savedListModalPopUp !== false) && `Removed from ${favorites[savedListModalPopUp].name}`}
-                </SaveSharePopUpStatusMain>
-                <SaveSharePopUpStatusSecondary>
-                  Any time
-                </SaveSharePopUpStatusSecondary>
-              </SaveSharePopUpTextBox>
-              <SaveSharePopUpRevertButton onClick={savedListing ? () => this.handleToggleFavorite('add', savedListing) : () => this.handleToggleFavorite('add', savedListModalPopUp)}>
-                { savedListing ? 'Change' : 'Undo'}
-              </SaveSharePopUpRevertButton>
-            </SaveSharePopUpContainer>
-          </CSSTransition>
-        </TransitionGroup>
-      );
-    };
+    const renderModal = (
+      <GalleryModal
+        changeImage={(image) => this.setState({ selectedImage: image })}
+        closeModal={() => this.setState({ modal: 0, features: true })}
+        favorites={favorites}
+        images={imagesArray}
+        handleModalState={this.handleModalState}
+        handleAddCategory={this.handleAddCategory}
+        handleToggleFavorite={this.handleToggleFavorite}
+        modalState={modalState}
+        savedListing={savedListing}
+        selectedImage={selectedImage}
+      />
+    );
+
+    const SaveModalStatusPopUp = (
+      <CSSTransition
+        in={triggerSaveModal}
+        classNames="slideUp"
+        timeout={800}
+        appear
+        enter
+        exit
+        unmountOnExit
+      >
+        <SaveSharePopUpContainer id="pop-up-modal">
+          <SaveSharePopUpTextBox>
+            <SaveSharePopUpStatusMain>
+              {savedListing !== false && `Saved to ${favorites[savedListing].name}`}
+              {(savedListModalPopUp !== false) && `Removed from ${favorites[savedListModalPopUp].name}`}
+            </SaveSharePopUpStatusMain>
+            <SaveSharePopUpStatusSecondary>
+              Any time
+            </SaveSharePopUpStatusSecondary>
+          </SaveSharePopUpTextBox>
+          <SaveSharePopUpRevertButton onClick={savedListing >= 0 ? () => this.handleToggleFavorite('add', savedListing) : () => this.handleToggleFavorite('add', savedListModalPopUp)}>
+            { savedListing >= 0 ? 'Change' : 'Undo'}
+          </SaveSharePopUpRevertButton>
+        </SaveSharePopUpContainer>
+      </CSSTransition>
+    );
 
     return (
       <AppTopContainer>
@@ -348,10 +354,10 @@ class App extends Component {
         <Helmet>
           <title>{this.state.listing.title}</title>
         </Helmet>
-        {renderCurrentPage()}
-        {renderModal()}
-        {triggerSaveModal
-        && SaveModalStatusPopUp()}
+        {(!features && !modal) && renderMainPage}
+        {renderGalleryFeatures}
+        {modal > 0 && renderModal}
+        {SaveModalStatusPopUp}
       </AppTopContainer>
     );
   }

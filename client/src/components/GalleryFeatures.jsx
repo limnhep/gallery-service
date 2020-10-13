@@ -18,10 +18,6 @@ import {
   AmenitiesModule,
 } from '../../styled/galleryFeatures';
 
-import {
-  CssReset,
-} from '../../styled/global';
-
 class GalleryFeatures extends Component {
   constructor(props) {
     super(props);
@@ -75,7 +71,6 @@ class GalleryFeatures extends Component {
     return (
       <>
         {/* GALLERY FEATURES PARENT  */}
-        <CssReset />
         <GalleryFeaturesContainer>
           <Header>
             <ToggleButton onClick={setFeaturePage}>

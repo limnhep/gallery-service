@@ -809,6 +809,10 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 
+@media screen and (max-width: 750px) {
+    bottom: 102px;
+}
+
 &.slideUp-appear {
     bottom: -200px;
 }
@@ -816,6 +820,11 @@ justify-content: space-between;
 &.slideUp-appear-active {
     bottom: 22px;
     transition: bottom 400ms ease;
+
+    @media screen and (max-width: 750px) {
+        bottom: 102px;
+        transition: bottom 400ms ease;
+    }
 }
 
 &.slideUp-enter {
@@ -825,10 +834,19 @@ justify-content: space-between;
 &.slideUp-enter-active {
     bottom: 22px;
     transition: bottom 400ms ease;
+
+    @media screen and (max-width: 750px) {
+        bottom: 102px;
+        transition: bottom 400ms ease;
+    }
 }
 
 &.slideUp-exit {
     bottom: 22px;
+
+    @media screen and (max-width: 750px) {
+        bottom: 102px;
+    }
 }
 
 &.slideUp-exit-active {

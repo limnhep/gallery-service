@@ -28,18 +28,25 @@ display: grid;
 grid-template-rows: 64px auto 74px;
 
 &.slideUp-appear {
-    bottom: 0;
+    bottom: -100%;
 }
 &.slideUp-appear-active {
     bottom: 50%;
-    transition: all 400ms ease;
+    transition: all 600ms ease;
+}
+&.slideUp-enter {
+    bottom: -100%;
+}
+&.slideUp-enter-active {
+    bottom: 50%;
+    transition: all 600ms ease;
 }
 &.slideUp-exit {
     bottom: 50%;
 }
 &.slideUp-exit-active {
-    bottom: 0;
-    transition: all 400ms ease;
+    bottom: -100%;
+    transition: all 600ms ease;
 }
 `;
 

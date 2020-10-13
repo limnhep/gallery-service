@@ -6,34 +6,26 @@ background-color: white;
 padding-bottom: 54px;
 width: 100%;
 
-&.slide-appear {
+&.slide-enter {
     transform: translateY(100%);
     opacity: 0;
-    overflow: hidden;
-    overflow-y: hidden;
 }
 
-&.slide-appear-active {
+&.slide-enter-active {
     transform: translateY(0);
     opacity: 1;
-    overflow: visible;
-    overflow-y: visible;
-    transition: transform 400ms ease, opacity 400ms ease, overflow 400ms ease, overflow-y 400ms ease;
+    transition: all 600ms ease;
 }
 
 &.slide-exit {
     transform: translateY(0);
     opacity: 1;
-    overflow: visible;
-    overflow-y: visible;
 }
 
 &.slide-exit-active {
     transform: translateY(100%);
     opacity: 0;
-    overflow: hidden;
-    overflow-y: hidden;
-    transition: transform 400ms ease, opacity 400ms ease, overflow 400ms ease, overflow-y 400ms ease;
+    transition: all 600ms ease;
 }
 `;
 

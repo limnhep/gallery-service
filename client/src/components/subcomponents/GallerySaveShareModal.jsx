@@ -27,7 +27,6 @@ import {
   SaveModalBodyButtonDivTextContainer,
   SaveModalBodyButtonDivTextContainerTime,
   SaveModalBodyButtonDivTextContainerTitle,
-  SaveModalBodyButtonDivTextContainerStays,
   ShareModal,
   ShareModalContainer,
   ShareModalCloseButtonContainer,
@@ -99,14 +98,14 @@ class GallerySaveShareModal extends Component {
 
     const ModalStateOneSaveList = (
       <>
-        <ModalBackground onClick={() => handleModalState(0)} />
         <CSSTransition
           in={modalState === 1}
           classNames="slideUp"
-          timeout={400}
+          timeout={600}
           appear
           enter
           exit
+          unmountOnExit
         >
           <SaveModal>
             <ModalNavBar>
@@ -122,9 +121,6 @@ class GallerySaveShareModal extends Component {
                 {renderModalStateList}
               </SaveModalBodyContainer>
             </ModalBody>
-            {/* <ModalFooter>
-            <SaveModalFooterButton onClick={() => handleModalState(2)}>Create a list</SaveModalFooterButton>
-          </ModalFooter> */}
           </SaveModal>
         </CSSTransition>
       </>
@@ -239,7 +235,8 @@ class GallerySaveShareModal extends Component {
 
     return (
       <>
-        {modalState === 1 ? ModalStateOneSaveList : null}
+        {modalState === 1 && <ModalBackground onClick={() => handleModalState(0)} />}
+        {ModalStateOneSaveList}
         {modalState === 2 ? ModalStateTwoCreateList : null}
         {modalState === 3 ? ModalStateThreeShare : null}
       </>

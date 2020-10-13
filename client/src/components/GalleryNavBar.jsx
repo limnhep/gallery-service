@@ -148,7 +148,7 @@ class GalleryNavBar extends Component {
     this.state = {
       searchBarState: 0,
       userModalState: 0,
-      loggedIn: false,
+      loggedIn: true,
       location: '',
       hoveredDate: null,
       startDate: null,
@@ -342,7 +342,7 @@ class GalleryNavBar extends Component {
     } else if (state === 6 && searchBarState === 6) {
       this.setState({ searchBarState: 6, userModalState: 0});
     } else if (state !== searchBarState && searchBarState !== 8) {
-      this.setState({ searchBarState: state, userModalState: 0,  animationSlide: false });
+      this.setState({ searchBarState: state, userModalState: 0, animationSlide: false });
     } else if (state === searchBarState) {
       this.setState({ searchBarState: 8, userModalState: 0 });
     } else {
@@ -376,7 +376,9 @@ class GalleryNavBar extends Component {
       this.setState({ searchBarState: 5, userModalState: 0 });
     } else if (state === userModalState && searchBarState === 0) {
       this.setState({ searchBarState: 0, userModalState: 0 });
-    } else if (searchBarState !== 0) {
+    } else if (searchBarState > 5) {
+      this.setState({ searchBarState: 8, userModalState: state });
+    } else if (searchBarState !== 0 && searchBarState <= 5) {
       this.setState({ searchBarState: 5, userModalState: state });
     } else {
       this.setState({ searchBarState: 0, userModalState: state });
