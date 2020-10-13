@@ -12,13 +12,18 @@ import {
   CalendarModalBodyDayText,
   CalendarModalButtonContainer,
   CalendarModalNavigationButton,
+  CalendarAdditionDaysContainers,
+  CalendarAdditionDays,
+  CalendarAdditionDaysButton,
 } from '../../../styled/galleryNavBar';
 
-const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate, setHoveredDate }) => {
+const GallerySearchBarCalendar = ({
+  props, setMonthIndex, setCalendarDate, setExtraDays, setHoveredDate,
+}) => {
   // const [hoveredDate, setHoveredDate] = useState(null);
 
   const {
-    calendar, hoveredDate, startDate, endDate, selectedMonthIndex,
+    calendar, hoveredDate, startDate, endDate, selectedMonthIndex, extraDays, searchBarState,
   } = props;
 
   // Determine today's day from javascript date library.
@@ -159,6 +164,23 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate, setHo
           const hoveredMonthValue = monthMapChart[hoveredMonth];
           const renderedMonthValue = monthMapChart[renderedMonth];
           const userSelectedMonthFromValue = monthMapChart[userSelectedMonthFrom];
+          [userSelectedYearFrom, userSelectedMonthFrom, userSelectedDayFrom] = startDate;
+
+          // TEST SCRIPT
+          // console.log('-------------------------------------------------');
+          // console.log('-------------------------------------------------');
+          // console.log(`hoveredYear : ${hoveredYear}`);
+          // console.log(`hoveredMonthValue : ${hoveredMonthValue}`);
+          // console.log(`hoveredDay : ${hoveredDay}`);
+          // console.log('-------------------------------------------------');
+          // console.log(`userSelectedYearFrom : ${userSelectedYearFrom}`);
+          // console.log(`userSelectedMonthFromValue : ${userSelectedMonthFromValue}`);
+          // console.log(`userSelectedDayFrom : ${userSelectedDayFrom}`);
+          // console.log('-------------------------------------------------');
+          // console.log(`renderedYear : ${renderedYear}`);
+          // console.log(`renderedMonthValue : ${renderedMonthValue}`);
+          // console.log(`renderedDay : ${renderedDay}`);
+          // console.log('----------------- Case 1 -----------------');
 
           // Check and toggle BLACK CIRCLLE for the valid dates that falls after START DATE ON HOVER.
           if (hoveredDay === renderedDay && hoveredMonthValue === renderedMonthValue && hoveredYear >= renderedYear) {
@@ -190,7 +212,7 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate, setHo
               betweenStyling = true;
             }
           } else if (userSelectedYearFrom < hoveredYear) {
-            if (renderedYear === hoveredYear && renderedDay < hoveredDay) {
+            if (renderedYear === hoveredYear && renderedDay < hoveredDay && renderedMonthValue <= hoveredMonthValue) {
               betweenStyling = true;
             } else if (renderedYear === userSelectedYearFrom && renderedMonthValue > userSelectedMonthFromValue) {
               betweenStyling = true;
@@ -234,6 +256,7 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate, setHo
         );
       }
     }
+
     return (
       <CalendarModalMonthContainer>
         <CalendarModalHeading>
@@ -273,10 +296,29 @@ const GallerySearchBarCalendar = ({ props, setMonthIndex, setCalendarDate, setHo
   };
   return (
     <NavBarSearchExpandedCalendarModal>
-      <CalendarModal>
+      <CalendarModal extraDays={startDate && endDate && searchBarState !== 7}>
         {renderCalendar(selectedMonthIndex, true)}
         {renderCalendar(selectedMonthIndex + 1)}
       </CalendarModal>
+      {(startDate && endDate && searchBarState !== 7)
+      && (
+      <CalendarAdditionDaysContainers>
+        <CalendarAdditionDays>
+          <CalendarAdditionDaysButton days={extraDays === null} onClick={() => setExtraDays(null)}>
+            Exact dates
+          </CalendarAdditionDaysButton>
+          <CalendarAdditionDaysButton days={extraDays === '1'} onClick={() => setExtraDays('1')}>
+            ±1 day
+          </CalendarAdditionDaysButton>
+          <CalendarAdditionDaysButton days={extraDays === '3'} onClick={() => setExtraDays('3')}>
+            ±3 days
+          </CalendarAdditionDaysButton>
+          <CalendarAdditionDaysButton days={extraDays === '7'} onClick={() => setExtraDays('7')}>
+            ±7 days
+          </CalendarAdditionDaysButton>
+        </CalendarAdditionDays>
+      </CalendarAdditionDaysContainers>
+      )}
     </NavBarSearchExpandedCalendarModal>
   );
 };

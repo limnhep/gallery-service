@@ -71,7 +71,6 @@ class Gallery extends Component {
 
   handleFindImageInFeatures(id) {
     const { modalToggle, setScrollToImg } = this.props;
-    console.log('ID:' + id);
     setScrollToImg(id);
     modalToggle();
   }

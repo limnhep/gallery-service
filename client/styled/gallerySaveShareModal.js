@@ -16,8 +16,8 @@ z-index: 10;
 min-height: 530px;
 width: 572px;
 left: 50%;
-top: 50%;
-transform: translate(-50%, -50%);
+bottom: 50%;
+transform: translate(-50%, 50%);
 background-color: white;
 border-color: black;
 border-radius: 1px;
@@ -26,6 +26,21 @@ border-radius: 15px;
 
 display: grid;
 grid-template-rows: 64px auto 74px;
+
+&.slideUp-appear {
+    bottom: 0;
+}
+&.slideUp-appear-active {
+    bottom: 50%;
+    transition: all 400ms ease;
+}
+&.slideUp-exit {
+    bottom: 50%;
+}
+&.slideUp-exit-active {
+    bottom: 0;
+    transition: all 400ms ease;
+}
 `;
 
 export const CreateListModal = styled.div`

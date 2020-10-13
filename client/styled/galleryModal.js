@@ -4,7 +4,6 @@ export const GalleryModalContainer = styled.div`
 height: 90vh;
 width: 100vw;
 position: relative;
-z-index: 12000; //EXPERIEMENTAL
 background-color: white;
 padding-top: 16px;
 `;

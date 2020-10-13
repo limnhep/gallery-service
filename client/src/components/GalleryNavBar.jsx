@@ -44,6 +44,7 @@ import {
   SearchInput,
   SearchInputContainer,
   SearchSecondary,
+  SearchSecondaryExtra,
   NavBarSearchText,
   NavBarSearchIconContainer, // Base Search Bar ICON
   NavBarSearchIcon, // Base Search Bar ICON
@@ -152,15 +153,17 @@ class GalleryNavBar extends Component {
       hoveredDate: null,
       startDate: null,
       endDate: null,
+      extraDays: null,
       selectedMonthIndex: currentMonthIndex,
       adults: 0,
       children: 0,
       infants: 0,
       bookingPrice: null,
       hoveredBoxBorderCheck: null,
-      stickyNavBar: false,
-      stickyNavBarCalendar: false,
+      showStickyNavBar: false,
+      showStickyNavBarCalendar: false,
       searchButtonCursorPosition: null,
+      animationSlide: false,
     };
     this.setMonthIndex = this.setMonthIndex.bind(this);
     this.setCalendarDate = this.setCalendarDate.bind(this);
@@ -281,6 +284,39 @@ class GalleryNavBar extends Component {
       } else {
         this.setState({ endDate: dateArray, searchBarState: 3 });
       }
+    } else if (searchBarState === 7 && !startDate) {
+      this.setState({ startDate: dateArray });
+    } else if (searchBarState === 7 && !endDate) {
+      const monthMapChart = {
+        Jan: 1,
+        Feb: 2,
+        Mar: 3,
+        Apr: 4,
+        May: 5,
+        Jun: 6,
+        Jul: 7,
+        Aug: 8,
+        Sep: 9,
+        Oct: 10,
+        Nov: 11,
+        Dec: 12,
+      };
+
+      const [fromYear, fromMonth, fromDay] = startDate;
+      const [selectedYear, selectedMonth, selectedDay] = dateArray;
+
+      const fromMonthValue = monthMapChart[fromMonth];
+      const selectedMonthValue = monthMapChart[selectedMonth];
+
+      if (!startDate) {
+        this.setState({ startDate: dateArray });
+      } else if (selectedYear <= fromYear && selectedMonthValue < fromMonthValue) {
+        this.setState({ startDate: dateArray });
+      } else if (selectedYear <= fromYear && selectedMonthValue === fromMonthValue && selectedDay < fromDay) {
+        this.setState({ startDate: dateArray });
+      } else {
+        this.setState({ endDate: dateArray });
+      }
     }
   }
 
@@ -300,14 +336,17 @@ class GalleryNavBar extends Component {
       } else if (state === searchBarState && state === 1) {
         this.setState({ searchBarState: 1, userModalState: 0 });
       } else {
-        this.setState({ searchBarState: state, userModalState: 0 });
+        this.setState({ searchBarState: state, userModalState: 0, animationSlide: true }, () => {
+        });
       }
-    } else if (state === searchBarState && state !== 8) {
+    } else if (state === 6 && searchBarState === 6) {
+      this.setState({ searchBarState: 6, userModalState: 0});
+    } else if (state !== searchBarState && searchBarState !== 8) {
+      this.setState({ searchBarState: state, userModalState: 0,  animationSlide: false });
+    } else if (state === searchBarState) {
       this.setState({ searchBarState: 8, userModalState: 0 });
-    } else if (state === searchBarState && state === 6) {
-      this.setState({ searchBarState: 6, userModalState: 0 });
     } else {
-      this.setState({ searchBarState: state, userModalState: 0 });
+      this.setState({ searchBarState: state, userModalState: 0, animationSlide: false });
     }
   }
 
@@ -319,14 +358,14 @@ class GalleryNavBar extends Component {
       this.setState({ searchBarState: 0 });
     }
     if (window.scrollY > gallery.height + 180) {
-      this.setState({ stickyNavBar: true, userModalState: 0 });
+      this.setState({ showStickyNavBar: true, userModalState: 0 });
     } else {
-      this.setState({ stickyNavBar: false });
+      this.setState({ showStickyNavBar: false });
     }
     if (window.scrollY > gallery.height + listingbody.height + 60 + 518) {
-      this.setState({ stickyNavBarCalendar: true });
+      this.setState({ showStickyNavBarCalendar: true });
     } else {
-      this.setState({ stickyNavBarCalendar: false });
+      this.setState({ showStickyNavBarCalendar: false });
     }
   }
 
@@ -351,6 +390,10 @@ class GalleryNavBar extends Component {
       (className.includes('CalendarModal') && searchBarState === 2)
       || (className.includes('CalendarModal') && searchBarState === 3)
       || (className.includes('GuestModal') && searchBarState === 4)
+      || (className.includes('CalendarModal') && searchBarState === 7)
+      || (className.includes('CalendarAdditionDays') && searchBarState === 2)
+      || (className.includes('CalendarAdditionDays') && searchBarState === 3)
+      || (className.includes('CalendarAdditionDays') && searchBarState === 7)
     ) {
       return;
     }
@@ -380,16 +423,30 @@ class GalleryNavBar extends Component {
 
   render() {
     const {
-      adults, infants, children, bookingPrice, hoveredBoxBorderCheck, location, loggedIn, searchBarState, stickyNavBar, stickyNavBarCalendar, userModalState,
+      animationSlide, adults, infants, children, bookingPrice, hoveredBoxBorderCheck, location, loggedIn, searchBarState, showStickyNavBar, showStickyNavBarCalendar, userModalState,
     } = this.state;
     const {
-      startDate, endDate, hoveredDate, selectedMonthIndex, searchButtonCursorPosition
+      startDate, endDate, hoveredDate, extraDays, selectedMonthIndex, searchButtonCursorPosition,
     } = this.state; // Calendar
     const {
       savedListing, handleModalState, handleScrollTo, handleToggleFavorite, setFeaturePage,
     } = this.props;
     const totalGuests = adults + infants + children;
-    
+
+    const experienceCalendarDates = () => {
+      if (startDate && endDate) {
+        const [startYear, startMonth, startDay] = startDate;
+        const [endYear, endMonth, endDay] = endDate;
+        const displayStart = `${startMonth} ${startDay}`;
+        const displayEnd = startYear === endYear && startMonth === endMonth ? `${endDay}` : `${endMonth} ${endDay}`;
+        return `${displayStart} - ${displayEnd}`;
+      } if (startDate) {
+        const [startYear, startMonth, startDay] = startDate;
+        return `${startMonth} ${startDay}`;
+      }
+      return 'Add when you want to go';
+    };
+
     const RenderProfileModal = (
       <ProfileModal onClick={(e) => e.stopPropagation()}>
         <ProfileContainers borderBottom>
@@ -595,117 +652,147 @@ class GalleryNavBar extends Component {
     const RenderExpandedSearchBar = (
       <>
         <DivPadding>
-          <NavBarSearchExpandedContainer state={searchBarState} modal={userModalState}>
-            <NavBarSearchExpandedLocation
-              state={searchBarState}
-              modal={userModalState}
-              hoveringState={hoveredBoxBorderCheck}
-              onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 1 })}
-              onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
-              onClick={(e) => this.handleSearchBarState(1, e)}
-            >
-              <SearchInputContainer>
-                <SearchHeading>Location</SearchHeading>
-                <SearchInput
-                  value={location}
-                  placeholder="Where are you going?"
-                  bold={location}
-                  state={searchBarState}
-                  modal={userModalState}
-                  onChange={(event) => this.setState({ location: event.target.value })}
+          <CSSTransition
+            in={animationSlide}
+            classNames="slideDown"
+            timeout={200}
+            appear
+          >
+            <NavBarSearchExpandedContainer state={searchBarState} modal={userModalState}>
+              <NavBarSearchExpandedLocation
+                state={searchBarState}
+                modal={userModalState}
+                hoveringState={hoveredBoxBorderCheck}
+                onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 1 })}
+                onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
+                onClick={(e) => this.handleSearchBarState(1, e)}
+              >
+                <SearchInputContainer>
+                  <SearchHeading>Location</SearchHeading>
+                  <SearchInput
+                    value={location}
+                    placeholder="Where are you going?"
+                    bold={location}
+                    state={searchBarState}
+                    modal={userModalState}
+                    onChange={(event) => this.setState({ location: event.target.value })}
+                  />
+                </SearchInputContainer>
+                {(searchBarState === 1 && location) && (
+                  <CloseButton onClick={() => this.setState({ location: '' })}>
+                    <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
+                  </CloseButton>
+                )}
+              </NavBarSearchExpandedLocation>
+              <NavBarSearchExpandedCalendarFrom
+                state={searchBarState}
+                hoveringState={hoveredBoxBorderCheck}
+                onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 2 })}
+                onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
+                onClick={(e) => this.handleSearchBarState(2, e)}
+              >
+                <SearchHeading>Check in</SearchHeading>
+                <SearchSecondary bold={startDate}>
+                  {startDate ? `${startDate[1]} ${startDate[2]}` : 'Add dates' }
+                  {extraDays && (
+                  <SearchSecondaryExtra>
+                    ±
+                    {extraDays}
+                  </SearchSecondaryExtra>
+                  )}
+                </SearchSecondary>
+                {(searchBarState === 2 && startDate) && (
+                  <CloseButton onClick={() => this.setState({
+                    startDate: null, endDate: null, extraDays: null, searchBarState: 2,
+                  })}
+                  >
+                    <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
+                  </CloseButton>
+                )}
+              </NavBarSearchExpandedCalendarFrom>
+              <NavBarSearchExpandedCalendarTo
+                state={searchBarState}
+                hoveringState={hoveredBoxBorderCheck}
+                onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 3 })}
+                onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
+                onClick={(e) => this.handleSearchBarState(3, e)}
+              >
+                <SearchHeading>Check out</SearchHeading>
+                <SearchSecondary bold={endDate}>
+                  {endDate ? `${endDate[1]} ${endDate[2]}` : 'Add dates' }
+                  {extraDays && (
+                  <SearchSecondaryExtra>
+                    ±
+                    {extraDays}
+                  </SearchSecondaryExtra>
+                  )}
+                </SearchSecondary>
+                {(searchBarState === 3 && startDate && endDate) && (
+                  <CloseButton onClick={() => this.setState({
+                    startDate: null, endDate: null, extraDays: null, searchBarState: 2,
+                  })}
+                  >
+                    <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
+                  </CloseButton>
+                )}
+              </NavBarSearchExpandedCalendarTo>
+              <ExpandedSearchGuestContainer
+                state={searchBarState}
+                hoveringState={hoveredBoxBorderCheck}
+                onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 4 })}
+                onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
+                onClick={(e) => this.handleSearchBarState(4, e)}
+              >
+                <NavBarSearchExpandedGuests>
+                  <SearchHeading>Guests</SearchHeading>
+                  <SearchSecondary bold={!!totalGuests}>{totalGuests === 0 ? 'Add guests' : `${totalGuests} guests`}</SearchSecondary>
+                  {(searchBarState === 4 && totalGuests > 0) && (
+                    <CloseButton onClick={() => this.setState({
+                      adults: 0, children: 0, infants: 0, searchBarState: 4,
+                    })}
+                    >
+                      <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
+                    </CloseButton>
+                  )}
+                </NavBarSearchExpandedGuests>
+                {searchBarState !== 5
+                  ? (
+                    <LargeSearchIconContainer>
+                      <LargeSearchIcon viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                          <path d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9" />
+                        </g>
+                      </LargeSearchIcon>
+                      <LargeSearchIconText>
+                        Search
+                      </LargeSearchIconText>
+                    </LargeSearchIconContainer>
+                  )
+                  : (
+                    <RoundSearchIconContainer>
+                      <LargeSearchIcon viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                          <path d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9" />
+                        </g>
+                      </LargeSearchIcon>
+                    </RoundSearchIconContainer>
+                  )}
+              </ExpandedSearchGuestContainer>
+              {(searchBarState === 1 || (searchBarState === 6 && !location)) && RenderLocationModel}
+              {(searchBarState === 2 || searchBarState === 3) && (
+                <GallerySearchBarCalendar
+                  props={{
+                    calendar, startDate, endDate, extraDays, selectedMonthIndex, hoveredDate,
+                  }}
+                  setExtraDays={(days) => this.setState({ extraDays: days })}
+                  setHoveredDate={(date) => this.setState({ hoveredDate: date })}
+                  setMonthIndex={this.setMonthIndex}
+                  setCalendarDate={this.setCalendarDate}
                 />
-              </SearchInputContainer>
-              {(searchBarState === 1 && location) && (
-              <CloseButton onClick={() => this.setState({ location: '' })}>
-                <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
-              </CloseButton>
               )}
-            </NavBarSearchExpandedLocation>
-            <NavBarSearchExpandedCalendarFrom
-              state={searchBarState}
-              hoveringState={hoveredBoxBorderCheck}
-              onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 2 })}
-              onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
-              onClick={(e) => this.handleSearchBarState(2, e)}
-            >
-              <SearchHeading>Check in</SearchHeading>
-              <SearchSecondary bold={startDate}>{startDate ? `${startDate[1]} ${startDate[2]}` : 'Add dates' }</SearchSecondary>
-              {(searchBarState === 2 && startDate && endDate) && (
-              <CloseButton onClick={() => this.setState({ startDate: null, endDate: null, searchBarState: 2 })}>
-                <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
-              </CloseButton>
-              )}
-            </NavBarSearchExpandedCalendarFrom>
-            <NavBarSearchExpandedCalendarTo
-              state={searchBarState}
-              hoveringState={hoveredBoxBorderCheck}
-              onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 3 })}
-              onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
-              onClick={(e) => this.handleSearchBarState(3, e)}
-            >
-              <SearchHeading>Check out</SearchHeading>
-              <SearchSecondary bold={endDate}>{endDate ? `${endDate[1]} ${endDate[2]}` : 'Add dates' }</SearchSecondary>
-              {(searchBarState === 3 && startDate && endDate) && (
-              <CloseButton onClick={() => this.setState({ startDate: null, endDate: null, searchBarState: 2 })}>
-                <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
-              </CloseButton>
-              )}
-            </NavBarSearchExpandedCalendarTo>
-            <ExpandedSearchGuestContainer
-              state={searchBarState}
-              hoveringState={hoveredBoxBorderCheck}
-              onMouseEnter={() => this.setState({ hoveredBoxBorderCheck: 4 })}
-              onMouseLeave={() => this.setState({ hoveredBoxBorderCheck: null })}
-              onClick={(e) => this.handleSearchBarState(4, e)}
-            >
-              <NavBarSearchExpandedGuests>
-                <SearchHeading>Guests</SearchHeading>
-                <SearchSecondary bold={!!totalGuests}>{totalGuests === 0 ? 'Add guests' : `${totalGuests} guests`}</SearchSecondary>
-                {(searchBarState === 4 && totalGuests > 0) && (
-                <CloseButton onClick={() => this.setState({
-                  adults: 0, children: 0, infants: 0, searchBarState: 4,
-                })}
-                >
-                  <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
-                </CloseButton>
-                )}
-              </NavBarSearchExpandedGuests>
-              {searchBarState !== 5
-                ? (
-                  <LargeSearchIconContainer>
-                    <LargeSearchIcon viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                      <g>
-                        <path d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9" />
-                      </g>
-                    </LargeSearchIcon>
-                    <LargeSearchIconText>
-                      Search
-                    </LargeSearchIconText>
-                  </LargeSearchIconContainer>
-                )
-                : (
-                  <RoundSearchIconContainer>
-                    <LargeSearchIcon viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                      <g>
-                        <path d="m13 24c6.0751322 0 11-4.9248678 11-11 0-6.07513225-4.9248678-11-11-11-6.07513225 0-11 4.92486775-11 11 0 6.0751322 4.92486775 11 11 11zm8-3 9 9" />
-                      </g>
-                    </LargeSearchIcon>
-                  </RoundSearchIconContainer>
-                )}
-            </ExpandedSearchGuestContainer>
-            {(searchBarState === 1 || (searchBarState === 6 && !location)) && RenderLocationModel}
-            {(searchBarState === 2 || searchBarState === 3) && (
-            <GallerySearchBarCalendar
-              props={{
-                calendar, startDate, endDate, selectedMonthIndex, hoveredDate,
-              }}
-              setHoveredDate={(date) => this.setState({ hoveredDate: date })}
-              setMonthIndex={this.setMonthIndex}
-              setCalendarDate={this.setCalendarDate}
-            />
-            )}
-            {searchBarState === 4 && RenderGuestModal}
-          </NavBarSearchExpandedContainer>
+              {searchBarState === 4 && RenderGuestModal}
+            </NavBarSearchExpandedContainer>
+          </CSSTransition>
         </DivPadding>
         <NavBarModal onClick={(e) => this.handleSearchBarState(0, e)} />
       </>
@@ -736,7 +823,7 @@ class GalleryNavBar extends Component {
               </SearchInputContainer>
               {(searchBarState === 6 && location !== '') && (
                 <CloseButton onClick={() => this.setState({
-                  adults: 0, children: 0, infants: 0, searchBarState: 4,
+                  location: '',
                 })}
                 >
                   <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
@@ -751,13 +838,10 @@ class GalleryNavBar extends Component {
               onClick={(e) => this.handleSearchBarState(7, e)}
             >
               <NavBarSearchExpandedExperienceCalendarText>
-                <SearchHeading>Check out</SearchHeading>
-                <SearchSecondary bold={endDate}>{endDate ? `${endDate[1]} ${endDate[2]}` : 'Add when you want to go' }</SearchSecondary>
-                {(searchBarState === 7 && startDate !== null) && (
-                <CloseButton onClick={() => this.setState({
-                  adults: 0, children: 0, infants: 0, searchBarState: 7,
-                })}
-                >
+                <SearchHeading>Date</SearchHeading>
+                <SearchSecondary bold={endDate}>{experienceCalendarDates()}</SearchSecondary>
+                {(searchBarState === 7 && startDate) && (
+                <CloseButton onClick={() => this.setState({ startDate: null, endDate: null, extraDays: null })}>
                   <CloseButtonIMG src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png" />
                 </CloseButton>
                 )}
@@ -789,7 +873,7 @@ class GalleryNavBar extends Component {
             {(searchBarState === 7) && (
             <GallerySearchBarCalendar
               props={{
-                calendar, startDate, endDate, selectedMonthIndex, hoveredDate,
+                calendar, startDate, endDate, selectedMonthIndex, hoveredDate, searchBarState,
               }}
               setHoveredDate={(date) => this.setState({ hoveredDate: date })}
               setMonthIndex={this.setMonthIndex}
@@ -823,12 +907,12 @@ class GalleryNavBar extends Component {
 
     const renderStickyNavBar = (
       <CSSTransition
-        in={stickyNavBar}
+        in={showStickyNavBar}
         classNames="slideDown"
         timeout={200}
-        appear={stickyNavBar}
-        enter={stickyNavBar}
-        exit={stickyNavBar}
+        appear
+        enter
+        exit
       >
         <StickyNavBarDIV>
           <StickyNavBar>
@@ -853,32 +937,41 @@ class GalleryNavBar extends Component {
                 Location
               </StickyNavBarLinksText>
             </StickyNavBarLinks>
-            {stickyNavBarCalendar && (
-            <StickyNavBarCalendar>
-              <StickyNavBarCalendarPriceContainer>
-                <StickyNavBarCalendarPrice>
-                  {bookingPrice ? `${bookingPrice}` : '$538' }
+            {showStickyNavBarCalendar && (
+            <CSSTransition
+              in={showStickyNavBarCalendar}
+              classNames="fadeIn"
+              timeout={500}
+              appear
+              enter
+              exit
+            >
+              <StickyNavBarCalendar>
+                <StickyNavBarCalendarPriceContainer>
+                  <StickyNavBarCalendarPrice>
+                    {bookingPrice ? `${bookingPrice}` : '$538' }
 &nbsp;
-                  <StickyNavBarCalendarPriceSecondary fontSize={14}>
-                    / night
-                  </StickyNavBarCalendarPriceSecondary>
-                </StickyNavBarCalendarPrice>
-                <StickyNavBarCalendarRating>
-                  <StarIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/star.png" />
+                    <StickyNavBarCalendarPriceSecondary fontSize={14}>
+                      / night
+                    </StickyNavBarCalendarPriceSecondary>
+                  </StickyNavBarCalendarPrice>
+                  <StickyNavBarCalendarRating>
+                    <StarIcon src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/star.png" />
                 &nbsp;&nbsp;4.98&nbsp;&nbsp;
-                  <StickyNavBarCalendarPriceSecondary fontSize={12}>
-                    (145)
-                  </StickyNavBarCalendarPriceSecondary>
-                </StickyNavBarCalendarRating>
-              </StickyNavBarCalendarPriceContainer>
-              <StickyNavBarCalendarCheckAvailability
-                onMouseMove={(e) => this.handleSearchButtonCursorPosition(e)}
-                onClick={() => handleScrollTo('booking')}
-                position={searchButtonCursorPosition}
-              >
-                Check availability
-              </StickyNavBarCalendarCheckAvailability>
-            </StickyNavBarCalendar>
+                    <StickyNavBarCalendarPriceSecondary fontSize={12}>
+                      (145)
+                    </StickyNavBarCalendarPriceSecondary>
+                  </StickyNavBarCalendarRating>
+                </StickyNavBarCalendarPriceContainer>
+                <StickyNavBarCalendarCheckAvailability
+                  onMouseMove={(e) => this.handleSearchButtonCursorPosition(e)}
+                  onClick={() => handleScrollTo('booking')}
+                  position={searchButtonCursorPosition}
+                >
+                  Check availability
+                </StickyNavBarCalendarCheckAvailability>
+              </StickyNavBarCalendar>
+            </CSSTransition>
             )}
           </StickyNavBar>
         </StickyNavBarDIV>
@@ -933,24 +1026,33 @@ class GalleryNavBar extends Component {
               </NavBarSearch>
             )
             : (
-              <NavBarSearchCategories>
-                <NavBarSearchCategoriesItem onClick={(e) => e.stopPropagation()}>
-                  <NavBarSearchCategoriesItemHeading
-                    valid={searchBarState >= 1 && searchBarState <= 5}
-                    onClick={searchBarState > 5 ? (e) => this.handleSearchBarState(1, e) : null}
-                  >
-                    Places to stay
-                  </NavBarSearchCategoriesItemHeading>
-                </NavBarSearchCategoriesItem>
-                <NavBarSearchCategoriesItem onClick={(e) => e.stopPropagation()}>
-                  <NavBarSearchCategoriesItemHeading
-                    valid={searchBarState >= 6 && searchBarState <= 8}
-                    onClick={searchBarState <= 5 ? (e) => this.handleSearchBarState(6, e) : null}
-                  >
-                    Experiences
-                  </NavBarSearchCategoriesItemHeading>
-                </NavBarSearchCategoriesItem>
-              </NavBarSearchCategories>
+              <CSSTransition
+                in={animationSlide}
+                classNames="slideDown"
+                timeout={200}
+                appear
+                enter
+                exit
+              >
+                <NavBarSearchCategories>
+                  <NavBarSearchCategoriesItem onClick={(e) => e.stopPropagation()}>
+                    <NavBarSearchCategoriesItemHeading
+                      valid={searchBarState >= 1 && searchBarState <= 5}
+                      onClick={searchBarState > 5 ? (e) => this.handleSearchBarState(1, e) : null}
+                    >
+                      Places to stay
+                    </NavBarSearchCategoriesItemHeading>
+                  </NavBarSearchCategoriesItem>
+                  <NavBarSearchCategoriesItem onClick={(e) => e.stopPropagation()}>
+                    <NavBarSearchCategoriesItemHeading
+                      valid={searchBarState >= 6 && searchBarState <= 8}
+                      onClick={searchBarState <= 5 ? (e) => this.handleSearchBarState(6, e) : null}
+                    >
+                      Experiences
+                    </NavBarSearchCategoriesItemHeading>
+                  </NavBarSearchCategoriesItem>
+                </NavBarSearchCategories>
+              </CSSTransition>
             )}
           <ButtonsContainer>
             <ProfileIconButton onClick={(e) => this.handlePopUpState(2, e)}>
@@ -980,7 +1082,7 @@ class GalleryNavBar extends Component {
         {renderNavBarMinWidth}
         {(searchBarState > 0 && searchBarState <= 5) && RenderExpandedSearchBar}
         {(searchBarState >= 6 && searchBarState <= 8) && RenderExperienceSearchBar}
-        {stickyNavBar && renderStickyNavBar}
+        {showStickyNavBar && renderStickyNavBar}
         {stickyNavBarMinWidth}
         {userModalState > 0 && <DivPaddingToExitModal onClick={() => this.setState({ searchBarState: 0, userModalState: 0 })} />}
       </NavBarFullSpan>

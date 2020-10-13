@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, { Component } from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
 import {
   ModalBackground,
   SaveModal,
@@ -98,24 +100,33 @@ class GallerySaveShareModal extends Component {
     const ModalStateOneSaveList = (
       <>
         <ModalBackground onClick={() => handleModalState(0)} />
-        <SaveModal>
-          <ModalNavBar>
-            <ModalNavBarHeading>Save to a list</ModalNavBarHeading>
-            <ModalNavBarBackButton
-              src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png"
-              onClick={() => handleModalState(0)}
-            />
-          </ModalNavBar>
-          <ModalBody saveModalState={1}>
-            <SaveModalBodyContainer>
-              {renderModalStateListCreateButton}
-              {renderModalStateList}
-            </SaveModalBodyContainer>
-          </ModalBody>
-          {/* <ModalFooter>
+        <CSSTransition
+          in={modalState === 1}
+          classNames="slideUp"
+          timeout={400}
+          appear
+          enter
+          exit
+        >
+          <SaveModal>
+            <ModalNavBar>
+              <ModalNavBarHeading>Save to a list</ModalNavBarHeading>
+              <ModalNavBarBackButton
+                src="https://airbnb-bougie.s3-us-west-1.amazonaws.com/icons/close-button.png"
+                onClick={() => handleModalState(0)}
+              />
+            </ModalNavBar>
+            <ModalBody saveModalState={1}>
+              <SaveModalBodyContainer>
+                {renderModalStateListCreateButton}
+                {renderModalStateList}
+              </SaveModalBodyContainer>
+            </ModalBody>
+            {/* <ModalFooter>
             <SaveModalFooterButton onClick={() => handleModalState(2)}>Create a list</SaveModalFooterButton>
           </ModalFooter> */}
-        </SaveModal>
+          </SaveModal>
+        </CSSTransition>
       </>
     );
 

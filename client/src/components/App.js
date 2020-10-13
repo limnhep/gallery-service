@@ -82,7 +82,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.features === true && this.state.features === false && this.state.modal === false) {
+    if (prevState.features === true && this.state.features === false && this.state.modal === 0) {
       const node = document.getElementById('turn-off'); // PROXY SERVER CODE ONLY
       if (node !== null) {
         node.style.display = 'block';

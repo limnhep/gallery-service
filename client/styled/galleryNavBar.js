@@ -170,7 +170,7 @@ flex-basis: 100%;
 
 export const SearchSecondary = styled.div`
 font-family: ${({ bold }) => (!bold ? 'Airbnb Cereal App Light' : 'Airbnb Cereal App Medium')};
-color: rgb(113, 113, 113);
+color: rgb(43, 43, 43);
 font-size: 14px;
 line-height: 18px;
 font-weight: 400px; 
@@ -179,6 +179,22 @@ border: none;
 padding: 0 0;
 
 flex-basis: 100%;
+
+&:focus {
+    outline: none;
+}
+`;
+
+export const SearchSecondaryExtra = styled.span`
+font-family: 'Airbnb Cereal App Light';
+color: rgb(43, 43, 43);
+font-size: 14px;
+line-height: 18px;
+font-weight: 400px; 
+border: none;
+margin-left: 8px;
+
+padding: 0 0;
 
 &:focus {
     outline: none;
@@ -214,6 +230,17 @@ border: 1px solid rgb(235,235,235);
 
 display: grid;
 grid-template-columns: ${({ state }) => (state === 5 ? '270px 179px 179px 227px' : '248px 165px 165px 278px')};
+
+&.slideDown-appear {
+  margin-top: -40px;
+  transform: scale(0.5, 1);
+}
+
+&.slideDown-appear-active {
+  margin-top: 12px;
+  transform: scale(1, 1);
+  transition: all 200ms ease;
+}
 `;
 
 export const NavBarSearchExperienceContainer = styled.div`
@@ -545,9 +572,51 @@ border: 1px solid rgb(235,235,235);
 
 export const CalendarModal = styled.div`
 width: 849px;
-padding: 16px 32px 28px 32px;
+padding: ${({ extraDays }) => (extraDays === true ? '16px 32px 0 32px' : '16px 32px 28px 32px')};
 display: flex;
 justify-content: space-between;
+`;
+
+export const CalendarAdditionDaysContainers = styled.div`
+width: 100%;
+flex-basis: 100%;
+display: block;
+`;
+
+export const CalendarAdditionDays = styled.div`
+padding: 32px 0;
+margin: 0 54px;
+`;
+
+export const CalendarAdditionDaysButton = styled.button`
+height: 40px;
+margin-left: 8px;
+padding: 10px 18px;
+border-top-right-radius: 24px;
+border-top-left-radius: 24px;
+border-bottom-left-radius: 24px;
+border-bottom-right-radius: 24px;
+border: ${({ days }) => (days === false ? '1px solid rgb(113, 113, 113)' : '2px solid rgb(43, 43, 43)')};
+background-color: #F7F7F7;
+
+display: inline-block;
+
+user-select: none;
+
+font-family: ${({ days }) => (days === null ? 'Airbnb Cereal App Light' : 'Airbnb Cereal App Medium')};
+color: rgb(43, 43, 43);
+background-color: #ffffff;
+font-size: 14px;
+line-height: 18px;
+font-weight: 400px; 
+
+&:hover {
+  cursor: pointer;
+}
+
+&:focus {
+  outline: none;
+}
 `;
 
 export const CalendarModalMonthContainer = styled.div`
@@ -961,6 +1030,19 @@ width: 300px;
 
 display: flex;
 align-items: center;
+
+&.slideDown-appear {
+  margin-top: -50px;
+  opacity: 0;
+  transform: scale(0.3, 1);
+}
+
+&.slideDown-appear-active {
+  margin-top: 0;
+  opacity: 1;
+  transform: scale(1, 1);
+  transition: all 200ms ease;
+}
 `;
 
 export const NavBarSearchCategoriesItem = styled.div`
@@ -1395,7 +1477,7 @@ border-bottom: 1px solid rgb(245, 245, 245);
   
 }
 
-&.slideDown-appear-done {
+&.slideDown-appear-active {
   top: 0;
   transition: top 200ms ease;
 }
@@ -1405,7 +1487,7 @@ border-bottom: 1px solid rgb(245, 245, 245);
   
 }
 
-&.slideDown-enter-done {
+&.slideDown-enter-active {
   top: 0;
   transition: top 200ms ease;
 }
@@ -1415,7 +1497,7 @@ border-bottom: 1px solid rgb(245, 245, 245);
   
 }
 
-&.slideDown-exit-done {
+&.slideDown-exit-active {
   top: -100px;
   transition: top 200ms ease;
 }
@@ -1541,6 +1623,15 @@ font-weight: 400px;
 
 display: flex;
 align-items: center;
+
+&.fadeIn-appear {
+  opacity: 0;
+}
+
+&.fadeIn-appear-active {
+  opacity: 1;
+  transition: opacity 500ms ease;
+}
 `;
 
 export const StickyNavBarCalendarPriceContainer = styled.div`
